@@ -32,7 +32,10 @@
         ]
     ];*/
 
-    $menus = \App\Models\Menu::with('submenu')->get();
+    $menus = \App\Models\Menu::where('parent_id', null)
+    ->with('submenu')
+    ->get();
+
 @endphp
 
 <div class="ff">
