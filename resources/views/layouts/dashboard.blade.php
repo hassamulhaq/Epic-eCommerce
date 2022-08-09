@@ -72,7 +72,12 @@
             <!-- /Sidebar header -->
 
             <!-- Menu -->
-
+            {{--@include('components/backend/sidebar/sidebar-menu/sidebar-menu', [])--}}
+            <x-sidebar-menu >
+                <x-slot name="menu-title">
+                    Kio
+                </x-slot>
+            </x-sidebar-menu>
             <!-- /Menu -->
         </div>
 
