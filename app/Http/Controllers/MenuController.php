@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 
-class MenusController extends Controller
+class MenuController extends Controller
 {
     public function index()
     {
-
+        $menu = Menu::all();
+        return view('menu.index', ['menu' => $menu]);
     }
 
     public function create()

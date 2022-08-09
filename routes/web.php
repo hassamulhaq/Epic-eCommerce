@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use \App\Http\Controllers\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::get('/', function () {
 Route::get('/old/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('old.dashboard');
+
 Route::get('/dashboard/', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
@@ -31,6 +33,13 @@ Route::get('/dashboard/', [DashboardController::class, 'index'])
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
 
 Route::get('/dashboard-preview/', [DashboardController::class, 'preview'])->name('previewdashboard');
+
+Route::group(['prefix'=>'admin'], function() {
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+    Route::get('/menu/create', [MenuController::class, 'index'])->name('menu.create');
+    Route::get('/menu/edit', [MenuController::class, 'index'])->name('menu.edit');
+    Route::get('/menu/delete', [MenuController::class, 'index'])->name('menu.delete');
+});
 
 
 require __DIR__.'/auth.php';

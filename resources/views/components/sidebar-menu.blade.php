@@ -1,7 +1,11 @@
 {{-- @devhassam --}}
-
+<style>
+/*    .sidebar-expanded .ttz {
+        width: 90rem !important;
+    }*/
+</style>
 @php
-    $menus = [
+    /*$menus = [
         [
             "id" => 1,
             "hasSubMenu" => false,
@@ -26,7 +30,9 @@
                 "Products" => "products"
             ]
         ]
-    ];
+    ];*/
+
+    $menus = \App\Models\Menu::with('submenu')->get();
 @endphp
 
 <div class="ff">
@@ -36,26 +42,25 @@
             <span class="tex ttj 2xl:block">Main</span>
         </h3>
         <ul class="nk">
-            @foreach($menus as $menu)
-
+            @foreach($menus as $index => $menu)
                 <!-- single -->
-                @if(!$menu['hasSubMenu'])
+                @if(!$menu->submenu->count())
                     <li class="vn vr rounded-sm n_ ww">
-                        <a class="block gj xc ld wt wi" href="{{ $menu['route'] }}">
+                        <a class="block gj xc ld wt wi" href="{{ $menu->route }}">
                             <div class="flex items-center">
-                                {!! $menu['icon']['svg'] !!}
-                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
+                                {!! $menu->icon !!}
+                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu->title }}</span>
                             </div>
                         </a>
                     </li>
                 <!-- submenu -->
                 @else
-                <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu['route'] == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
+                <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
                     <a class="block gj ld wt wi" href="#0"
                        @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                         <div class="flex items-center fe">
                             <div class="flex items-center">
-                                {!! $menu['icon']['svg'] !!}
+                                {!! $menu->icon !!}
                                 <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
                             </div>
                             <!-- Icon -->
@@ -68,12 +73,12 @@
                         </div>
                     </a>
                     <div class="tex ttj 2xl:block">
-                        @if(is_array($menu['submenu']) && count($menu['submenu']))
+                        @if(count($menu->submenu))
                             <ul class="me re" :class="open ? '!block' : 'hidden'">
-                                @foreach($menu['submenu'] as $name => $route)
+                                @foreach($menu->submenu as $submenu_index => $submenu_menu)
                                     <li class="rt ww">
-                                        <a class="block text-indigo-500 wt wi ld" href="{{ $route }}">
-                                            <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $name }}</span>
+                                        <a class="block gq hover--text-slate-200 wt wi ld" href="{{ $submenu_menu->route }}">
+                                            <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $submenu_menu->title }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -83,19 +88,20 @@
                 </li>
                 @endif
             @endforeach
-                <li class="vn vr rounded-sm n_ ww">
-                    <form method="POST" action="{{ route('logout') }}">
-                        <input type="hidden" name="_token" value="x0yKXAdJEqI2xQcLMSYglZaDrWTt9mObSAzC9yyb">
-                        <div class="flex items-center">
-                            <svg class="ub so oi" viewBox="0 0 24 24">
-                                <path class="du g_" d="M8.07 16H10V8H8.07a8 8 0 110 8z"></path>
-                                <path class="du gq" d="M15 12L8 6v5H0v2h8v5z"></path>
-                            </svg>
-                            <a class="block gj xc ld wt wi" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                this.closest('form').submit();"><span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">Logout</span></a>
-                        </div>
-                    </form>
-                </li>
+
+            <li class="vn vr rounded-sm n_ ww">
+                <form method="POST" action="{{ route('logout') }}">
+                    <input type="hidden" name="_token" value="x0yKXAdJEqI2xQcLMSYglZaDrWTt9mObSAzC9yyb">
+                    <div class="flex items-center">
+                        <svg class="ub so oi" viewBox="0 0 24 24">
+                            <path class="du g_" d="M8.07 16H10V8H8.07a8 8 0 110 8z"></path>
+                            <path class="du gq" d="M15 12L8 6v5H0v2h8v5z"></path>
+                        </svg>
+                        <a class="block gj xc ld wt wi" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            this.closest('form').submit();"><span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">Logout</span></a>
+                    </div>
+                </form>
+            </li>
         </ul>
     </div>
 </div>

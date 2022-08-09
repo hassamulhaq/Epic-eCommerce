@@ -33,28 +33,20 @@ class MenuSeeder extends Seeder
                 'parent_id' => 2,
                 'title' => 'Menu',
                 'route' => 'menu',
-                'route_name' => 'menu',
+                'route_name' => 'admin.menu',
                 'icon_type' => 0,
                 'icon' => '',
             ],
             [
                 'id' => 4,
-                'parent_id' => 3,
-                'title' => 'Create Menu',
-                'route' => 'create',
-                'route_name' => 'menu.create',
+                'parent_id' => 2,
+                'title' => 'Widgets',
+                'route' => 'admin.widgets',
+                'route_name' => '',
                 'icon_type' => 0,
                 'icon' => '',
             ],
-            [
-                'id' => 5,
-                'parent_id' => 3,
-                'title' => 'Edit Menu',
-                'route' => 'edit',
-                'route_name' => 'menu.edit',
-                'icon_type' => 0,
-                'icon' => '',
-            ],
+
         ]);
     }
 }
