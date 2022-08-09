@@ -4,24 +4,27 @@
     $menus = [
         [
             "id" => 1,
+            "hasSubMenu" => false,
             "title" => "Dashboard",
-            "submenu" => [
-                "Dashboard 01" => "dashboard",
-                "Dashboard 02" => "dashboard.preview",
+            "route" => "dashboard",
+            "icon" => [
+                "svg" => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du gq" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"></path><path class="du g_" d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"></path><path class="du gq" d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"></path></svg>',
+                "image" => ''
             ]
         ],
         [
             "id" => 2,
+            "hasSubMenu" => true,
             "title" => "E-Commerce",
+            "route" => "ecommerce",
+            "icon" => [
+                "svg" => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du gq" d="M13 15l11-7L11.504.136a1 1 0 00-1.019.007L0 7l13 8z"></path><path class="du gz" d="M13 15L0 7v9c0 .355.189.685.496.864L13 24v-9z"></path><path class="du g_" d="M13 15.047V24l10.573-7.181A.999.999 0 0024 16V8l-11 7.047z"></path></svg>',
+                "image" => ''
+            ],
             "submenu" => [
                 "Orders" => "orders",
                 "Products" => "products"
             ]
-        ],
-        [
-            "id" => 3,
-            "title" => "Logout",
-            "submenu" => []
         ]
     ];
 @endphp
@@ -34,19 +37,25 @@
         </h3>
         <ul class="nk">
             @foreach($menus as $menu)
-                <li class="vn vr rounded-sm n_ ww bg-slate-900" x-data="{{ Route::has('dashboard') ? '{ open: true }' : '{ open: false }' }}">
+
+                <!-- single -->
+                @if(!$menu['hasSubMenu'])
+                    <li class="vn vr rounded-sm n_ ww">
+                        <a class="block gj xc ld wt wi" href="{{ $menu['route'] }}">
+                            <div class="flex items-center">
+                                {!! $menu['icon']['svg'] !!}
+                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
+                            </div>
+                        </a>
+                    </li>
+                <!-- submenu -->
+                @else
+                <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu['route'] == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
                     <a class="block gj ld wt wi" href="#0"
                        @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                         <div class="flex items-center fe">
                             <div class="flex items-center">
-                                <svg class="ub so oi" viewBox="0 0 24 24">
-                                    <path class="du text-indigo-500"
-                                          d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"></path>
-                                    <path class="du text-indigo-600"
-                                          d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"></path>
-                                    <path class="du text-indigo-200"
-                                          d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"></path>
-                                </svg>
+                                {!! $menu['icon']['svg'] !!}
                                 <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
                             </div>
                             <!-- Icon -->
@@ -63,8 +72,8 @@
                             <ul class="me re" :class="open ? '!block' : 'hidden'">
                                 @foreach($menu['submenu'] as $name => $route)
                                     <li class="rt ww">
-                                        <a class="block text-indigo-500 wt wi ld" href="{{ route('dashboard') }}">
-                                            <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">Main</span>
+                                        <a class="block text-indigo-500 wt wi ld" href="{{ $route }}">
+                                            <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $name }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -72,7 +81,21 @@
                         @endif
                     </div>
                 </li>
+                @endif
             @endforeach
+                <li class="vn vr rounded-sm n_ ww">
+                    <form method="POST" action="{{ route('logout') }}">
+                        <input type="hidden" name="_token" value="x0yKXAdJEqI2xQcLMSYglZaDrWTt9mObSAzC9yyb">
+                        <div class="flex items-center">
+                            <svg class="ub so oi" viewBox="0 0 24 24">
+                                <path class="du g_" d="M8.07 16H10V8H8.07a8 8 0 110 8z"></path>
+                                <path class="du gq" d="M15 12L8 6v5H0v2h8v5z"></path>
+                            </svg>
+                            <a class="block gj xc ld wt wi" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                this.closest('form').submit();"><span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">Logout</span></a>
+                        </div>
+                    </form>
+                </li>
         </ul>
     </div>
 </div>
