@@ -44,7 +44,7 @@
                     </svg>
                 </button>
                 <!-- Logo -->
-                <a class="block" href="index-2.html">
+                <a class="block" href="{{ route('dashboard') }}">
                     <svg width="32" height="32" viewBox="0 0 32 32">
                         <defs>
                             <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">
@@ -72,7 +72,7 @@
             <!-- /Sidebar header -->
 
             <!-- Menu -->
-            
+
             <!-- /Menu -->
         </div>
 
