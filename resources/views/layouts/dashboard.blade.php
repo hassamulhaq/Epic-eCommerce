@@ -15,7 +15,7 @@
       x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
 
 <script>
-    if (localStorage.getItem('sidebar-expanded') == 'true') {
+    if (localStorage.getItem('sidebar-expanded') === 'true') {
         document.querySelector('body').classList.add('sidebar-expanded');
     } else {
         document.querySelector('body').classList.remove('sidebar-expanded');
@@ -45,7 +45,7 @@
                     </svg>
                 </button>
                 <!-- Logo -->
-                <a class="block" href="{{ route('dashboard') }}">
+                <a class="block" href="{{ route('admin.dashboard') }}">
                     <svg width="32" height="32" viewBox="0 0 32 32">
                         <defs>
                             <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">

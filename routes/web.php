@@ -25,9 +25,7 @@ Route::get('/old/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('old.dashboard');
 
-Route::get('/dashboard/', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
+
 
 
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
@@ -35,10 +33,15 @@ Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users'
 Route::get('/dashboard-preview/', [DashboardController::class, 'preview'])->name('previewdashboard');
 
 Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
-    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-    Route::get('/menu/create', [MenuController::class, 'index'])->name('menu.create');
-    Route::get('/menu/edit', [MenuController::class, 'index'])->name('menu.edit');
-    Route::get('/menu/delete', [MenuController::class, 'index'])->name('menu.delete');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('/', [MenuController::class, 'index'])->name('menu.index');
+        Route::get('/create', [MenuController::class, 'create'])->name('menu.create');
+        Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
+        Route::get('/delete', [MenuController::class, 'delete'])->name('menu.delete');
+    });
 });
 
 

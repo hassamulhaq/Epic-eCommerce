@@ -48,8 +48,8 @@
             @foreach($menus as $index => $menu)
                 <!-- single -->
                 @if(!$menu->submenu->count())
-                    <li class="vn vr rounded-sm n_ ww">
-                        <a class="block gj xc ld wt wi" href="{{ $menu->route }}">
+                    <li class="vn vr rounded-sm n_ ww {{ ($menu->route_name == Route::currentRouteName()) ? 'bg-slate-900' : '' }}">
+                        <a class="block gj xc ld wt wi " href="{{ $menu->route }}">
                             <div class="flex items-center">
                                 {!! $menu->icon !!}
                                 <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu->title }}</span>
@@ -58,37 +58,38 @@
                     </li>
                 <!-- submenu -->
                 @else
-                <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
-                    <a class="block gj ld wt wi" href="#0"
-                       @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
-                        <div class="flex items-center fe">
-                            <div class="flex items-center">
-                                {!! $menu->icon !!}
-                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
+                    <!-- active parent_menu if its any child_menu is active -->
+                    <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route_name == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
+                        <a class="block gj ld wt wi" href="#0"
+                           @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
+                            <div class="flex items-center fe">
+                                <div class="flex items-center">
+                                    {!! $menu->icon !!}
+                                    <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
+                                </div>
+                                <!-- Icon -->
+                                <div class="flex ub nq ttw tnn 2xl:opacity--100 wr">
+                                    <svg class="w-3 h-3 ub nz du gq" :class="open ? 'as' : 'ao'"
+                                         viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
+                                    </svg>
+                                </div>
                             </div>
-                            <!-- Icon -->
-                            <div class="flex ub nq ttw tnn 2xl:opacity--100 wr">
-                                <svg class="w-3 h-3 ub nz du gq" :class="open ? 'as' : 'ao'"
-                                     viewBox="0 0 12 12">
-                                    <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
-                                </svg>
-                            </div>
+                        </a>
+                        <div class="tex ttj 2xl:block">
+                            @if(count($menu->submenu))
+                                <ul class="me re" :class="open ? '!block' : 'hidden'">
+                                    @foreach($menu->submenu as $submenu_index => $submenu_menu)
+                                        <li class="rt ww">
+                                            <a class="block gq hover--text-slate-200 wt wi ld" href="{{ $submenu_menu->route }}">
+                                                <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $submenu_menu->title }}</span>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </div>
-                    </a>
-                    <div class="tex ttj 2xl:block">
-                        @if(count($menu->submenu))
-                            <ul class="me re" :class="open ? '!block' : 'hidden'">
-                                @foreach($menu->submenu as $submenu_index => $submenu_menu)
-                                    <li class="rt ww">
-                                        <a class="block gq hover--text-slate-200 wt wi ld" href="{{ $submenu_menu->route }}">
-                                            <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $submenu_menu->title }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    </div>
-                </li>
+                    </li>
                 @endif
             @endforeach
 
