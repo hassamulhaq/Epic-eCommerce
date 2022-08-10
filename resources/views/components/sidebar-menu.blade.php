@@ -59,7 +59,8 @@
                 <!-- submenu -->
                 @else
                     <!-- active parent_menu if its any child_menu is active -->
-                    <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route_name == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">
+                        {{--<li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route_name == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">--}}
+                    <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{ open: false }">
                         <a class="block gj ld wt wi" href="#0"
                            @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                             <div class="flex items-center fe">
@@ -79,9 +80,11 @@
                         <div class="tex ttj 2xl:block">
                             @if(count($menu->submenu))
                                 <ul class="me re" :class="open ? '!block' : 'hidden'">
+
                                     @foreach($menu->submenu as $submenu_index => $submenu_menu)
                                         <li class="rt ww">
-                                            <a class="block gq hover--text-slate-200 wt wi ld" href="{{ $submenu_menu->route }}">
+                                            <a class="block gq hover--text-slate-200 wt wi ld {{ ($submenu_menu->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}"
+                                               href="{{ $submenu_menu->route }}">
                                                 <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $submenu_menu->title }}</span>
                                             </a>
                                         </li>
