@@ -98,7 +98,7 @@
 
             <li class="vn vr rounded-sm n_ ww">
                 <form method="POST" action="{{ route('logout') }}">
-                    <input type="hidden" name="_token" value="x0yKXAdJEqI2xQcLMSYglZaDrWTt9mObSAzC9yyb">
+                    @csrf
                     <div class="flex items-center">
                         <svg class="ub so oi" viewBox="0 0 24 24">
                             <path class="du g_" d="M8.07 16H10V8H8.07a8 8 0 110 8z"></path>
