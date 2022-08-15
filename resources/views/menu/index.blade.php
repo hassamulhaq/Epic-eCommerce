@@ -51,45 +51,59 @@
                     <section>
                         <div class="je jc fg jm jb rw">
                             <div class="jr">
-                                <label class="block text-sm gp rt" for="name">Business Name</label>
-                                <input id="name" class="s ou" type="text" value="Acme Inc.">
-                            </div>
-                            <div class="jr">
-                                <label class="block text-sm gp rt" for="business-id">Business ID</label>
-                                <input id="business-id" class="s ou" type="text" value="Kz4tSEqtUmA">
-                            </div>
-                            <div class="jr">
-                                <label class="block text-sm gp rt" for="location">Location</label>
-                                <input id="location" class="s ou" type="text" value="London, UK">
+                                <label class="block text-sm gp rt" for="name">Menu Name</label>
+                                <input type="hidden" class="s ou" name="menu_name" value="null">
+                                <input id="name" class="s ou" type="text" placeholder="Posts">
                             </div>
                         </div>
                     </section>
 
                     <!-- Email -->
-                    <section>
-                        <h3 class="gf gb text-slate-800 font-bold rt">Email</h3>
-                        <div class="text-sm">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia.</div>
+                    <section class="mt-7">
+                        <h3 class="text-slate-800 font-bold ii">Add Routes</h3>
                         <div class="flex flex-wrap rw">
                             <div class="mr-2">
-                                <label class="d" for="email">Business email</label>
-                                <input id="email" class="s" type="email" value="admin@acmeinc.com">
+                                <label class="text-sm block" for="route_title">Route Title</label>
+                                <input id="route_title" name="route_title[]" class="s" type="text" placeholder="Customers data">
+                            </div>
+
+                            <div class="mr-2">
+                                <label class="text-sm block" for="route">Route</label>
+                                <input id="route" name="route[]" class="s" type="text" placeholder="customers">
+                            </div>
+
+                            <div class="mr-2">
+                                <label class="text-sm block" for="route_name">Route Name</label>
+                                <input id="route_name" name="route_name[]" class="s" type="text" placeholder="customers.data">
                             </div>
                             <button class="btn border-slate-200 hover--border-slate-300 bv text-indigo-500">Change</button>
                         </div>
-                    </section>
 
-                    <!-- Password -->
-                    <section>
-                        <h3 class="gf gb text-slate-800 font-bold rt">Password</h3>
-                        <div class="text-sm">You can set a permanent password if you don't want to use temporary login codes.</div>
-                        <div class="rw">
-                            <button class="btn border-slate-200 bv text-indigo-500">Set New Password</button>
+                        <div class="mt-7" style="margin-top: 32px;">
+                            <div class="flex items-center rw">
+                                <div>
+                                    <label for="">Icon/Image</label>
+                                </div>
+                                <div>
+                                    <div class="flex items-center" x-data="{ checked: true }">
+                                        <div class="c">
+                                            <input type="checkbox" id="toggle" class="d" x-model="checked">
+                                            <label class="h_" for="toggle">
+                                                <span class="bg-white bv" aria-hidden="true"></span>
+                                                <span class="d">Enable smart sync</span>
+                                            </label>
+                                        </div>
+                                        <div class="text-sm gq gm nq" x-text="checked ? 'On' : 'Off'">On</div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </section>
 
                     <!-- Smart Sync -->
                     <section>
-                        <h3 class="gf gb text-slate-800 font-bold rt">Smart Sync update for Mac</h3>
+                        <h3 class="text-slate-800 font-bold ii">Smart Sync update for Mac</h3>
                         <div class="flex items-center rw" x-data="{ checked: true }">
                             <div class="c">
                                 <input type="checkbox" id="toggle" class="d" x-model="checked">
