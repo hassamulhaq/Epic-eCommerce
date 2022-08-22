@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="mt-7" style="margin-top: 32px;">
-                            <div class="flex items-center rw">
+                            <div class="flex items-center gap-4 rw">
                                 <div>
                                     <label for="">Icon/Image</label>
                                 </div>
@@ -98,21 +98,6 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </section>
-
-                    <!-- Smart Sync -->
-                    <section>
-                        <h3 class="text-slate-800 font-bold ii">Smart Sync update for Mac</h3>
-                        <div class="flex items-center rw" x-data="{ checked: true }">
-                            <div class="c">
-                                <input type="checkbox" id="toggle" class="d" x-model="checked">
-                                <label class="h_" for="toggle">
-                                    <span class="bg-white bv" aria-hidden="true"></span>
-                                    <span class="d">Enable smart sync</span>
-                                </label>
-                            </div>
-                            <div class="text-sm gq gm nq" x-text="checked ? 'On' : 'Off'">On</div>
                         </div>
                     </section>
                 </div>
