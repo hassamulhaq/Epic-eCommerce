@@ -169,6 +169,7 @@
     @endpush
 
     @push('js_after')
+        <!-- will remove sortablejs cdn later -->
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
         <script>
