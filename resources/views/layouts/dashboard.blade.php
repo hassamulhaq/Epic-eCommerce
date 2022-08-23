@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
     @stack('css_after')
