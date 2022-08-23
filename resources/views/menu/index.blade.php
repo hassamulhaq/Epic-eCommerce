@@ -42,24 +42,24 @@
                         <form action="" method="get" id="blank-route-form">
                             <!-- route-block -->
                             <div class="routeFormatBlock">
-                                <div class="mr-2">
+                                <div class="mr-2 rh">
                                     <label class="text-sm block" for="route_title">Route Title</label>
                                     <input id="route_title" name="route_title[]" class="s" type="text" placeholder="Customers data">
                                 </div>
 
-                                <div class="mr-2">
+                                <div class="mr-2 rh">
                                     <label class="text-sm block" for="route">Route</label>
                                     <input id="route" name="route[]" class="s" type="text" placeholder="customers">
                                 </div>
 
-                                <div class="mr-2">
+                                <div class="mr-3 rh">
                                     <label class="text-sm block" for="route_name">Route Name</label>
                                     <input id="route_name" name="route_name[]" class="s" type="text" placeholder="customers.data">
                                 </div>
                                 <div class="mt-2" x-data="{ is_icon: false }">
-                                    <div class="flex items-center fl rh">
+                                    <div class="flex items-center fl">
                                         <div>
-                                            <label for="">Icon/SVG</label>
+                                            <label for="" class="text-sm block">Icon/SVG</label>
                                         </div>
                                         <div>
                                             <div class="flex items-center">
@@ -77,7 +77,7 @@
                                     <div class="">
                                         <div x-bind:class="is_icon ? 'hidden' : ''">
                                             <label for="route_image" class="d">Route Image</label>
-                                            <input type="file" id="route_image[]" class="s p-0" name="route_image">
+                                            <input type="file" id="route_image" class="s" name="route_image[]">
                                         </div>
                                         <div class="uw" x-bind:class="!is_icon ? 'hidden' : ''">
                                             <label for="route_icon" class="d">Write a comment…</label>
@@ -146,6 +146,7 @@
 
 
     @push('css_after')
+        {{--<script src="https://cdn.tailwindcss.com"></script>--}}
         <style>
             .routeListItem .routeFormatBlock {
                 display: flex;
