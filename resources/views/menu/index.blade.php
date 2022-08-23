@@ -153,15 +153,31 @@
 
     @push('css_after')
         <style>
+            .routeListItem {
+                border: 1px dotted #cecece;
+                border-radius: .25rem;
+                margin-bottom: 2px;
+            }
             .routeListItem .routeFormatBlock {
                 display: flex;
                 gap: 6px;
+            }
+            .gray-background-class {
+                background-color: #e6e6e6;
             }
         </style>
     @endpush
 
     @push('js_after')
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
         <script>
+            new Sortable(routeList, {
+                animation: 150,
+                ghostClass: 'gray-background-class'
+            })
+
+
             let itemNo = 0;
             $('form#blank-route-form').on('submit', (e) => {
                 e.preventDefault();
@@ -176,6 +192,7 @@
 
                 $form.trigger('reset');
             })
+
 
             function removeList(target, itemNo) {
                 $(target).parent('li').remove();
