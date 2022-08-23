@@ -40,7 +40,8 @@
                     </div>
                     <div class="border dw">
                         <form action="" method="get" id="blank-route-form">
-                            <div class="route-block">
+                            <!-- route-block -->
+                            <div class="routeFormatBlock">
                                 <div class="mr-2">
                                     <label class="text-sm block" for="route_title">Route Title</label>
                                     <input id="route_title" name="route_title[]" class="s" type="text" placeholder="Customers data">
@@ -84,14 +85,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt">
-                                    <button class="btn border-slate-200 hover--border-slate-300 g_">
-                                        <svg class="oo sl du bf ub" viewBox="0 0 16 16">
-                                            <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
-                                        </svg>
-                                        <span class="nq">Add</span>
-                                    </button>
-                                </div>
+                            </div> <!-- /_route-block -->
+                            <div class="mt">
+                                <button class="btn border-slate-200 hover--border-slate-300 g_">
+                                    <svg class="oo sl du bf ub" viewBox="0 0 16 16">
+                                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
+                                    </svg>
+                                    <span class="nq">Add</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -123,7 +124,7 @@
                         <form action="" method="post">
                             @csrf
 
-                            <ul id="route_block" class="list-none"></ul>
+                            <ul id="routeList" class="list-none"></ul>
                         </form>
                     </section>
                 </div>
@@ -146,23 +147,20 @@
 
     @push('js_after')
         <script>
+            let index = 0;
             $('form#blank-route-form').on('submit', (e) => {
                 e.preventDefault();
                 let $form = $(e.target);
+                let UlRouteList = $('ul#routeList');
 
-                let route_block = $('#route_block');
+                index = index + 1;
 
-                //const html = `<div> ${$form} </div>`;
-                //console.log($form.find('input#route_name')[0])
-                //console.log($form.find('.route-block')[0])
+                //$form.find(".routeFormatBlock").clone().appendTo(UlRouteList);
+                UlRouteList.append('<li id="routeListItem-'+index+'" class="routeListItem flex"></li>');
+                $('#routeListItem-'+index+'').append($form.find(".routeFormatBlock").clone())
+                //$form.find(".routeFormatBlock")
 
-                let fio = $('.route-block');
-                console.log(fio)
-
-                //route_block.clone.append(fio)
-                $form.find(".route-block").clone().appendTo(route_block);
-
-                //$form.trigger('reset');
+                $form.trigger('reset');
             })
         </script>
     @endpush
