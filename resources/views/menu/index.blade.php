@@ -56,7 +56,7 @@
                                     <label class="text-sm block" for="route_name">Route Name</label>
                                     <input id="route_name" name="route_name[]" class="s" type="text" placeholder="customers.data">
                                 </div>
-                                <div class="mt-7" style="margin-top: 32px;" x-data="{ is_icon: false }">
+                                <div class="mt-2" x-data="{ is_icon: false }">
                                     <div class="flex items-center fl rh">
                                         <div>
                                             <label for="">Icon/SVG</label>
@@ -77,11 +77,11 @@
                                     <div class="">
                                         <div x-bind:class="is_icon ? 'hidden' : ''">
                                             <label for="route_image" class="d">Route Image</label>
-                                            <input type="file" id="route_image[]" class="s" name="route_image">
+                                            <input type="file" id="route_image[]" class="s p-0" name="route_image">
                                         </div>
                                         <div class="uw" x-bind:class="!is_icon ? 'hidden' : ''">
                                             <label for="route_icon" class="d">Write a comment…</label>
-                                            <textarea name="route_icon[]" id="route_icon" class="f ou xq" cols="30" rows="3"></textarea>
+                                            <input type="text" name="route_icon[]" id="route_icon" class="f ou xq">
                                         </div>
                                     </div>
                                 </div>
@@ -144,6 +144,14 @@
         </div>
     </div>
 
+
+    @push('css_after')
+        <style>
+            .routeListItem .routeFormatBlock {
+                display: flex;
+            }
+        </style>
+    @endpush
 
     @push('js_after')
         <script>

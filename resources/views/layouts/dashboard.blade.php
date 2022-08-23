@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
+    @stack('css_after')
 </head>
 
 <body class="gs bs hi g_" :class="{ 'sidebar-expanded': sidebarExpanded }"
