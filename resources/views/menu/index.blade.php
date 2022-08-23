@@ -162,8 +162,8 @@
                 display: flex;
                 gap: 6px;
             }
-            .gray-background-class {
-                background-color: #e6e6e6;
+            .mint-background-class {
+                background-color: #c0ffe8;
             }
         </style>
     @endpush
@@ -174,7 +174,7 @@
         <script>
             new Sortable(routeList, {
                 animation: 150,
-                ghostClass: 'gray-background-class'
+                ghostClass: 'mint-background-class'
             })
 
 
