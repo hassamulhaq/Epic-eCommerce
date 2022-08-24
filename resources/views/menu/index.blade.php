@@ -34,24 +34,25 @@
                         <form action="" method="get" id="blank-route-form">
                             <!-- route-block -->
                             <div class="routeFormatBlock">
+                                <input type="hidden" name="data[count][]">
                                 <div class="mb-3">
                                     <label class="text-sm block" for="route_title">
                                         <span>Route Title</span>
-                                        <input name="route_title[]" class="s block" type="text" placeholder="Customers data">
+                                        <input name="data[route_title][]" class="s block" type="text" placeholder="Customers data">
                                     </label>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="text-sm block" for="route">
                                         <span>Route</span>
-                                        <input name="route[]" class="s block" type="text" placeholder="customers">
+                                        <input name="data[route][]" class="s block" type="text" placeholder="customers">
                                     </label>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="text-sm block" for="route_name">
                                         <span>Route Name</span>
-                                        <input name="route_name[]" class="s block" type="text" placeholder="customers.data">
+                                        <input name="data[route_name][]" class="s block" type="text" placeholder="customers.data">
                                     </label>
                                 </div>
                                 {{--<div class="mb-3">
@@ -75,7 +76,7 @@
                                 <div class="mb-3">
                                     <label class="text-sm block">
                                         <span>Route Image/SVG</span>
-                                        <input type="file" name="route_image[]" class="block w-full text-sm text-slate-500
+                                        <input type="file" name="data[route_image][]" class="block w-full text-sm text-slate-500
                                         file:mr-4 file:py-2 file:px-4
                                         file:rounded file:border-0
                                         file:text-sm file:font-semibold
@@ -100,51 +101,65 @@
 
             <!-- Panel -->
             <div class="uw">
-                <form action="{{ route('menu.create') }}" method="post">
-                    @csrf
                     <!-- Panel body -->
                     <div class="d_ fd">
                         <h4 class="text-slate-800 font-bold ii">Menu structure</h4>
-
                         <!-- Business Profile -->
                         <section>
-                            <div class="je jc fg jm jb rw">
-                                <div class="jr">
-                                    <label class="block text-sm gp rt" for="menu_title">Menu Title</label>
-                                    <input type="hidden" class="s ou" name="menu_type" value="menu">
-                                    <input id="menu_title" name="menu_title" class="s ou" type="text" placeholder="Backend Menu">
+                            <form action="{{ route('menu.create') }}" method="post">
+                                @csrf
+                                <input type="hidden" class="s ou" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['menu'] }}">
+
+                                <div class="je jc fg jm jb rw items-center">
+                                    <div class="jr">
+                                        <label class="block text-sm gp rt" for="menu_title">Menu Title</label>
+                                        <input id="menu_title" name="menu_title" class="s ou" type="text" placeholder="Backend Menu">
+                                    </div>
+                                    <div class="ak border-slate-200">
+                                        <label class="block text-sm gp rt" for="">&nbsp;</label>
+                                        <button type="submit" class="btn ho xi ye ml-3">Save Menu</button>
+                                    </div>
                                 </div>
-                            </div>
-                            @if ($errors->any())
-                                <div class="text-red-600 text-sm">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                                @if ($errors->any())
+                                    <div class="text-red-600 text-sm">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                            </form>
                         </section>
 
-                        <!-- Email -->
-                        <section class="mt-7">
+
+                        <section class="mt-7 co pt-3">
                             <h3 class="text-slate-800 font-bold ii">Routes</h3>
+                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" class="s ou" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['route'] }}">
 
-
+                                <input type="hidden" name="selected_menu_id" value="{{ Request::get('selected_menu') }}">
                                 <ul id="routeList" class="list-none"></ul>
 
+                                <div class="flex ak vm vg border-slate-200">
+                                    <div class="flex ls">
+                                        <button type="submit" class="btn ho xi ye ml-3">Save Routes</button>
+                                    </div>
+                                </div>
+                            </form>
                         </section>
                     </div>
 
                     <!-- Panel footer -->
                     <footer>
-                        <div class="flex ak vm vg co border-slate-200">
+                        {{--<div class="flex ak vm vg co border-slate-200">
                             <div class="flex ls">
-                                <button type="submit" class="btn ho xi ye ml-3">Save Menu</button>
+                                <button type="submit" class="btn ho xi ye ml-3">Save Routes</button>
                             </div>
-                        </div>
+                        </div>--}}
                     </footer>
-                </form>
+
             </div>
 
         </div>

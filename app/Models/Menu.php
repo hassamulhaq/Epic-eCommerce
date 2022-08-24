@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Helpers\Constant;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
     protected $table = 'menu';
 
-    protected $fillable = ['menu_type', 'title', 'route', 'route_name', 'icon_type', 'icon'];
+    protected $fillable = ['parent_id', 'child_id', 'menu_type', 'title', 'route', 'route_name', 'icon_type', 'icon'];
+
+    //protected $casts = ['menu_type' => Constant::MENU_TYPE];
 
 
 //    public function submenu(): \Illuminate\Database\Eloquent\Relations\BelongsTo

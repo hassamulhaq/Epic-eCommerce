@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->mediumIncrements('id');
             $table->mediumInteger('parent_id')->unsigned()->nullable();
             $table->mediumInteger('child_id')->unsigned()->nullable();
-            $table->enum('menu_type', ['menu', 'route'])->default('route');
+            $table->tinyInteger('menu_type')->default(\App\Helpers\Constant::MENU_TYPE['route'])->comment('1=menu, 2=route');
             $table->string('title', 50);
             $table->string('route', 50)->nullable()->index();
             $table->string('route_name', 50)->nullable()->index();
