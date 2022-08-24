@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\MenuController;
+use \App\Http\Controllers\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
         Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
         Route::get('/delete', [MenuController::class, 'delete'])->name('menu.delete');
     });
+
+    Route::get('products', [ProductsController::class, 'index'])->name('products.index');
 });
 
 
