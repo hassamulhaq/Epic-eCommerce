@@ -13,6 +13,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => 1,
                 'parent_id' => null,
+                'menu_type' => 'route',
                 'title' => 'Dashboard',
                 'route' => 'dashboard',
                 'route_name' => 'admin.dashboard',
@@ -22,6 +23,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => 2,
                 'parent_id' => null,
+                'menu_type' => 'route',
                 'title' => 'Appearance',
                 'route' => '#0',
                 'route_name' => '#0',
@@ -31,6 +33,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => 3,
                 'parent_id' => 2,
+                'menu_type' => 'route',
                 'title' => 'Menu',
                 'route' => 'menu',
                 'route_name' => 'admin.menu',
@@ -40,6 +43,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => 4,
                 'parent_id' => 2,
+                'menu_type' => 'route',
                 'title' => 'Widgets',
                 'route' => 'widgets',
                 'route_name' => 'admin.widgets',

@@ -38,8 +38,8 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::group(['prefix' => 'menu'], function () {
-        Route::get('/', [MenuController::class, 'index'])->name('admin.menu');
-        Route::get('/create', [MenuController::class, 'create'])->name('menu.create');
+        Route::get('/{selected_menu?}', [MenuController::class, 'index'])->name('menu.index');
+        Route::post('/create', [MenuController::class, 'create'])->name('menu.create');
         Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
         Route::get('/delete', [MenuController::class, 'delete'])->name('menu.delete');
     });

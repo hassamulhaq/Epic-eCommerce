@@ -8,6 +8,8 @@ class Menu extends Model
 {
     protected $table = 'menu';
 
+    protected $fillable = ['menu_type', 'title', 'route', 'route_name', 'icon_type', 'icon'];
+
 
 //    public function submenu(): \Illuminate\Database\Eloquent\Relations\BelongsTo
 //    {

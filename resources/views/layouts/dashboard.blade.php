@@ -105,8 +105,9 @@
         @include('layouts/header')
 
         <main>
+            @include('_particles.flash_message')
             <div class="vs jj ttm vl ou uf na">
-            @yield('content')
+                @yield('content')
             </div>
         </main>
 
