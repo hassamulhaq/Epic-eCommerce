@@ -13,7 +13,7 @@
                 <!-- Group 1 -->
                 <div>
                     <div class="go gh gq gv ro">Add menu items</div>
-                    @include('menu._particles.parent_menu', $onlyMenus)
+                    @include('menu._particles.chose_menu', $onlyMenus)
                     {{--@dd($routes)--}}
                 </div>
                 <!-- Group Menu Item -->

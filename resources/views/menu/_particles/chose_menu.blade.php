@@ -2,8 +2,8 @@
     <div class="flex gap-3 items-center">
         <label>
             <select class="border-slate-200 hover--border-slate-300 g_" name="selected_menu">
+                <option value="" selected>-- chose --</option>
                 @forelse($onlyMenus as $menu)
-                    <option value="" selected>-- chose --</option>
                     <option value="{{ $menu['id'] }}">
                         <span class="text-sm gp text-indigo-500">{{ $menu['title'] }}</span>
                     </option>
