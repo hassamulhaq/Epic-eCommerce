@@ -8,4 +8,8 @@ class Constant
         'menu' => 1,
         'route' => 2
     ];
+
+    const BACKEND_MENU = [
+        'dashboard' => 1
+    ];
 }

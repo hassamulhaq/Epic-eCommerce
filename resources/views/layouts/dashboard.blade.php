@@ -75,10 +75,10 @@
             </div>
             <!-- /Sidebar header -->
 
-            <!-- Menu -->
-            {{--@include('components/backend/sidebar/sidebar-menu/sidebar-menu', [])--}}
+
+            <!-- sidebar-menu -->
             <x-sidebar-menu></x-sidebar-menu>
-            <!-- /Menu -->
+            <!-- /sidebar-menu -->
         </div>
 
         <!-- Expand | collapse button -->

@@ -4,44 +4,8 @@
     /*    width: 90rem !important;*/
     /*}*/
 </style>
-@php
-    /*$menus = [
-        [
-            "id" => 1,
-            "hasSubMenu" => false,
-            "title" => "Dashboard",
-            "route" => "dashboard",
-            "icon" => [
-                "svg" => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du gq" d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z"></path><path class="du g_" d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z"></path><path class="du gq" d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"></path></svg>',
-                "image" => ''
-            ]
-        ],
-        [
-            "id" => 2,
-            "hasSubMenu" => true,
-            "title" => "E-Commerce",
-            "route" => "ecommerce",
-            "icon" => [
-                "svg" => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du gq" d="M13 15l11-7L11.504.136a1 1 0 00-1.019.007L0 7l13 8z"></path><path class="du gz" d="M13 15L0 7v9c0 .355.189.685.496.864L13 24v-9z"></path><path class="du g_" d="M13 15.047V24l10.573-7.181A.999.999 0 0024 16V8l-11 7.047z"></path></svg>',
-                "image" => ''
-            ],
-            "submenu" => [
-                "Orders" => "orders",
-                "Products" => "products"
-            ]
-        ]
-    ];*/
 
-    $dashboardMenu = \App\Models\Menu::where([
-        'id' => 1, // comes from migration. on dashboard, we can only show the one menu.
-        'parent_id' => null,
-        'child_id' => null,
-        'menu_type' => \App\Helpers\Constant::MENU_TYPE['menu']
-        ])
-        ->with('submenu.menuChildRoutes')
-        ->first();
-
-@endphp
+{{-- sidebar-menu is loaded using view-composers --}}
 
 <div class="ff">
     <div>
