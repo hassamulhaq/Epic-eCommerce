@@ -23,4 +23,14 @@ class Menu extends Model
     {
         return $this->hasMany(Menu::class, 'parent_id');
     }
+
+    public function menuChildRoutes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Menu::class, 'child_id', 'id');
+    }
+
+//    public function menuChildRoutes()
+//    {
+//        return $this->hasManyThrough(Menu::class, Menu::class, 'parent_id', 'child_id', 'oooo', 'id');
+//    }
 }

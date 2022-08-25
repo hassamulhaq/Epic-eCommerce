@@ -1,8 +1,8 @@
 {{-- @devhassam --}}
 <style>
-/*    .sidebar-expanded .ttz {
-        width: 90rem !important;
-    }*/
+    /*.sidebar-expanded .ttz {*/
+    /*    width: 90rem !important;*/
+    /*}*/
 </style>
 @php
     /*$menus = [
@@ -32,9 +32,14 @@
         ]
     ];*/
 
-    $menus = \App\Models\Menu::where('parent_id', null)
-    ->with('submenu')
-    ->get();
+    $dashboardMenu = \App\Models\Menu::where([
+        'id' => 1, // comes from migration. on dashboard, we can only show the one menu.
+        'parent_id' => null,
+        'child_id' => null,
+        'menu_type' => \App\Helpers\Constant::MENU_TYPE['menu']
+        ])
+        ->with('submenu.menuChildRoutes')
+        ->first();
 
 @endphp
 
@@ -45,24 +50,22 @@
             <span class="tex ttj 2xl:block">Main</span>
         </h3>
         <ul class="nk">
-            @foreach($menus as $index => $menu)
-                <!-- single -->
-                @if(!$menu->submenu->count())
-                    <li class="vn vr rounded-sm n_ ww {{ ($menu->route_name == Route::currentRouteName()) ? 'bg-slate-900' : '' }}">
-                        <a class="block gj xc ld wt wi " href="{{ $menu->route }}">
-                            <div class="flex items-center">
-                                {!! $menu->icon !!}
-                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu->title }}</span>
-                            </div>
-                        </a>
+            @foreach($dashboardMenu->submenu as $index => $menu)
+                <!-- single menu -->
+                @if(!$menu->menuChildRoutes->count() && is_null($menu->child_id))
+                    <li class="vn vr rounded-sm n_ ww">
+                        <div class="flex items-center">
+                            {!! $menu->icon !!}
+                            <a class="block gq hover--text-slate-200 wt wi ld {{ ($menu->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}" href="{{ $menu->route }}">
+                                <span class="text-sm gp ml-3 ttw tnn 2xl:opacity--100 wr">{{ $menu['title'] }}</span>
+                            </a>
+                        </div>
                     </li>
-                <!-- submenu -->
-                @else
-                    <!-- active parent_menu if its any child_menu is active -->
-                        {{--<li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route_name == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}">--}}
+                <!-- dropdown menu -->
+                @elseif($menu->menuChildRoutes->count() > 0)
+                    {{--<li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{{ ($menu->route_name == Route::currentRouteName()) ? '{ open: true }' : '{ open: false }' }}"></li>--}}
                     <li class="vn vr rounded-sm n_" :class="open ? 'bg-slate-900' : 'ao'" x-data="{ open: false }">
-                        <a class="block gj ld wt wi" href="#0"
-                           @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
+                        <a class="block gj ld wt wi" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                             <div class="flex items-center fe">
                                 <div class="flex items-center">
                                     {!! $menu->icon !!}
@@ -70,32 +73,24 @@
                                 </div>
                                 <!-- Icon -->
                                 <div class="flex ub nq ttw tnn 2xl:opacity--100 wr">
-                                    <svg class="w-3 h-3 ub nz du gq" :class="open ? 'as' : 'ao'"
-                                         viewBox="0 0 12 12">
-                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
-                                    </svg>
+                                    <svg class="w-3 h-3 ub nz du gq" :class="open ? 'as' : 'ao'" viewBox="0 0 12 12"><path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path></svg>
                                 </div>
                             </div>
                         </a>
                         <div class="tex ttj 2xl:block">
-                            @if(count($menu->submenu))
-                                <ul class="me re" :class="open ? '!block' : 'hidden'">
-
-                                    @foreach($menu->submenu as $submenu_index => $submenu_menu)
-                                        <li class="rt ww">
-                                            <a class="block gq hover--text-slate-200 wt wi ld {{ ($submenu_menu->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}"
-                                               href="{{ $submenu_menu->route }}">
-                                                <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $submenu_menu->title }}</span>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                            <ul class="me re" :class="open ? '!block' : 'hidden'">
+                            @foreach($menu->menuChildRoutes as $childRoutes)
+                                <li class="rt ww">
+                                    <a class="block gq hover--text-slate-200 wt wi ld {{ ($childRoutes->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}" href="{{ $childRoutes->route }}">
+                                        <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $childRoutes->title }}</span>
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
                         </div>
                     </li>
                 @endif
             @endforeach
-
             <li class="vn vr rounded-sm n_ ww">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
