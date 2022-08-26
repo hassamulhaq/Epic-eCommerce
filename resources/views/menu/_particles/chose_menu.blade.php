@@ -4,7 +4,7 @@
             <select class="border-slate-200 hover--border-slate-300 g_" name="selected_menu">
                 <option value="" selected>-- chose --</option>
                 @forelse($onlyMenus as $menu)
-                    <option value="{{ $menu['id'] }}">
+                    <option value="{{ $menu['id'] }}" {{ ($menu['id'] == Request::get('selected_menu')) ? 'selected' : '' }}>
                         <span class="text-sm gp text-indigo-500">{{ $menu['title'] }}</span>
                     </option>
                 @empty
