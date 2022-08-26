@@ -13,9 +13,13 @@ class MenuController extends Controller
         $selected_menu = (int) $request->input('selected_menu');
         $onlyMenus = $this->getOnlyMenus();
 
-        $routes = Menu::where(['parent_id' => $selected_menu, 'menu_type' => Constant::MENU_TYPE['route']])->get();
+        $selectedMenuRoutes = Menu::where([
+            'parent_id' => $selected_menu,
+            'menu_type' => Constant::MENU_TYPE['route']
+        ])->get();
 
-        return view('menu.index', ['onlyMenus' => $onlyMenus, 'routes' => $routes]);
+
+        return view('menu.index', ['onlyMenus' => $onlyMenus, 'selectedMenuRoutes' => $selectedMenuRoutes]);
     }
 
     protected function getOnlyMenus() {
