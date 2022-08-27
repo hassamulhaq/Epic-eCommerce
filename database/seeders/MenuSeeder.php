@@ -50,8 +50,8 @@ class MenuSeeder extends Seeder
                 'child_id' => 3, // child of Appearance
                 'menu_type' => Constant::MENU_TYPE['route'],
                 'title' => 'Menu',
-                'route' => 'menu',
-                'route_name' => 'admin.menu',
+                'route' => '/admin/menu',
+                'route_name' => 'admin.index',
                 'icon_type' => 0,
                 'icon' => '',
             ],

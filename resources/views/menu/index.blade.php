@@ -17,21 +17,12 @@
                     {{--@dd($routes)--}}
                 </div>
                 <!-- Group Menu Item -->
-                <div class="mt-7">
+                <div class="mt-10">
                     <div class="go gh gq gv ro flex flex items-center">
                         Add Routes
-                        <div class="nr">
-                            <!-- Start -->
-                            <button class="btn-xs border-slate-200 hover--border-slate-300">
-                                <svg class="oo sl du bf ub" viewBox="0 0 16 16">
-                                    <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
-                                </svg>
-                            </button>
-                            <!-- End -->
-                        </div>
                     </div>
                     <div class="border dw">
-                        <form action="" method="get" id="blank-route-form">
+                        <form action="" method="get" id="blank-route-form" autocomplete="off">
                             <!-- route-block -->
                             <div class="routeFormatBlock">
                                 <input type="hidden" name="data[count][]">
@@ -79,7 +70,7 @@
                                         <input type="file" name="data[route_image][]" class="block w-full text-sm text-slate-500
                                         file:mr-4 file:py-2 file:px-4
                                         file:rounded file:border-0
-                                        file:text-sm file:font-semibold
+                                        file:text-sm
                                         file:bg-gray-50 file:text-gray-700
                                         hover:file:bg-gray-100">
                                     </label>
@@ -103,21 +94,33 @@
             <div class="uw">
                     <!-- Panel body -->
                     <div class="d_ fd">
-                        <h4 class="text-slate-800 font-bold ii">Menu structure</h4>
+                        <h4 class="text-slate-800 font-bold ii">
+                            Menu structure
+                            <span class="font-light">&nbsp;&nbsp;or</span>
+                            <small><a href="{{ route('menu.create') }}" class="font-light underline text-blue-600">create new menu</a>.</small>
+                        </h4>
                         <!-- Business Profile -->
                         <section>
-                            <form action="{{ route('menu.create') }}" method="post">
+                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                                 @csrf
-                                <input type="hidden" class="s ou" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['menu'] }}">
+                                <input type="hidden" name="action" value="{{ Request::get('selected_menu') ? 'update' : 'add' }}">
+                                <input type="hidden" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['menu'] }}">
+                                <input type="hidden" name="selected_menu_id" value="{{ Request::get('selected_menu') }}">
 
                                 <div class="je jc fg jm jb rw items-center">
                                     <div class="jr">
                                         <label class="block text-sm gp rt" for="menu_title">Menu Title</label>
-                                        <input id="menu_title" name="menu_title" class="s ou" type="text" placeholder="Backend Menu">
+                                        <input
+                                            id="menu_title"
+                                            name="menu_title"
+                                            class="s ou"
+                                            type="text"
+                                            placeholder="Backend Menu"
+                                        value="{{ (Request::get('selected_menu')) ? $current_menu->title : '' }}">
                                     </div>
                                     <div class="ak border-slate-200">
                                         <label class="block text-sm gp rt" for="">&nbsp;</label>
-                                        <button type="submit" class="btn ho xi ye ml-3">Save Menu</button>
+                                        <button type="submit" class="btn ho xi ye ml-3">{{ Request::get('selected_menu') ? 'Update Menu' : 'Add Menu' }}</button>
                                     </div>
                                 </div>
                                 @if ($errors->any())
@@ -134,13 +137,63 @@
 
 
                         <section class="mt-7 co pt-3">
-                            <h3 class="text-slate-800 font-bold ii">Routes</h3>
-                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data">
+                            <h3 class="text-slate-800 font-bold ii">
+                                Routes
+                                ({{ (Request::get('selected_menu')) ? $current_menu->title : '' }})
+                            </h3>
+                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                                 @csrf
-                                <input type="hidden" class="s ou" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['route'] }}">
-
+                                <input type="hidden" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['route'] }}">
+                                <input type="hidden" name="action" value="{{ Request::get('selected_menu') ? 'update' : 'add' }}">
+                                {{--<input type="hidden" name="selected_menu" value="{{ Request::get('selected_menu') ?? '' }}">--}}
                                 <input type="hidden" name="selected_menu_id" value="{{ Request::get('selected_menu') }}">
-                                <ul id="routeList" class="list-none"></ul>
+
+                                <ul id="routeListFetched" class="list-none block">
+                                    @foreach($selectedMenuRoutes as $route)
+                                        <li id="routeListItemFetched-{{ $loop->index }}"
+                                            class="routeListItem flex items-center {{ ($route->child_id) ? 'ml-4' : '' }}">
+                                            {{--<button type="button" class="btn-xs text-sm">{{ $route->id }}</button>--}}
+                                            <button type="button" onclick="removeList(this, {{ $loop->index }})" class="btn-xs"><svg class="oo sl du yl ub" viewBox="0 0 16 16"> <path d="M5 7h2v6H5V7zm4 0h2v6H9V7zm3-6v2h4v2h-1v10c0 .6-.4 1-1 1H2c-.6 0-1-.4-1-1V5H0V3h4V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1zM6 2v1h4V2H6zm7 3H3v9h10V5z"></path></svg></button>
+                                            <div class="routeFormatBlock">
+                                                <input type="hidden" name="data[count][]">
+                                                <div class="mb-3">
+                                                    <label class="text-sm block" for="route_title">
+                                                        <span>Route Title</span>
+                                                        <input name="data[route_title][]" class="s block" type="text" placeholder="Customers data"
+                                                        value="{{ $route->title }}">
+                                                    </label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="text-sm block" for="route">
+                                                        <span>Route</span>
+                                                        <input name="data[route][]" class="s block" type="text" placeholder="customers"
+                                                               value="{{ $route->route }}">
+                                                    </label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="text-sm block" for="route_name">
+                                                        <span>Route Name</span>
+                                                        <input name="data[route_name][]" class="s block" type="text" placeholder="customers.data"
+                                                               value="{{ $route->route_name }}">
+                                                    </label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="text-sm block">
+                                                        <span>Route Image/SVG</span>
+                                                        <input type="file" name="data[route_image][]" class="block w-full text-sm text-slate-500
+                                                        file:mr-4 file:py-2 file:px-4
+                                                        file:rounded file:border-0
+                                                        file:text-sm
+                                                        file:bg-gray-50 file:text-gray-700
+                                                        hover:file:bg-gray-100">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <!-- ul#routeList populated with JS -->
+                                <ul id="routeList" class="list-none block"></ul>
 
                                 <div class="flex ak vm vg border-slate-200">
                                     <div class="flex ls">
@@ -169,7 +222,7 @@
     @push('css_after')
         <style>
             .routeListItem {
-                border: 1px dotted #cecece;
+                border: 1px solid #cecece;
                 border-radius: .25rem;
                 margin-bottom: 2px;
             }
@@ -188,6 +241,10 @@
         <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
         <script>
+            new Sortable(routeListFetched, {
+                animation: 150,
+                ghostClass: 'mint-background-class'
+            })
             new Sortable(routeList, {
                 animation: 150,
                 ghostClass: 'mint-background-class'

@@ -11,20 +11,29 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $selected_menu = (int) $request->input('selected_menu');
-        $onlyMenus = $this->getOnlyMenus();
 
-        $selectedMenuRoutes = Menu::where([
-            'parent_id' => $selected_menu,
-            'menu_type' => Constant::MENU_TYPE['route']
-        ])->get();
-
-
-        return view('menu.index', ['onlyMenus' => $onlyMenus, 'selectedMenuRoutes' => $selectedMenuRoutes]);
+        return view('menu.index', [
+            'current_menu' => $this->currentMenu($selected_menu),
+            'onlyMenus' => $this->getOnlyMenus(),
+            'selectedMenuRoutes' =>  $this->selectedMenuRoutes($selected_menu),
+        ]);
     }
 
     protected function getOnlyMenus() {
         // not null means' child items
         return Menu::where(['parent_id' => null, 'menu_type' => Constant::MENU_TYPE['menu']])->get()->toArray();
+    }
+
+    protected function currentMenu($menu_id) {
+        // not null means' child items
+        return Menu::where(['id' => $menu_id, 'menu_type' => Constant::MENU_TYPE['menu']])->first();
+    }
+
+    protected function selectedMenuRoutes($menu_id) {
+        return Menu::where([
+            'parent_id' => $menu_id,
+            'menu_type' => Constant::MENU_TYPE['route']
+        ])->get();
     }
 
     public function create(Request $request)
@@ -37,29 +46,29 @@ class MenuController extends Controller
         $res = [];
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['menu']) {
-            $menu = Menu::create([
-                'menu_type' => $request->input('menu_type'),
-                'title' => $request->input('menu_title'),
-            ]);
+            $menu = Menu::updateOrCreate(
+                ['id' => $request->input('selected_menu_id')],
+                ['menu_type' => $request->input('menu_type'), 'title' => $request->input('menu_title')]
+            );
 
             $res = ($menu) ? ['success' => 'Menu created successfully!'] : ['error' => 'Menu not created'];
         }
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['route']) {
-
             \DB::beginTransaction();
+
             try {
                 for ($i = 0; $i < count($request->input('data.count')); $i++) {
-                    foreach ($request->except(['_token', 'selected_menu_id', 'menu_type', 'data.count']) as $name => $val) {
+                    foreach ($request->except(['_token', 'action', 'selected_menu_id', 'menu_type', 'data.count']) as $dataVal) {
                         Menu::create([
                             'parent_id' => $request->input('selected_menu_id', null),
                             'menu_type' => $request->input('menu_type'),
-                            'title' => $val['route_title'][$i],
-                            'route' => $val['route'][$i],
-                            'route_name' => $val['route_name'][$i],
+                            'title' => $dataVal['route_title'][$i],
+                            'route' => $dataVal['route'][$i],
+                            'route_name' => $dataVal['route_name'][$i],
                             'icon_type' => 1,
-                            'icon' => ''
-                        ]);
+                            'icon' => '']
+                        );
                     }
                 }
                 \DB::commit();
