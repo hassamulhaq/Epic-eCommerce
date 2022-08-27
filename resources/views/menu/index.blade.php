@@ -17,7 +17,7 @@
                     {{--@dd($routes)--}}
                 </div>
                 <!-- Group Menu Item -->
-                <div class="mt-10">
+                <div class="mt-10 addRouteGenerator {{ (Request::get('selected_menu')) ? '' : 'blurBlock' }}">
                     <div class="go gh gq gv ro flex flex items-center">
                         Add Routes
                     </div>
@@ -232,6 +232,21 @@
             }
             .mint-background-class {
                 background-color: #c0ffe8;
+            }
+
+            .blurBlock {
+                filter: blur(1px);
+            }
+            .blurBlock::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                user-select: none;
+                cursor: not-allowed;
+                background-color: #e3e3e36e;
             }
         </style>
     @endpush
