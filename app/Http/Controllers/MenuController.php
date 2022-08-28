@@ -41,7 +41,9 @@ class MenuController extends Controller
     {
         $request->validate([
             'menu_title' => 'required_if:menu_type,==,'.Constant::MENU_TYPE['menu'].'|max:255',
-            'menu_type' => 'required|max:50',
+            'action' => 'required|string|max:20',
+            'menu_type' => 'required|int|max:2',
+            'selected_menu_id' => 'required_if:action,==,update'
         ]);
 
         $res = [];
@@ -56,11 +58,22 @@ class MenuController extends Controller
         }
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['route']) {
-
             //Menu::where('parent_id', '=', $request->input('selected_menu_id'))->delete();
 
-            \DB::beginTransaction();
+            $request->validate([
+                'action' => 'required|string|max:20',
+                'menu_type' => 'required|int|max:2',
+                'selected_menu_id' => 'required_if:action,==,update',
+                'data.route_id.*' => 'required|int',
+                'data.child_id.*' => 'sometimes',
+                'data.route_parent.*' => 'sometimes',
+                'data.route_title.*' => 'required|string|max:200',
+                'data.route.*' => 'required|string|max:250',
+                'data.route_name.*' => 'required|string|max:250',
+                //'data.route_image.*' => 'required|string',
+            ]);
 
+            \DB::beginTransaction();
             try {
                 for ($i = 0; $i < count($request->input('data.count')); $i++) {
                     foreach ($request->except(['_token', 'action', 'selected_menu_id', 'menu_type', 'data.count']) as $dataVal) {
