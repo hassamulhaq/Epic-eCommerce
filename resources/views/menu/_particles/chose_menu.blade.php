@@ -2,7 +2,7 @@
     <div class="flex gap-3 items-center">
         <label>
             <select class="border-slate-200 hover--border-slate-300 g_" name="selected_menu">
-                <option value="" selected>-- chose --</option>
+                <option value="" disabled selected>-- chose --</option>
                 @forelse($onlyMenus as $menu)
                     <option value="{{ $menu['id'] }}" {{ ($menu['id'] == Request::get('selected_menu')) ? 'selected' : '' }}>
                         <span class="text-sm gp text-indigo-500">{{ $menu['title'] }}</span>

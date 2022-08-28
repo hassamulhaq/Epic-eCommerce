@@ -13,9 +13,9 @@ class MenuController extends Controller
         $selected_menu = (int) $request->input('selected_menu');
 
         return view('menu.index', [
-            'current_menu' => $this->currentMenu($selected_menu),
+            'current_menu' => $this->getCurrentMenu($selected_menu),
             'onlyMenus' => $this->getOnlyMenus(),
-            'selectedMenuRoutes' =>  $this->selectedMenuRoutes($selected_menu),
+            'selectedMenuRoutes' =>  $this->getSelectedMenuRoutes($selected_menu),
         ]);
     }
 
@@ -24,12 +24,12 @@ class MenuController extends Controller
         return Menu::where(['parent_id' => null, 'menu_type' => Constant::MENU_TYPE['menu']])->get()->toArray();
     }
 
-    protected function currentMenu($menu_id) {
+    protected function getCurrentMenu($menu_id) {
         // not null means' child items
         return Menu::where(['id' => $menu_id, 'menu_type' => Constant::MENU_TYPE['menu']])->first();
     }
 
-    protected function selectedMenuRoutes($menu_id) {
+    protected function getSelectedMenuRoutes($menu_id) {
         return Menu::where([
             'parent_id' => $menu_id,
             'menu_type' => Constant::MENU_TYPE['route']
@@ -55,6 +55,9 @@ class MenuController extends Controller
         }
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['route']) {
+
+            //Menu::where('parent_id', '=', $request->input('selected_menu_id'))->delete();
+
             \DB::beginTransaction();
 
             try {
@@ -62,6 +65,7 @@ class MenuController extends Controller
                     foreach ($request->except(['_token', 'action', 'selected_menu_id', 'menu_type', 'data.count']) as $dataVal) {
                         Menu::create([
                             'parent_id' => $request->input('selected_menu_id', null),
+                            'child_id' =>  ($dataVal['route_parent'][$i] != 'None') ? $dataVal['route_parent'][$i] : null,
                             'menu_type' => $request->input('menu_type'),
                             'title' => $dataVal['route_title'][$i],
                             'route' => $dataVal['route'][$i],

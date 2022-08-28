@@ -22,28 +22,41 @@
                         Add Routes
                     </div>
                     <div class="border dw">
-                        <form action="" method="get" id="blank-route-form" autocomplete="off">
+                        <form action="" method="get" id="blank-route-form" autocomplete="off" enctype="multipart/form-data">
                             <!-- route-block -->
                             <div class="routeFormatBlock">
                                 <input type="hidden" name="data[count][]">
                                 <div class="mb-3">
+                                    <label class="text-sm block">
+                                        <span>Route Parent (Choose parent if any)</span>
+                                        <select name="data[route_parent][]" id="" class="s block w-full">
+                                            <option selected>None</option>
+                                            @foreach($selectedMenuRoutes as $route)
+                                                @if(!$route->child_id)
+                                                    <option value="{{ $route->id }}">{{ $route->title }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="mb-3">
                                     <label class="text-sm block" for="route_title">
                                         <span>Route Title</span>
-                                        <input name="data[route_title][]" class="s block" type="text" placeholder="Customers data">
+                                        <input name="data[route_title][]" class="s block w-full" type="text" placeholder="Customers data">
                                     </label>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="text-sm block" for="route">
                                         <span>Route</span>
-                                        <input name="data[route][]" class="s block" type="text" placeholder="customers">
+                                        <input name="data[route][]" class="s block w-full" type="text" placeholder="customers">
                                     </label>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="text-sm block" for="route_name">
                                         <span>Route Name</span>
-                                        <input name="data[route_name][]" class="s block" type="text" placeholder="customers.data">
+                                        <input name="data[route_name][]" class="s block w-full" type="text" placeholder="customers.data">
                                     </label>
                                 </div>
                                 {{--<div class="mb-3">
@@ -156,6 +169,18 @@
                                             <button type="button" onclick="removeList(this, {{ $loop->index }})" class="btn-xs"><svg class="oo sl du yl ub" viewBox="0 0 16 16"> <path d="M5 7h2v6H5V7zm4 0h2v6H9V7zm3-6v2h4v2h-1v10c0 .6-.4 1-1 1H2c-.6 0-1-.4-1-1V5H0V3h4V1c0-.6.4-1 1-1h6c.6 0 1 .4 1 1zM6 2v1h4V2H6zm7 3H3v9h10V5z"></path></svg></button>
                                             <div class="routeFormatBlock">
                                                 <input type="hidden" name="data[count][]">
+                                                <div class="mb-3">
+                                                    <label class="text-sm block">
+                                                        <span>Parent Route</span>
+                                                        {{ ($route->id)}}
+                                                        <select name="data[route_parent][]" id="" class="s block w-full">
+                                                            <option selected disabled>None</option>
+                                                            @if($route->child_id)
+                                                                <option value="{{ $route->id }}" {{ ($route->child_id == $route->id) ? 'selected' : '' }}>{{ $route->title }}</option>
+                                                            @endif
+                                                        </select>
+                                                    </label>
+                                                </div>
                                                 <div class="mb-3">
                                                     <label class="text-sm block" for="route_title">
                                                         <span>Route Title</span>
