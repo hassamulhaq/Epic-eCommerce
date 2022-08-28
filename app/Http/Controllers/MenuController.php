@@ -30,8 +30,9 @@ class MenuController extends Controller
     }
 
     protected function getSelectedMenuRoutes($menu_id) {
-        return Menu::where([
+        return Menu::with('childRoutes')->where([
             'parent_id' => $menu_id,
+            'child_id' => null,
             'menu_type' => Constant::MENU_TYPE['route']
         ])->get();
     }
@@ -63,7 +64,13 @@ class MenuController extends Controller
             try {
                 for ($i = 0; $i < count($request->input('data.count')); $i++) {
                     foreach ($request->except(['_token', 'action', 'selected_menu_id', 'menu_type', 'data.count']) as $dataVal) {
-                        Menu::create([
+                        Menu::updateOrCreate(
+                            [
+                                'id' => $dataVal['route_id'][$i],
+                                'parent_id' => $request->input('selected_menu_id'),
+                                'child_id' =>  $dataVal['child_id'][$i],
+                            ],
+                            [
                             'parent_id' => $request->input('selected_menu_id', null),
                             'child_id' =>  ($dataVal['route_parent'][$i] != 'None') ? $dataVal['route_parent'][$i] : null,
                             'menu_type' => $request->input('menu_type'),

@@ -15,7 +15,7 @@ class SidebarMenuViewComposer
             'child_id' => null,
             'menu_type' => \App\Helpers\Constant::MENU_TYPE['menu']
         ])
-            ->with('submenu.menuChildRoutes')
+            ->with('submenu.childRoutes')
             ->first();
 
         $view->with('dashboardMenu', $dashboardMenu);
