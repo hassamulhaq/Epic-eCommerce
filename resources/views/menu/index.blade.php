@@ -28,7 +28,7 @@
                                 <input type="hidden" name="data[count][]">
                                 <div class="mb-3">
                                     <label class="text-sm block">
-                                        <span>Route Parent (Choose parent if any)</span>
+                                        <span>Parent Route (if any)</span>
                                         <select name="data[route_parent][]" id="" class="s block w-full">
                                             <option selected>None</option>
                                             @foreach($selectedMenuRoutes as $route)
@@ -171,10 +171,9 @@
                                                 <input type="hidden" name="data[count][]">
                                                 <div class="mb-3">
                                                     <label class="text-sm block">
-                                                        <span>Parent Route</span>
-                                                        {{ ($route->id)}}
+                                                        <span>Parent Route (if any)</span>
                                                         <select name="data[route_parent][]" id="" class="s block w-full">
-                                                            <option selected disabled>None</option>
+                                                            <option selected>None</option>
                                                             @if($route->child_id)
                                                                 <option value="{{ $route->id }}" {{ ($route->child_id == $route->id) ? 'selected' : '' }}>{{ $route->title }}</option>
                                                             @endif
