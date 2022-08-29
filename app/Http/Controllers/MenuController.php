@@ -127,8 +127,15 @@ class MenuController extends Controller
         $request->validate([
             'selected_menu' => 'exists:menu,id'
         ]);
-        Menu::where('id', '=', $request->input('selected_menu'))->delete();
 
-        return redirect()->route('menu.index')->with(['success' => 'Menu Deleted']);
+        $res = [];
+        if ($request->input('selected_menu') == Constant::BACKEND_MENU['dashboard']) {
+            $res = ['error' => 'You cannot delete this menu.'];
+        } else {
+            Menu::where('id', '=', $request->input('selected_menu'))->delete();
+            $res = ['success' => 'Menu Deleted'];
+        }
+
+        return redirect()->route('menu.index')->with($res);
     }
 }
