@@ -39,16 +39,16 @@ class MenuController extends Controller
 
     public function create(Request $request)
     {
-        $request->validate([
-            'menu_title' => 'required_if:menu_type,==,'.Constant::MENU_TYPE['menu'].'|max:255',
-            'action' => 'required|string|max:20',
-            'menu_type' => 'required|int|max:2',
-            'selected_menu_id' => 'required_if:action,==,update'
-        ]);
-
+        \Session::pull('url', \request()->fullUrl());
         $res = [];
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['menu']) {
+            $request->validate([
+                'menu_title' => 'required_if:menu_type,==,'.Constant::MENU_TYPE['menu'].'|max:255',
+                'action' => 'required|string|max:20',
+                'menu_type' => 'required|int|max:2',
+                'selected_menu_id' => 'required_if:action,==,update'
+            ]);
             $menu = Menu::updateOrCreate(
                 ['id' => $request->input('selected_menu_id')],
                 ['menu_type' => $request->input('menu_type'), 'title' => $request->input('menu_title')]
@@ -59,14 +59,13 @@ class MenuController extends Controller
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['route']) {
             //Menu::where('parent_id', '=', $request->input('selected_menu_id'))->delete();
-
             $request->validate([
                 'action' => 'required|string|max:20',
                 'menu_type' => 'required|int|max:2',
                 'selected_menu_id' => 'required_if:action,==,update',
-                'data.route_id.*' => 'required|int',
-                'data.child_id.*' => 'sometimes',
-                'data.route_parent.*' => 'sometimes',
+                'data.route_id.*' => 'required|int|distinct',
+                'data.child_id.*' => 'sometimes|nullable|int',
+                'data.route_parent.*' => 'sometimes|nullable|int',
                 'data.route_title.*' => 'required|string|max:200',
                 'data.route.*' => 'required|string|max:250',
                 'data.route_name.*' => 'required|string|max:250',
@@ -103,7 +102,8 @@ class MenuController extends Controller
             }
         }
 
-        return redirect()->route('menu.index')->with($res);
+        $redirect_to = route('menu.index') . "?selected_menu={$request->input('selected_menu_id')}";
+        return redirect($redirect_to)->with($res);
     }
 
     public function store(Request $request)
