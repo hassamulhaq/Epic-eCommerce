@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->string('description', 500)->nullable();
             $table->timestamps();
 
-            $table->foreign('parent_id')->references('id')->on('menu')->nullOnDelete();
-            $table->foreign('child_id')->references('id')->on('menu')->nullOnDelete();
+            $table->foreign('parent_id')->references('id')->on('menu')->cascadeOnDelete();
+            $table->foreign('child_id')->references('id')->on('menu')->cascadeOnDelete();
         });
     }
 

@@ -109,11 +109,22 @@
             <div class="uw">
                     <!-- Panel body -->
                     <div class="d_ fd">
-                        <h4 class="text-slate-800 font-bold ii">
-                            Menu structure
-                            <span class="font-light">&nbsp;&nbsp;or</span>
-                            <small><a href="{{ route('menu.create') }}" class="font-light underline text-blue-600">create new menu</a>.</small>
-                        </h4>
+                        <div class="flex">
+                            <h4 class="text-slate-800 font-bold">
+                                Menu structure
+                            </h4>
+                            <span class="font-light">&nbsp;&nbsp;or&nbsp;&nbsp;</span>
+                            @if(\Request::get('selected_menu'))
+                                <form action="{{ route('menu.delete') }}" method="post" class="flex">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="selected_menu" value="{{ \Request::get('selected_menu') }}">
+                                    <button type="submit" class="font-light text-sm underline text-red-600">delete menu</button>
+                                </form>
+                                <span class="font-light">/</span>
+                            @endif
+                            <a href="{{ route('menu.create') }}" class="font-light text-sm underline text-blue-600">create new menu</a>
+                        </div>
                         <!-- Business Profile -->
                         <section>
                             <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">

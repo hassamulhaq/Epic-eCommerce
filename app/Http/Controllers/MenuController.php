@@ -54,7 +54,7 @@ class MenuController extends Controller
                 ['menu_type' => $request->input('menu_type'), 'title' => $request->input('menu_title')]
             );
 
-            $res = ($menu) ? ['success' => 'Menu created successfully!'] : ['error' => 'Menu not created'];
+            $res = ($menu) ? ['success' => 'succeed!'] : ['error' => 'Menu not created'];
         }
 
         if ($request->input('menu_type') == Constant::MENU_TYPE['route']) {
@@ -63,9 +63,9 @@ class MenuController extends Controller
                 'action' => 'required|string|max:20',
                 'menu_type' => 'required|int|max:2',
                 'selected_menu_id' => 'required_if:action,==,update',
-                'data.route_id.*' => 'required|int|distinct',
-                'data.child_id.*' => 'sometimes|nullable|int',
-                'data.route_parent.*' => 'sometimes|nullable|int',
+                'data.route_id.*' => 'sometimes|nullable',
+                'data.child_id.*' => 'sometimes|nullable',
+                'data.route_parent.*' => 'sometimes|nullable',
                 'data.route_title.*' => 'required|string|max:200',
                 'data.route.*' => 'required|string|max:250',
                 'data.route_name.*' => 'required|string|max:250',
@@ -95,7 +95,7 @@ class MenuController extends Controller
                     }
                 }
                 \DB::commit();
-                $res = ['success' => 'Route/s Created!'];
+                $res = ['success' => 'Task Succeed!'];
             } catch (\Exception $e) {
                 \DB::rollback();
                 $res = ['error' => $e->getMessage()];
@@ -122,7 +122,13 @@ class MenuController extends Controller
     {
     }
 
-    public function destroy(Menu $menu)
+    public function destroy(Request $request)
     {
+        $request->validate([
+            'selected_menu' => 'exists:menu,id'
+        ]);
+        Menu::where('id', '=', $request->input('selected_menu'))->delete();
+
+        return redirect()->route('menu.index')->with(['success' => 'Menu Deleted']);
     }
 }

@@ -41,7 +41,7 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
         Route::get('/{selected_menu?}', [MenuController::class, 'index'])->name('menu.index');
         Route::post('/create', [MenuController::class, 'create'])->name('menu.create');
         Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
-        Route::get('/delete', [MenuController::class, 'delete'])->name('menu.delete');
+        Route::delete('/delete', [MenuController::class, 'destroy'])->name('menu.delete');
     });
 
     Route::get('products', [ProductsController::class, 'index'])->name('products.index');
