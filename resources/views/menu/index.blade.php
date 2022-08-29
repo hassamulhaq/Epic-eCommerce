@@ -138,15 +138,7 @@
                                         <button type="submit" class="btn ho xi ye ml-3">{{ Request::get('selected_menu') ? 'Update Menu' : 'Add Menu' }}</button>
                                     </div>
                                 </div>
-                                @if ($errors->any())
-                                    <div class="text-red-600 text-sm">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+
                             </form>
                         </section>
 

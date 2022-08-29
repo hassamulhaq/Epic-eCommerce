@@ -92,10 +92,15 @@
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
-                    <svg class="oo sl ub du text-indigo-500 ie ra" viewBox="0 0 16 16">
-                        <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm1 12H7V7h2v5zM8 6c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z"></path>
+                    <svg class="oo sl ub du yl ie ra" viewBox="0 0 16 16">
+                        <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm3.5 10.1l-1.4 1.4L8 9.4l-2.1 2.1-1.4-1.4L6.6 8 4.5 5.9l1.4-1.4L8 6.6l2.1-2.1 1.4 1.4L9.4 8l2.1 2.1z"></path>
                     </svg>
-                    <div>{{ $message }}</div>
+                    {{--<div>{{ $message }}</div>--}}
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
                 <button class="bc x_ ml-3 ie" @click="open = false">
                     <div class="d">Close</div>
@@ -107,3 +112,13 @@
         </div>
     </div>
 @endif
+
+{{--@if ($errors->any())
+    <div class="text-red-600 text-sm">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif--}}
