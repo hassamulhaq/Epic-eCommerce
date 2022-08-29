@@ -44,7 +44,7 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
         Route::delete('/delete', [MenuController::class, 'destroy'])->name('menu.delete');
     });
 
-    Route::get('products', [ProductsController::class, 'index'])->name('products.index');
+    Route::get('product', [ProductsController::class, 'index'])->name('product.index');
 });
 
 
