@@ -14,3 +14,10 @@ ___
 
 
 #### Dynamic Menu [08/06/22]
+
+
+
+
+#### Check List
+- ❌ `https://ip.city/` (for analytics)
+- 
