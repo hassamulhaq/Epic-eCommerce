@@ -52,7 +52,7 @@
                             <ul class="pl-10 mt-2" :class="open ? '!block' : 'hidden'">
                             @foreach($route->childRoutes as $childRoutes)
                                 <li class="mb-1.5">
-                                    <a class="block w-full text-gray-400 hover:text-gray-600 wt {{ ($childRoutes->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}" href="{{ $childRoutes->route }}">
+                                    <a class="block w-full text-gray-400 hover:text-gray-600 wt {{ ($childRoutes->route_name == Route::currentRouteName()) ? 'text-indigo-500' : '' }}" href="{{ route($childRoutes->route_name) }}">
                                         <span class="text-sm gp ttw tnn 2xl:opacity--100 wr">{{ $childRoutes->title }}</span>
                                     </a>
                                 </li>

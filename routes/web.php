@@ -43,8 +43,20 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
         Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
         Route::delete('/delete', [MenuController::class, 'destroy'])->name('menu.delete');
     });
+    Route::get('/widgets', [DashboardController::class, 'index'])->name('widget.index');
 
-    Route::get('product', [ProductsController::class, 'index'])->name('product.index');
+    Route::group(['prefix' => '/products'], function () {
+        Route::get('/', [ProductsController::class, 'index'])->name('products.index');
+        Route::get('/create', [ProductsController::class, 'create'])->name('product.create');
+        Route::get('/store', [ProductsController::class, 'store'])->name('product.store');
+        Route::get('/show/{id}', [ProductsController::class, 'show'])->name('product.show');
+        Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('product.edit');
+        Route::get('/update', [ProductsController::class, 'update'])->name('product.update');
+        Route::get('/delete', [ProductsController::class, 'destroy'])->name('product.delete');
+
+        Route::get('/categories', [ProductsController::class, 'index'])->name('products.categories');
+        Route::get('/collections', [ProductsController::class, 'index'])->name('products.collections');
+    });
 });
 
 

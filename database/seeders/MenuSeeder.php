@@ -62,7 +62,7 @@ class MenuSeeder extends Seeder
                 'menu_type' => Constant::MENU_TYPE['route'],
                 'title' => 'Widgets',
                 'route' => 'widgets',
-                'route_name' => 'admin.widgets',
+                'route_name' => 'widget.index',
                 'icon_type' => 0,
                 'icon' => '',
             ],
@@ -71,11 +71,44 @@ class MenuSeeder extends Seeder
                 'parent_id' => 1,
                 'child_id' => null, // null = no child
                 'menu_type' => Constant::MENU_TYPE['route'],
-                'title' => 'Products',
-                'route' => 'product',
-                'route_name' => 'admin.product',
+                'title' => 'Catalog',
+                'route' => null,
+                'route_name' => null,
                 'icon_type' => 1,
                 'icon' => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du gq" d="M13 15l11-7L11.504.136a1 1 0 00-1.019.007L0 7l13 8z"></path><path class="du gz" d="M13 15L0 7v9c0 .355.189.685.496.864L13 24v-9z"></path><path class="du g_" d="M13 15.047V24l10.573-7.181A.999.999 0 0024 16V8l-11 7.047z"></path></svg>',
+            ],
+            [
+                'id' => 7,
+                'parent_id' => 1,
+                'child_id' => 6, // null = no child
+                'menu_type' => Constant::MENU_TYPE['route'],
+                'title' => 'Products',
+                'route' => 'products',
+                'route_name' => 'products.index',
+                'icon_type' => 0,
+                'icon' => null,
+            ],
+            [
+                'id' => 8,
+                'parent_id' => 1,
+                'child_id' => 6, // null = no child
+                'menu_type' => Constant::MENU_TYPE['route'],
+                'title' => 'Categories',
+                'route' => 'categories',
+                'route_name' => 'products.categories',
+                'icon_type' => 0,
+                'icon' => null,
+            ],
+            [
+                'id' => 9,
+                'parent_id' => 1,
+                'child_id' => 6, // null = no child
+                'menu_type' => Constant::MENU_TYPE['route'],
+                'title' => 'Collections',
+                'route' => 'collections',
+                'route_name' => 'products.collections',
+                'icon_type' => 0,
+                'icon' => null,
             ],
         ]);
     }
