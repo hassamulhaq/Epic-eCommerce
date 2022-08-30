@@ -33,7 +33,7 @@
         <div class="m w bg-slate-900 pu tb tex ted bz wr" :class="sidebarOpen ? 'ba' : 'opacity-0 pointer-events-none'" aria-hidden="true" x-cloak=""></div>
 
         <!-- Sidebar -->
-        <div id="sidebar" class="flex ak g tb x k tea tec teh tts ss lp tth l or tej ttz 2xl:!w-64 ub hs dw we wr wu"
+        <div id="sidebar" class="h-screen bg-white flex flex-col overflow-y-auto bg-gray-0 border-r border-grey-20 py-4 px-4 g tb x k tea tec teh tts lp tth l or tej ttz 2xl:!w-64 ub _hs we wr wu"
              :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'" @click.outside="sidebarOpen = false"
              @keydown.escape.window="sidebarOpen = false" x-cloak="lg">
 
