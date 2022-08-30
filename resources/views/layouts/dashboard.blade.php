@@ -48,7 +48,7 @@
                     </svg>
                 </button>
                 <!-- Logo -->
-                <a class="block" href="{{ route('admin.dashboard') }}">
+                <a class="block flex gap-2 items-center" href="{{ route('admin.dashboard') }}">
                     <svg width="32" height="32" viewBox="0 0 32 32">
                         <defs>
                             <linearGradient x1="28.538%" y1="20.229%" x2="100%" y2="108.156%" id="logo-a">
@@ -71,6 +71,7 @@
                             d="M2.223 24.14L29.777 7.86A15.926 15.926 0 0132 16c0 8.837-7.163 16-16 16-5.864 0-10.991-3.154-13.777-7.86z"
                             fill="url(#logo-b)"></path>
                     </svg>
+                    <span class="font-bold">Epic Ecommerce</span>
                 </a>
             </div>
             <!-- /Sidebar header -->
