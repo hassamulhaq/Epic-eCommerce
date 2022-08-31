@@ -102,7 +102,7 @@ class MenuController extends Controller
             }
         }
 
-        $redirect_to = route('menu.index') . "?selected_menu={$request->input('selected_menu_id')}";
+        $redirect_to = route('admin.menu.index') . "?selected_menu={$request->input('selected_menu_id')}";
         return redirect($redirect_to)->with($res);
     }
 
@@ -136,6 +136,6 @@ class MenuController extends Controller
             $res = ['success' => 'Menu Deleted'];
         }
 
-        return redirect()->route('menu.index')->with($res);
+        return redirect()->route('admin.menu.index')->with($res);
     }
 }
