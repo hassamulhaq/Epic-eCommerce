@@ -33,31 +33,38 @@ Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users'
 
 Route::get('/dashboard-preview/', [DashboardController::class, 'preview'])->name('previewdashboard');
 
-Route::group(['prefix'=>'admin', 'middleware' => 'auth'], function() {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+Route::prefix('admin')
+   ->name('admin.')
+   ->middleware('auth')
+   ->group(function () {
+       Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+       Route::get('/widgets', [DashboardController::class, 'index'])->name('widgets');
 
-    Route::group(['prefix' => 'menu'], function () {
-        Route::get('/{selected_menu?}', [MenuController::class, 'index'])->name('menu.index');
-        Route::post('/create', [MenuController::class, 'create'])->name('menu.create');
-        Route::get('/edit', [MenuController::class, 'edit'])->name('menu.edit');
-        Route::delete('/delete', [MenuController::class, 'destroy'])->name('menu.delete');
-    });
-    Route::get('/widgets', [DashboardController::class, 'index'])->name('widget.index');
+       Route::prefix('menu')
+           ->name('menu.')
+           ->group(function () {
+               Route::get('/{selected_menu?}', [MenuController::class, 'index'])->name('index');
+               Route::post('/create', [MenuController::class, 'create'])->name('create');
+               Route::get('/edit', [MenuController::class, 'edit'])->name('edit');
+               Route::delete('/delete', [MenuController::class, 'destroy'])->name('delete');
+           });
 
-    Route::group(['prefix' => '/products'], function () {
-        Route::get('/', [ProductsController::class, 'index'])->name('products.index');
-        Route::get('/create', [ProductsController::class, 'create'])->name('product.create');
-        Route::get('/store', [ProductsController::class, 'store'])->name('product.store');
-        Route::get('/show/{id}', [ProductsController::class, 'show'])->name('product.show');
-        Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('product.edit');
-        Route::get('/update', [ProductsController::class, 'update'])->name('product.update');
-        Route::get('/delete', [ProductsController::class, 'destroy'])->name('product.delete');
+       Route::prefix('products')
+           ->name('products.')
+           ->group(function () {
+               Route::get('/', [ProductsController::class, 'index'])->name('index');
+               Route::get('/create', [ProductsController::class, 'create'])->name('create');
+               Route::get('/store', [ProductsController::class, 'store'])->name('store');
+               Route::get('/show/{id}', [ProductsController::class, 'show'])->name('show');
+               Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('edit');
+               Route::get('/update', [ProductsController::class, 'update'])->name('update');
+               Route::get('/delete', [ProductsController::class, 'destroy'])->name('delete');
+           });
 
-        Route::get('/categories', [ProductsController::class, 'index'])->name('products.categories');
-        Route::get('/collections', [ProductsController::class, 'index'])->name('products.collections');
-    });
-});
+       Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
+       Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
+  });
 
 
 require __DIR__.'/auth.php';
