@@ -309,7 +309,7 @@
                 border: 1px solid #cecece;
                 border-radius: .25rem;
                 margin-bottom: 2px;
-                background-color: aliceblue;
+                background-color: #fcfcfc;
             }
             .routeListItem .routeFormatBlock {
                 display: flex;
@@ -338,17 +338,17 @@
 
     @push('js_after')
         <!-- will remove sortablejs cdn later -->
-        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+{{--        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>--}}
 
         <script>
-            new Sortable(routeListFetched, {
+/*            new Sortable(routeListFetched, {
                 animation: 150,
                 ghostClass: 'mint-background-class'
             })
             new Sortable(routeList, {
                 animation: 150,
                 ghostClass: 'mint-background-class'
-            })
+            })*/
 
 
             let itemNo = 0;
