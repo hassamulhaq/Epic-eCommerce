@@ -115,7 +115,7 @@
                             </h4>
                             <span class="font-light">&nbsp;&nbsp;or&nbsp;&nbsp;</span>
                             @if(\Request::get('selected_menu'))
-                                <form action="{{ route('menu.delete') }}" method="post" class="flex">
+                                <form action="{{ route('admin.menu.delete') }}" method="post" class="flex">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="selected_menu" value="{{ \Request::get('selected_menu') }}">
@@ -123,11 +123,11 @@
                                 </form>
                                 <span class="font-light">/</span>
                             @endif
-                            <a href="{{ route('menu.create') }}" class="font-light text-sm underline text-blue-600">create new menu</a>
+                            <a href="{{ route('admin.menu.create') }}" class="font-light text-sm underline text-blue-600">create new menu</a>
                         </div>
                         <!-- Business Profile -->
                         <section>
-                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form action="{{ route('admin.menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                                 @csrf
                                 <input type="hidden" name="action" value="{{ Request::get('selected_menu') ? 'update' : 'add' }}">
                                 <input type="hidden" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['menu'] }}">
@@ -159,7 +159,7 @@
                                 Routes
                                 ({{ (Request::get('selected_menu')) ? $current_menu->title : '' }})
                             </h3>
-                            <form action="{{ route('menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form action="{{ route('admin.menu.create') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                                 @csrf
                                 <input type="hidden" name="menu_type" value="{{ \App\Helpers\Constant::MENU_TYPE['route'] }}">
                                 <input type="hidden" name="action" value="{{ Request::get('selected_menu') ? 'update' : 'add' }}">
