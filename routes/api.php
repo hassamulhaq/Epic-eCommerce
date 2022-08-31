@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:sanctum'], function() {
-    Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
-});
+Route::prefix('v1')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+    });
