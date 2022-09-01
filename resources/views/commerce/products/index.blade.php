@@ -1,3 +1,4 @@
+{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
 @extends('layouts.dashboard')
 @section('content')
     <div class="mb-6">
@@ -183,3 +184,4 @@
         </div>
     </div>
 @endsection
+{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
