@@ -1,4 +1,4 @@
-{{-- https://github.com/hassamulhaq/epic-crm @devhassam --}}
+{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -132,3 +132,4 @@
 </script>
 </body>
 </html>
+{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
