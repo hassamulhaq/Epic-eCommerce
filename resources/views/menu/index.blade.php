@@ -30,7 +30,7 @@
                                 <input type="hidden" name="data[child_id][]">
                                 <div class="mb-3">
                                     <label class="text-sm block">
-                                        <span>Parent Route (if any)</span>
+                                        <span class="whitespace-nowrap">Parent Route (if any)</span>
                                         <select name="data[route_parent][]" id="" class="s block w-full">
                                             <option selected>None</option>
                                             @foreach($selectedMenuRoutes as $route)
@@ -106,7 +106,7 @@
             </div>
 
             <!-- Panel -->
-            <div class="uw">
+            <div class="uw overflow-x-auto">
                     <!-- Panel body -->
                     <div class="d_ fd">
                         <div class="flex">
@@ -168,7 +168,7 @@
 
                                 <ul id="routeListFetched" class="list-none block">
                                     @foreach($selectedMenuRoutes as $route)
-                                        <li id="routeListItemFetched-{{ $loop->index }}" class="routeListItem flex items-center {{ ($route->child_id) ? 'ml-4' : '' }}">
+                                        <li id="routeListItemFetched-{{ $loop->index }}" class="w-full routeListItem flex items-center {{ ($route->child_id) ? 'ml-4' : '' }}">
                                             <input type="hidden" name="data[count][]">
                                             <input type="hidden" name="data[route_id][]" value="{{ $route->id }}">
                                             {{--<input type="hidden" name="data[parent_id][]" value="{{ $route->parent_id }}">--}}
@@ -178,7 +178,7 @@
                                             <div class="routeFormatBlock">
                                                 <div class="mb-3">
                                                     <label class="text-sm block">
-                                                        <span>Parent Route (if any)</span>
+                                                        <span class="whitespace-nowrap">Parent Route (if any)</span>
                                                         <select name="data[route_parent][]" id="" class="s block w-full">
                                                             <option selected value="{{ $route->parentMenu->id ?? '' }}">{{ $route->parentMenu->title ?? 'None' }}</option>
                                                         </select>
@@ -231,7 +231,7 @@
                                                             <div class="routeFormatBlock">
                                                                 <div class="mb-3">
                                                                     <label class="text-sm block">
-                                                                        <span>Parent Route (if any)</span>
+                                                                        <span class="whitespace-nowrap">Parent Route (if any)</span>
                                                                         <select name="data[route_parent][]" id="" class="s block w-full">
                                                                             <option selected value="{{ $childRoutes->parentMenu->id ?? '' }}">{{ $childRoutes->parentMenu->title ?? 'None' }}</option>
                                                                         </select>
