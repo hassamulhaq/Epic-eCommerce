@@ -21,3 +21,4 @@ ___
 #### Check List
 - ❌ `https://ip.city/` (for analytics)
 - ❌ `https://www.tiny.cloud/` (rich text editor)
+- ❌ `https://github.com/artesaos/seotools` (Laravel SEO)
