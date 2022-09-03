@@ -28,3 +28,4 @@ ___
 
 #### Resources
 - ✅ `https://github.com/opcodesio/log-viewer` (log viewer)
+- ✅ `https://github.com/barryvdh/laravel-ide-helper` (IDE helper)
