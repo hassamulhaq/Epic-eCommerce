@@ -22,3 +22,9 @@ ___
 - ❌ `https://ip.city/` (for analytics)
 - ❌ `https://www.tiny.cloud/` (rich text editor)
 - ❌ `https://github.com/artesaos/seotools` (Laravel SEO)
+
+---
+
+
+#### Resources
+- ✅ `https://github.com/opcodesio/log-viewer` (log viewer)
