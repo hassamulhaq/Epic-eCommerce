@@ -1,43 +1,78 @@
 {{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
 @extends('layouts.dashboard')
 @section('content')
-    <div class="mb-6">
-        <!-- Title -->
-        <div class="sm:flex items-center justify-between mb-2">
+    <form action="" method="post" enctype="multipart/form-data">
+        @csrf
 
-            <!-- Left: Title -->
-            <div class="ri _y">
-                <h3 class="gu text-slate-800 font-bold">Create New Product</h3>
+        <div class="lg:flex gap-3 mb-3">
+            <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">General</h1>
+                    <span class="text-xs">To start selling, all you need is a name, price, and image</span>
+                </div>
+                <div class="mb-2">
+                    <label for="name" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
+                    <input type="text" id="name" name="name" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-3">
+                    <label for="slug" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Slug</label>
+                    <input type="text" id="slug" name="slug" class="block sm:text-xs p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-3">
+                    <label for="short_description" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-400">Short Description</label>
+                    <textarea id="short_description" name="short_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Short description of the product..."></textarea>
+                </div>
             </div>
-
-            <!-- Right: Actions -->
-            <div class="flex gap-2 justify-self-end">
-                <!-- Search form -->
-                <form method="get" action="" class="relative">
-                    <label for="action-search" class="d">Search</label>
-                    <input id="action-search" name="query" class="w-full rounded shadow-sm border border-gray-200 py-1.5 pl-10 pr-2.5 text-base text-slate-500 placeholder:text-slate-500" type="search" placeholder="Search by product">
-                    <button class="w-10 absolute right-0 left-0 top-0 bottom-0 float-left" type="submit" aria-label="Search">
-                        <svg class="w-4 h-4 fill-gray-400  ml-3 mr-2" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"></path>
-                            <path d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z"></path>
-                        </svg>
-                    </button>
-                </form>
-                <!-- Create product button -->
-                <a href="{{ route('admin.products.create') }}" class="btn ho xi ye">
-                    <svg class="oo sl du bf ub" viewBox="0 0 16 16">
-                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
-                    </svg>
-                    <span class="hidden trm nq">Create Product</span>
-                </a>
+            <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-2">
+                    <label for="collection" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Collection</label>
+                    <input type="text" id="collection" name="collection" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-2">
+                    <label for="category" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Type</label>
+                    <input type="text" id="category" name="category" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-2">
+                    <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (separated by comma)</label>
+                    <input type="text" id="tags" name="tags" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
             </div>
-
         </div>
-    </div>
-    <div class="bg-white bd rounded-sm mb-3">
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg pb-6">
 
+        <div class="lg:flex gap-3 mb-3">
+            <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">Variants</h1>
+                    <span class="text-xs">Add variations of this product. Offer your customers different options for price, color, format, size, shape, etc.</span>
+                </div>
+                <div class="mb-2">
+                    <label for="name" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
+                    <input type="text" id="name" name="name" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-3">
+                    <label for="slug" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Slug</label>
+                    <input type="text" id="slug" name="slug" class="block sm:text-xs p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                </div>
+                <div class="mb-3">
+                    <label for="short_description" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-400">Short Description</label>
+                    <textarea id="short_description" name="short_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Short description of the product..."></textarea>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">Images</h1>
+                    <span class="text-xs">Add images to your product</span>
+                </div>
+                <div class="mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="thumbnail">Thumbnail</label>
+                    <input type="file" aria-describedby="thumbnail" id="thumbnail" name="thumbnail" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                </div>
+                <div class="mb-2">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="gallery">Gallery</label>
+                    <input type="file" multiple aria-describedby="gallery" id="gallery" name="gallery" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
 @endsection
 {{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
