@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
     @stack('css_after')
 </head>
@@ -119,12 +119,12 @@
 
 {{--<script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>--}}
 <script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
-<script src="{{ asset('/js/ui/vendors/chart.js') }}"></script>
-<script src="{{ asset('/js/ui/vendors/moment.js') }}"></script>
-<script src="{{ asset('/js/ui/vendors/chartjs-adapter-moment.js') }}"></script>
-<script src="{{ asset('/js/ui/dashboard-charts.js') }}"></script>
-<script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>
-<script src="{{ asset('/js/ui/flatpickr-init.js') }}"></script>
+{{--<script src="{{ asset('/js/ui/vendors/chart.js') }}"></script>--}}
+{{--<script src="{{ asset('/js/ui/vendors/moment.js') }}"></script>--}}
+{{--<script src="{{ asset('/js/ui/vendors/chartjs-adapter-moment.js') }}"></script>--}}
+{{--<script src="{{ asset('/js/ui/dashboard-charts.js') }}"></script>--}}
+{{--<script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>--}}
+{{--<script src="{{ asset('/js/ui/flatpickr-init.js') }}"></script>--}}
 @stack('js_after')
 
 <script>
