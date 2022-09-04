@@ -2,7 +2,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="{{ route('admin.products.store') }}" method="post" id="product_create" enctype="multipart/form-data" class="dropzone" autocomplete="off">
+    <form action="{{ route('admin.products.store') }}" method="post" id="product_create" enctype="multipart/form-data" class="" autocomplete="off">
         @csrf
         <input type="hidden" name="status" value="draft">
 
@@ -236,9 +236,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
-                    <form action="" method="" id="dropzone_media_form" class="dropzone" enctype="multipart/form-data">
-
-                    </form>
+                    <form action="" method="post" id="dropzone_media_form" class="dropzone" enctype="multipart/form-data"></form>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
@@ -251,7 +249,7 @@
 
 
 @push('before-body')
-    <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/basic.css") }}">
+    <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/dropzone.css") }}">
     <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
 @endpush
 
@@ -267,7 +265,12 @@
 
 
     let dropzone = new Dropzone("#dropzone_media_form", {
-        url: "{{ route('admin.upload-media') }}"
+        url: "{{ route('admin.upload-media') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        maxFiles: 5,
+        acceptedFiles: ".jpeg,jpg,.png"
     });
 
 

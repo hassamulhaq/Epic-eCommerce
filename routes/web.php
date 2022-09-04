@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\MenuController;
 use \App\Http\Controllers\ProductsController;
+use \App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +66,7 @@ Route::prefix('admin')
        Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
        Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
 
-       Route::post('upload-media')->name('upload-media');
+       Route::post('upload-media', MediaController::class)->name('upload-media');
   });
 
 
