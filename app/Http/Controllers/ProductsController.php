@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class ProductsController extends Controller
     public function create()
     {
         $collections = Collection::all(['id', 'name']);
-        return view('commerce.products.create', compact('collections'));
+        $categories = Category::all(['id', 'name']);
+        return view('commerce.products.create', compact(['collections', 'categories']));
     }
 
     public function store(Request $request)
@@ -38,4 +40,6 @@ class ProductsController extends Controller
     public function destroy(Product $product)
     {
     }
+
+
 }

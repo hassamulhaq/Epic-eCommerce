@@ -4,6 +4,7 @@
 @section('content')
     <form action="" method="post" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="status" value="draft">
 
         <div class="lg:flex gap-3 mb-3">
             <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
@@ -11,60 +12,55 @@
                     <h1 class="text-2xl text-grey-90">General</h1>
                     <span class="text-xs">To start selling, all you need is a name, price, and image</span>
                 </div>
-                <div class="mb-2">
-                    <label for="name" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
-                    <input type="text" id="name" name="name" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                <div class="relative mb-3">
+                    <input type="text" id="name" name="name" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                    <label for="name"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Name</label>
                 </div>
-                <div class="mb-3">
-                    <label for="slug" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Slug</label>
-                    <input type="text" id="slug" name="slug" class="block sm:text-xs p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                <div class="relative mb-3">
+                    <input type="text" name="slug" id="slug" class="block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                    <label for="slug" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">Slug</label>
                 </div>
-                <div class="mb-3">
-                    <label for="short_description" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-400">Short Description</label>
-                    <textarea id="short_description" name="short_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Short description of the product..."></textarea>
+                <div class="relative mb-3">
+                    <textarea id="short_description" name="short_description" rows="4" class="block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" "></textarea>
+                    <label for="short_description" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/4 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">Short Description</label>
                 </div>
             </div>
             <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
-                <div class="mb-2">
+                <div class="mb-4">
                     <label for="collection" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Collections</label>
-                    <select name="collections[]" id="collections" multiple="multiple" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-indigo-500">
+                    <select name="collections[]" id="collections" multiple="multiple" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         @if($collections)
                             @foreach($collections as $collection)
                                 <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                             @endforeach
                         @endif
                     </select>
-
                 </div>
-                <div class="mb-2">
+                <div class="mb-4">
                     <label for="category" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Type</label>
-                    <input type="text" id="category" name="category" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                    <select name="category" id="category" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                        @if($categories)
+                            @foreach($categories as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
-                <div class="mb-2">
+                <div class="mb-4">
                     <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (separated by comma)</label>
                     <input type="text" id="tags" name="tags" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                 </div>
             </div>
         </div>
 
+        <!-- Variants -->
         <div class="lg:flex gap-3 mb-3">
             <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
                 <div class="mb-6">
                     <h1 class="text-2xl text-grey-90">Variants</h1>
                     <span class="text-xs">Add variations of this product. Offer your customers different options for price, color, format, size, shape, etc.</span>
                 </div>
-                <div class="mb-2">
-                    <label for="name" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
-                    <input type="text" id="name" name="name" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                </div>
-                <div class="mb-3">
-                    <label for="slug" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Slug</label>
-                    <input type="text" id="slug" name="slug" class="block sm:text-xs p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
-                </div>
-                <div class="mb-3">
-                    <label for="short_description" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-400">Short Description</label>
-                    <textarea id="short_description" name="short_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Short description of the product..."></textarea>
-                </div>
+
             </div>
             <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
                 <div class="mb-6">
@@ -81,6 +77,142 @@
                 </div>
             </div>
         </div>
+        <!-- END Variants -->
+
+        <!-- Stock & Inventory -->
+        <div class="lg:flex gap-3 mb-3">
+            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">Stock & Inventory</h1>
+                    <span class="text-xs">To start selling, all you need is a name, price, and image</span>
+                </div>
+                <div class=""><h6 class="inter-base-semibold text-grey-90 mr-1.5">General & Shipping</h6></div>
+                <div class="flex flex-col mb-2 mt-2">
+                    <div class="md:flex lg:flex md:flex-1 lg:flex-1 md:gap-x-8 lg:gap-x-8">
+                        <div class="flex-1 grid grid-cols-2 gap-x-2 gap-y-4 mb-2.5 mt-2.5">
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="length" name="dimensions[length]" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="length"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Length</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="width" name="dimensions[width]" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="width"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Width</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="height" name="dimensions[height]" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="height" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Height</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="weight" name="weight" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="weight" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Weight (grams)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 grid grid-cols-2 gap-x-2 gap-y-4 mb-2.5 mt-2.5">
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="width" name="sku" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="sku" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">SKU</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="text" id="mid_code" name="mid_code" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="mid_code"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">MID Code</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="number" id="price" name="price" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="price" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Price</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="number" id="regular_price" name="regular_price" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="regular_price" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Regular Price</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=""><h6 class="inter-base-semibold text-grey-90 mr-1.5">Stock</h6></div> <!-- Stock -->
+                <div class="flex flex-col mb-2 mt-2">
+                    <div class="md:flex lg:flex md:flex-1 lg:flex-1 md:gap-x-8 lg:gap-x-8">
+                        <div class="flex-1 grid lg:grid-cols-5 gap-2" x-data="{ open: false }">
+                            <div class="block h-12 px-2.5 pb-2.5 pt-4 w-full rounded-lg border border-1 border-gray-300 appearance-none dark:border-gray-600">
+                                <input id="manage_stock" type="checkbox" x-on:change="open = ! open" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="manage_stock" class="py-3 ml-2 w-full text-sm text-gray-500 dark:text-gray-300">Manage Stock</label>
+                            </div>
+                            <div class="relative mb-3" x-show="open">
+                                <input type="number" id="stock_quantity" name="stock_quantity" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                <label for="stock_quantity" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Stock Quantity</label>
+                            </div>
+                            <div class="relative mb-3" x-show="open">
+                                <select name="backorders" id="backorders" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-indigo-500">
+                                    <option value="no" selected="selected">Do not allow</option>
+                                    <option value="notify">Allow, but notify customer</option>
+                                    <option value="yes">Allow</option>
+                                </select>
+                                <label for="backorders" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Allow backorders?</label>
+                            </div>
+                            <div class="relative mb-3" x-show="open">
+                                <input type="number" id="low_stock_amount" name="low_stock_amount" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" " />
+                                <label for="low_stock_amount" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Low stock threshold</label>
+                            </div>
+
+                            <div class="relative mb-3">
+                                <select name="stock_status" id="stock_status" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-indigo-500">
+                                    <option value="instock" selected="selected">In stock</option>
+                                    <option value="outofstock">Out of stock</option>
+                                    <option value="onbackorder">On backorder</option>
+                                </select>
+                                <label for="stock_status" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Allow backorders?</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Stock & Inventory -->
+
+        <!-- Description -->
+        <div class="lg:flex gap-3 mb-3">
+            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">Description</h1>
+                    <span class="text-xs">Detail about product</span>
+                </div>
+                <div class="mb-2 mt-2">
+                    <div class="relative mb-3">
+                        <textarea id="description" name="description" rows="10" class="block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:ring-0 focus:border-indigo-600 peer" placeholder=" "></textarea>
+                        <label for="description" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/4 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">Description</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Stock & Inventory -->
+
+        <!-- submit -->
+        <div class="lg:flex gap-3 mb-3">
+            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+                <div class="mb-6">
+                    <h1 class="text-2xl text-grey-90">Publish/Draft</h1>
+                </div>
+                <div class="mb-2 mt-2">
+                    <input type="submit" value="Publish" class="flex items-center justify-center bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-indigo-50 text-white font-semibold h-12 px-6 rounded-lg w-full sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
+                </div>
+            </div>
+        </div>
+        <!-- submit -->
     </form>
 
 
