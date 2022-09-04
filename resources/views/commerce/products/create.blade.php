@@ -2,7 +2,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.products.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="status" value="draft">
 

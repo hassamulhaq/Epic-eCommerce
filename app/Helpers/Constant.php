@@ -12,4 +12,10 @@ class Constant
     const BACKEND_MENU = [
         'dashboard' => 1
     ];
+
+    const POST_STATUS = [
+        'draft' => 0,
+        'published' => 1,
+        'trashed' => 2
+    ];
 }

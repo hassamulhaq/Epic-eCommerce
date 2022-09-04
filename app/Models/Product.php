@@ -20,4 +20,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Product extends Model
 {
+
+    //protected $casts = [];
+
+    protected $fillable = [
+        'id',
+        'name',
+        'slug',
+        'short_description',
+        'category_id',
+        'tags',
+        'length',
+        'width',
+        'height',
+        'weight',
+        'sku',
+        'mid_code',
+        'price',
+        'regular_price',
+        'stock_quantity',
+        'backorders',
+        'low_stock_amount',
+        'stock_status',
+        'description',
+    ];
 }
