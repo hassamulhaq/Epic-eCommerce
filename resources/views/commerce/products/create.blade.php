@@ -71,14 +71,10 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="thumbnail">Thumbnail</label>
                     <input type="file" aria-describedby="thumbnail" id="thumbnail" name="thumbnail" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 </div>
-                <div class="mb-2">
-                    <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="defaultModal">
-                        Toggle modal
+                <div class="mt-4 mb-2">
+                    <button type="button" data-modal-toggle="defaultModal" class="text-sm px-5 py-2.5 text-center block w-full text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        Upload Gallery
                     </button>
-                </div>
-                <div class="mb-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="gallery">Gallery</label>
-                    <input type="file" multiple aria-describedby="gallery" id="gallery" name="gallery" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 </div>
             </div>
         </div>
@@ -154,7 +150,7 @@
                     <div class="md:flex lg:flex md:flex-1 lg:flex-1 md:gap-x-8 lg:gap-x-8">
                         <div class="flex-1 grid lg:grid-cols-5 gap-2" x-data="{ open: false }">
                             <div class="block h-12 px-2.5 pb-2.5 pt-4 w-full rounded-lg border border-1 border-gray-300 appearance-none dark:border-gray-600">
-                                <input id="manage_stock" type="checkbox" x-on:change="open = ! open" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <input id="manage_stock" type="checkbox" x-on:change="open = ! open" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                 <label for="manage_stock" class="py-3 ml-2 w-full text-sm text-gray-500 dark:text-gray-300">Manage Stock</label>
                             </div>
                             <div class="relative mb-3" x-show="open">
@@ -162,7 +158,7 @@
                                 <label for="stock_quantity" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Stock Quantity</label>
                             </div>
                             <div class="relative mb-3" x-show="open">
-                                <select name="backorders" id="backorders" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-indigo-500">
+                                <select name="backorders" id="backorders" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                                     <option value="no" selected="selected">Do not allow</option>
                                     <option value="notify">Allow, but notify customer</option>
                                     <option value="yes">Allow</option>
@@ -175,7 +171,7 @@
                             </div>
 
                             <div class="relative mb-3">
-                                <select name="stock_status" id="stock_status" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-indigo-500">
+                                <select name="stock_status" id="stock_status" class="w-full px-2.5 pb-2.5 pt-4 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                                     <option value="instock" selected="selected">In stock</option>
                                     <option value="outofstock">Out of stock</option>
                                     <option value="onbackorder">On backorder</option>
@@ -246,8 +242,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="defaultModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                    <button data-modal-toggle="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+
                 </div>
             </div>
         </div>
