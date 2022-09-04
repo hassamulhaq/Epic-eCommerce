@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
+import Dropzone from "dropzone";
+
 export default defineConfig({
     plugins: [
         laravel({

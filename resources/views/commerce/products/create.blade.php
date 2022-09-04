@@ -267,6 +267,8 @@
 {{--    @vite(['resources/js/app.js']);--}}
 <script>
 
+    import Dropzone from "dropzone/dist/dropzone";
+
     $('.select2').select2({
         placeholder: "Select Collection/s",
         allowClear: true
