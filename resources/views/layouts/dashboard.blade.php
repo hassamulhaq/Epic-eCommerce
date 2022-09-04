@@ -123,6 +123,7 @@
 <script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>
 <script src="{{ asset('/plugins/select2@4.1.0/select2.min.js') }}"></script>
 <script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
+<script src="{{ asset('/plugins/flowbite@1.5.3/flowbite.js') }}"></script>
 {{--<script src="{{ asset('/js/ui/vendors/chart.js') }}"></script>--}}
 {{--<script src="{{ asset('/js/ui/vendors/moment.js') }}"></script>--}}
 {{--<script src="{{ asset('/js/ui/vendors/chartjs-adapter-moment.js') }}"></script>--}}
