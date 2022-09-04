@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('/plugins/select2@4.1.0/select2.min.css') }}" rel="stylesheet" />
 
     @stack('css_after')
     @stack('before-body')
@@ -121,9 +121,8 @@
 </div>
 
 <script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ asset('/plugins/select2@4.1.0/select2.min.js') }}"></script>
 <script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
-
 {{--<script src="{{ asset('/js/ui/vendors/chart.js') }}"></script>--}}
 {{--<script src="{{ asset('/js/ui/vendors/moment.js') }}"></script>--}}
 {{--<script src="{{ asset('/js/ui/vendors/chartjs-adapter-moment.js') }}"></script>--}}
