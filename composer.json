@@ -11,7 +11,8 @@
         "laravel/framework": "^v9.27.0",
         "laravel/sanctum": "^v3.0.1",
         "laravel/tinker": "^2.7.2",
-        "opcodesio/log-viewer": "^1.2.8"
+        "opcodesio/log-viewer": "^1.2.8",
+        "spatie/laravel-medialibrary": "10.4.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12.3",

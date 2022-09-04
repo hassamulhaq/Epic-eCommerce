@@ -24,7 +24,7 @@ class ProductService
                 'id' => $request->input('id')
             ], [
                 'name' => $request->input('name'),
-                'slug' => $request->input('slug'),
+                'slug' => \Str::slug($request->input('slug', \Str::slug($request->input('name')))),
                 'short_description' => $request->input('short_description'),
                 'category' => $request->input('category'),
                 'tags' => $request->input('tags'),

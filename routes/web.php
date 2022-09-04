@@ -64,6 +64,8 @@ Route::prefix('admin')
 
        Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
        Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
+
+       Route::post('upload-media')->name('upload-media');
   });
 
 

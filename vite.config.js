@@ -25,6 +25,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '$': 'jQuery',
+            'Dropzone': 'Dropzone'
             //'select2': 'select2'
         },
     },
