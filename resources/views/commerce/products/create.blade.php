@@ -272,9 +272,9 @@
         allowClear: true
     });
 
-    let dropzone = new Dropzone("#product_create", {
-        url: "{{ route('admin.upload-media') }}"
-    });
+    {{--let dropzone = new Dropzone("#product_create", {--}}
+    {{--    url: "{{ route('admin.upload-media') }}"--}}
+    {{--});--}}
 
 
 
