@@ -2,7 +2,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="{{ route('admin.products.store') }}" method="post" id="product_create" enctype="multipart/form-data" class="" autocomplete="off">
+    <form action="{{ route('admin.products.store') }}" method="post" id="product_create_form" enctype="multipart/form-data" class="" autocomplete="off">
         @csrf
         <input type="hidden" name="status" value="draft">
 
@@ -72,7 +72,8 @@
                     <input type="file" aria-describedby="thumbnail" id="thumbnail" name="thumbnail" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 </div>
                 <div class="mt-4 mb-2">
-                    <button type="button" data-modal-toggle="defaultModal" class="text-sm px-5 py-2.5 text-center block w-full text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                    <!-- #MultiMediaDropzoneModal is in component media-form-multiple-dropzone -->
+                    <button type="button" data-modal-toggle="MultiMediaDropzoneModal" class="text-sm px-5 py-2.5 text-center block w-full text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         Upload Gallery
                     </button>
                 </div>
@@ -214,12 +215,13 @@
             </div>
         </div>
         <!-- submit -->
+        <input type="text" name="id" value="18">
     </form>
 
 
 
 
-    <!-- Main modal -->
+{{--    <!-- Main modal -->
     <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
             <!-- Modal content -->
@@ -244,38 +246,98 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
+
+    <x-media-form-multiple-dropzone>
+        <x-slot:header_title>Upload Product Media</x-slot:header_title>
+        <x-slot name="">
+            <script>
+                alert()
+            </script>
+        </x-slot>
+    </x-media-form-multiple-dropzone>
 
 
 
-@push('before-body')
-    <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/dropzone.css") }}">
-    <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
-@endpush
+
 
 
 @push('js_after')
-{{--    @vite(['resources/js/app.js']);--}}
-<script>
+    <script>
 
-    $('.select2').select2({
-        placeholder: "Select Collection/s",
-        allowClear: true
+        $('.select2').select2({
+            placeholder: "Select Collection/s",
+            allowClear: true
+        });
+
+
+        {{--let dropzone = new Dropzone("#media_form_multiple_dropzone", {--}}
+        {{--    url: "{{ route('admin.upload-media') }}",--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--        },--}}
+        {{--    maxFiles: 5,--}}
+        {{--    maxFilesize: 10,--}}
+        {{--    uploadMultiple: true,--}}
+        {{--    //autoProcessQueue:false,--}}
+        {{--    acceptedFiles: ".jpeg,jpg,.png",--}}
+        {{--    addRemoveLinks: true--}}
+        {{--});--}}
+
+
+    const $product_create_form = $('#product_create_form');
+    const url = $product_create_form.attr('action');
+    const method = $product_create_form.attr('method');
+
+    $product_create_form.on('submit', function (e) {
+        e.preventDefault();
+
+        sendAjaxRequest();
+
     });
 
+    // let typingTimer;                //timer identifier
+    // const doneTypingInterval = 3000;  //time in ms, 5 seconds for example
+    // const $input = $('input[type=text]');
+    // $input.on('keyup', function () {
+    //     clearTimeout(typingTimer);
+    //     typingTimer = setTimeout(sendAjaxRequest, doneTypingInterval);
+    // });
 
-    let dropzone = new Dropzone("#dropzone_media_form", {
-        url: "{{ route('admin.upload-media') }}",
+    function sendAjaxRequest () {
+        $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-        maxFiles: 5,
-        acceptedFiles: ".jpeg,jpg,.png"
-    });
+        })
+
+        const jqxhr = $.ajax({
+            url: url,
+            method: method,
+            data: $product_create_form.serialize(),
+            dataType: "html"
+        });
+        jqxhr.done(function(response) {
+            console.log(response)
+        })
+        jqxhr.fail(function(response) {
+            console.log(response)
+        })
+        jqxhr.always(function(response) {
+            console.log(response)
+        });
+
+        // Perform other work here ...
+
+        // Set another completion function for the request above
+        jqxhr.always(function() {
+            //alert( "second complete" );
+        });
+    }
 
 
 
-</script>
+    </script>
 @endpush
 
 @endsection

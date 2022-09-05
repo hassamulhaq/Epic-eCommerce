@@ -9,12 +9,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>
+
     <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
     <link href="{{ asset('/plugins/select2@4.1.0/select2.min.css') }}" rel="stylesheet" />
 
     @stack('css_after')
-    @stack('before-body')
+    @stack('before_body')
 </head>
 
 <body class="gs bs hi g_" :class="{ 'sidebar-expanded': sidebarExpanded }"
@@ -121,7 +123,6 @@
 
 </div>
 
-<script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>
 <script src="{{ asset('/plugins/select2@4.1.0/select2.min.js') }}"></script>
 <script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
 <script src="{{ asset('/plugins/flowbite@1.5.3/flowbite.js') }}"></script>
@@ -135,6 +136,11 @@
 
 <script>
     console.log("%cImportant!", "color: blue; font-size: x-large");
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    })
 </script>
 </body>
 </html>
