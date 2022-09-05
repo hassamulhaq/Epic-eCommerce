@@ -135,7 +135,7 @@
 @stack('js_after')
 
 <script>
-    console.log("%cImportant!", "color: blue; font-size: x-large");
+    /*console.log("%cImportant!", "color: blue; font-size: x-large");*/
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

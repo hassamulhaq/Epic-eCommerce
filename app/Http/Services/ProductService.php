@@ -20,7 +20,7 @@ class ProductService
     {
         \DB::beginTransaction();
         try {
-            Product::updateOrCreate([
+            $product = Product::updateOrCreate([
                 'id' => $request->input('id')
             ], [
                 'name' => $request->input('name'),
@@ -43,6 +43,12 @@ class ProductService
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
             ]);
+
+            // move media
+            foreach ($request->input('gallery', []) as $file) {
+                $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('gallery');
+            }
+
             \DB::commit();
             $this->response = [
                 'status' => 'success',
