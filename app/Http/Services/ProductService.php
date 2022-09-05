@@ -44,12 +44,15 @@ class ProductService
                 'status' => $request->input('status'),
             ]);
 
-            // thumbnail
-            $product->addMedia(storage_path('tmp/uploads/' . $request->input('thumbnail')))->toMediaCollection('thumbnail');
+            if ($request->has('thumbnail')) {
+                $product->addMedia(storage_path('tmp/uploads/' . $request->input('thumbnail')))->toMediaCollection('thumbnail');
+            }
 
             // move media
-            foreach ($request->input('gallery', []) as $file) {
-                $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('gallery');
+            if ($request->has('gallery')) {
+                foreach ($request->input('gallery', []) as $file) {
+                    $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('gallery');
+                }
             }
 
             \DB::commit();
