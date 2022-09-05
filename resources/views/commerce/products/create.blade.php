@@ -219,6 +219,7 @@
 
     <!-- dropzone form modal -->
     <x-media-form-multiple-dropzone />
+    <x-media-form-single-dropzone />
 
 
 
