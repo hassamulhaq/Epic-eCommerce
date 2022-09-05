@@ -67,9 +67,11 @@
                     <h1 class="text-2xl text-grey-90">Media</h1>
                     <span class="text-xs">Add images to your product</span>
                 </div>
-                <div class="mb-2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="thumbnail">Thumbnail</label>
-                    <input type="file" aria-describedby="thumbnail" id="thumbnail" name="thumbnail" class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <div class="mt-4 mb-2">
+                    <!-- #singleMediaDropzoneModal is in component media-form-single-dropzone -->
+                    <button type="button" data-modal-toggle="singleMediaDropzoneModal" class="text-sm px-5 py-2.5 text-center block w-full text-gray-700 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        Thumbnail
+                    </button>
                 </div>
                 <div class="mt-4 mb-2">
                     <!-- #MultiMediaDropzoneModal is in component media-form-multiple-dropzone -->
@@ -373,6 +375,84 @@
                 document.getElementById("dropzone-form").submit();
             }
         });
+        // multiple
+
+
+        // single
+        const singleDropzone = new Dropzone("#mediaFormSingleDropzone", {
+            url: "{{ route('admin.upload-media') }}",
+            method: "POST",
+            paramName: "files",
+            autoProcessQueue: false,
+            acceptedFiles: "image/*",
+            maxFiles: 1,
+            maxFilesize: allowMaxFilesize, // MB
+            uploadMultiple: false,
+            parallelUploads: 100, // use it with uploadMultiple
+            createImageThumbnails: true,
+            thumbnailWidth: 120,
+            thumbnailHeight: 120,
+            addRemoveLinks: true,
+            timeout: 180000,
+            dictRemoveFileConfirmation: "Are you Sure?", // ask before removing file
+            // Language Strings
+            dictFileTooBig: `File is to big. Max allowed file size is ${allowMaxFilesize}mb`,
+            dictInvalidFileType: "Invalid File Type",
+            dictCancelUpload: "Cancel",
+            dictRemoveFile: "Remove",
+            dictMaxFilesExceeded: `Only ${allowMaxFiles} files are allowed`,
+            dictDefaultMessage: "Drop files here to upload",
+        });
+
+        singleDropzone.on("addedfile", function(file) {
+            //console.log(file);
+        });
+
+        singleDropzone.on("removedfile", function(file) {
+            // console.log(file);
+        });
+
+        // Add more data to send along with the file as POST data. (optional)
+        /*myDropzone.on("sending", function(file, xhr, formData) {
+            formData.append("dropzone", "1"); // $_POST["dropzone"]
+            formData.append("productId", "10"); // $_POST["productId"]
+        });*/
+
+        singleDropzone.on("error", function(file, response) {
+            console.log(response);
+        });
+
+        // on success
+        singleDropzone.on("successmultiple", function(file, response) {
+            // get response from successful ajax request
+            // response includes what you you return from php side
+            console.log(response);
+            $.each(response, function( key, value ) {
+                $product_create_form.append('<input type="text" name="gallery[]" value="'+value.name+'">')
+            });
+
+            /* submit the form after images upload
+            (if u want to submit rest of the inputs in the form)
+            I have no other inputs so, I commented below line. */
+            //document.getElementById("mediaFormMultipleDropzone").submit();
+        });
+
+        // button trigger for processingQueue
+        const submitSingleDropzone = document.getElementById("submit-single-dropzone");
+        submitSingleDropzone.addEventListener("click", function(e) {
+            // Make sure that the form isn't actually being sent.
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (singleDropzone.files !== "") {
+                // console.log(myDropzone.files);
+                singleDropzone.processQueue();
+            } else {
+                // if no file submit the form
+                document.getElementById("dropzone-form").submit();
+            }
+        });
+        // single
     </script>
 @endpush
 

@@ -18,14 +18,21 @@ class MediaController extends Controller
         }
 
         $files = $request->file('files');
-        foreach($files as $index => $file) {
-            $name = uniqid() . '_' . trim($file->getClientOriginalName());
-            $file->move($path, $name);
+        if (is_array($files)) {
+            foreach($files as $index => $file) {
+                $name = uniqid() . '_' . trim($file->getClientOriginalName());
+                $file->move($path, $name);
 
 
-            $response[$index]['name'] = $name;
-            $response[$index]['original_name'] = $file->getClientOriginalName();
+                $response[$index]['name'] = $name;
+                $response[$index]['original_name'] = $file->getClientOriginalName();
+            }
+        } elseif (is_object($files)) {
+            $name = uniqid() . '_' . trim($files->getClientOriginalName());
+            $files->move($path, $name);
 
+            $response[0]['name'] = $name;
+            $response[0]['original_name'] = $files->getClientOriginalName();
         }
 
         return response()->json($response);
