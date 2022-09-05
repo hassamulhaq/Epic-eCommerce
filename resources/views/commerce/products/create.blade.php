@@ -306,7 +306,7 @@
             method: "POST",
             paramName: "files",
             autoProcessQueue: false,
-            acceptedFiles: "image/*",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
             maxFiles: allowMaxFiles,
             maxFilesize: allowMaxFilesize, // MB
             uploadMultiple: true,
@@ -382,9 +382,9 @@
         const singleDropzone = new Dropzone("#mediaFormSingleDropzone", {
             url: "{{ route('admin.upload-media') }}",
             method: "POST",
-            paramName: "files",
+            paramName: "thumbnail",
             autoProcessQueue: false,
-            acceptedFiles: "image/*",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif",
             maxFiles: 1,
             maxFilesize: allowMaxFilesize, // MB
             uploadMultiple: false,
@@ -413,9 +413,10 @@
         });
 
         // Add more data to send along with the file as POST data. (optional)
-        /*myDropzone.on("sending", function(file, xhr, formData) {
+        /*singleDropzone.on("sending", function(file, xhr, formData) {
             formData.append("dropzone", "1"); // $_POST["dropzone"]
             formData.append("productId", "10"); // $_POST["productId"]
+            formData.append("userId", "7"); // $_POST["productId"]
         });*/
 
         singleDropzone.on("error", function(file, response) {
@@ -423,12 +424,12 @@
         });
 
         // on success
-        singleDropzone.on("successmultiple", function(file, response) {
+        singleDropzone.on("success", function(file, response) {
             // get response from successful ajax request
             // response includes what you you return from php side
             console.log(response);
             $.each(response, function( key, value ) {
-                $product_create_form.append('<input type="text" name="gallery[]" value="'+value.name+'">')
+                $product_create_form.append('<input type="text" name="thumbnail" value="'+value.name+'">')
             });
 
             /* submit the form after images upload
@@ -449,7 +450,7 @@
                 singleDropzone.processQueue();
             } else {
                 // if no file submit the form
-                document.getElementById("dropzone-form").submit();
+                document.getElementById("dropzone-single-form").submit();
             }
         });
         // single

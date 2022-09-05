@@ -27,12 +27,15 @@ class MediaController extends Controller
                 $response[$index]['name'] = $name;
                 $response[$index]['original_name'] = $file->getClientOriginalName();
             }
-        } elseif (is_object($files)) {
-            $name = uniqid() . '_' . trim($files->getClientOriginalName());
-            $files->move($path, $name);
+        }
+
+        if (is_object($request->file('thumbnail'))) {
+            $thumb = $request->file('thumbnail');
+            $name = uniqid() . '_' . trim($thumb->getClientOriginalName());
+            $thumb->move($path, $name);
 
             $response[0]['name'] = $name;
-            $response[0]['original_name'] = $files->getClientOriginalName();
+            $response[0]['original_name'] = $thumb->getClientOriginalName();
         }
 
         return response()->json($response);
