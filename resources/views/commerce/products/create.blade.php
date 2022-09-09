@@ -48,7 +48,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (separated by comma)</label>
-                    <input type="text" id="tags" name="tags" class="block p-2 w-full text-gray-900 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                    <input type="text" id="tags" name="tags" class="selectize-tags w-full text-gray-900 rounded-md focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                 </div>
             </div>
         </div>
@@ -230,6 +230,42 @@
         <!-- dropzone assets -->
         <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/dropzone.css") }}">
         <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
+
+        <!-- dropzone assets -->
+        <link rel="stylesheet" href="{{ asset("/plugins/selectize@v0.13.6/dist/css/selectize.css") }}">
+        <script type="text/javascript" src="{{  asset("/plugins/selectize@v0.13.6/dist/js/standalone/selectize.min.js") }}"></script>
+
+
+        <style>
+            .selectize-input {
+                padding: 0.75rem 0.625rem 0.375rem;
+                --tw-border-opacity: 1;
+                border-color: rgb(209 213 219 / var(--tw-border-opacity));
+                border-radius: 0.5rem;
+                font-size: .875rem;
+                line-height: 1.5715;
+                box-shadow: none !important;
+            }
+            .selectize-control.multi .selectize-input > div.item {
+                --tw-text-opacity: 1;
+                color: rgb(17 24 39 / var(--tw-text-opacity));
+            }
+            .selectize-control.multi:hover {
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+                --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+                --tw-ring-offset-width: 0px;
+                --tw-ring-offset-color: #fff;
+                --tw-ring-color: #2563eb;
+                --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+                --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+                box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+                border-color: #2563eb;
+            }
+            .selectize-input.focus {
+                box-shadow: none !important;
+            }
+        </style>
     @endpush
 
     @push('js_after')
@@ -238,6 +274,17 @@
         $('.select2').select2({
             placeholder: "Select Collection/s",
             allowClear: true
+        });
+
+        $(".selectize-tags").selectize({
+            delimiter: ",",
+            persist: false,
+            create: function (input) {
+                return {
+                    value: input,
+                    text: input,
+                };
+            },
         });
 
         const $product_create_form = $('#product_create_form');
