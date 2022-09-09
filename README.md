@@ -13,17 +13,9 @@
 ___
 
 
-#### Dynamic Menu [08/06/22]
 
 
 
-
-#### Check List
-- ❌ `https://ip.city/` (for analytics)
-- ❌ `https://www.tiny.cloud/` (rich text editor)
-- ❌ `https://github.com/artesaos/seotools` (Laravel SEO)
-
----
 
 
 #### Repositories
@@ -31,3 +23,12 @@ ___
 - ✅ `https://github.com/barryvdh/laravel-ide-helper` (IDE helper)
 - ✅ `https://github.com/akaunting/laravel-money` (Currency formatting and conversion)
 - ✅ `https://github.com/spatie/laravel-medialibrary` (laravel media library)
+
+
+___
+#### Pending check List
+- ❌ `https://ip.city/` (for analytics)
+- ❌ `https://www.tiny.cloud/` (rich text editor)
+- ❌ `https://github.com/artesaos/seotools` (Laravel SEO)
+
+---
