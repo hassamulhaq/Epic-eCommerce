@@ -18,6 +18,7 @@
         "vite": "^3.0.9"
     },
     "dependencies": {
+        "@selectize/selectize": "^0.13.6",
         "dropzone": "^6.0.0-beta.2",
         "jquery": "^3.6.1",
         "select2": "^4.1.0-rc.0",
