@@ -35,5 +35,6 @@ Route::prefix('v1')
             });
 
         Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
+        Route::get('/types', [ProductsController::class, 'index'])->name('types');
         Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
     });
