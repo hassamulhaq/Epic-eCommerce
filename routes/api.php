@@ -33,4 +33,7 @@ Route::prefix('v1')
                 Route::put('/update', [ProductsController::class, 'update'])->name('update');
                 Route::delete('/delete', [ProductsController::class, 'destroy'])->name('delete');
             });
+
+        Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
+        Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
     });
