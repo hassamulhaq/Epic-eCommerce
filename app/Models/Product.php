@@ -47,4 +47,10 @@ class Product extends Model implements HasMedia
         'stock_status',
         'description',
     ];
+
+
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'product_category');
+    }
 }

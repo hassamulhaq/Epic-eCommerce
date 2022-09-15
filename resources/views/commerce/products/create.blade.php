@@ -60,7 +60,7 @@
                                 @foreach($categories as $type)
                                     <li>
                                         <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                            <input id="label-{{$type->id}}" type="checkbox" value="{{ $type->id }}" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                            <input id="label-{{$type->id}}" type="checkbox" value="{{ $type->id }}" name="categories[]" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                             <label for="label-{{$type->id}}" class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ $type->name }}</label>
                                         </div>
                                     </li>

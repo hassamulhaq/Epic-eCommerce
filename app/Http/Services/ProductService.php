@@ -26,7 +26,7 @@ class ProductService
                 'name' => $request->input('name'),
                 'slug' => is_null($request->input('slug')) ? \Str::slug($request->input('name')) : \Str::slug($request->input('slug')),
                 'short_description' => $request->input('short_description'),
-                'category' => $request->input('category'),
+                //'category' => $request->input('category'),
                 'tags' => $request->input('tags'),
                 'length' => $request->input('dimensions.length'),
                 'width' => $request->input('dimensions.width'),
@@ -43,6 +43,9 @@ class ProductService
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
             ]);
+
+            $product->categories()->sync($request->input('categories'));
+
 
             if ($request->has('thumbnail')) {
                 $product->addMedia(storage_path('tmp/uploads/' . $request->input('thumbnail')))->toMediaCollection('thumbnail');
