@@ -37,14 +37,45 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="category" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Type</label>
-                    <select name="category" id="category" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                    <label for="dropdownCategoriesButton" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Categories</label>
+                    <button id="dropdownCategoriesButton" data-dropdown-toggle="dropdownCategories" class="w-full inline-flex items-center px-2.5 pb-2.5 pt-4 text-sm font-medium text-center text-gray-700 bg-transparent rounded-lg border border-1 border-gray-300 focus:border-indigo-600 hover:bg-gray-100 focus:outline-none focus:ring-0 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800" type="button">
+                        Choose Categories
+                        <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownCategories" class="hidden z-10 w-60 bg-white rounded shadow-md border border-1 border-gray-300 dark:bg-gray-700" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 1310px);">
+                        <div class="p-3">
+                            <label for="input-group-search" class="sr-only">Search</label>
+                            <div class="relative">
+                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input type="text" id="input-group-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500" placeholder="Search...">
+                            </div>
+                        </div>
+                        <ul class="overflow-y-auto px-3 pb-3 h-48 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownCategoriesButton">
+                            @if($categories)
+                                @foreach($categories as $type)
+                                    <li>
+                                        <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <input id="label-{{$type->id}}" type="checkbox" value="{{ $type->id }}" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                            <label for="label-{{$type->id}}" class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ $type->name }}</label>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
+
+                    {{--<select name="category" id="category" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         @if($categories)
                             @foreach($categories as $type)
                                 <option value="{{ $type->id }}">{{ $type->name }}</option>
                             @endforeach
                         @endif
-                    </select>
+                    </select>--}}
                 </div>
                 <div class="mb-4">
                     <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (separated by comma)</label>
