@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('short_description', 1000)->nullable();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
+            //$table->foreignId('category_id')->nullable()->constrained('categories')->nullOnDelete();
             //$table->foreignId('tag_id')->nullable()->constrained('tags')->nullOnDelete();
             $table->string('tags', 500)->nullable();
             $table->integer('length')->nullable();
