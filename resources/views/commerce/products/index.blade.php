@@ -75,78 +75,52 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="pl-4 pr-1 py-1 w-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-8 h-8 rounded-full" src="{{ asset('images/ui/user-avatar-32.png') }}" alt="Jese image">
-                    </th>
-                    <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        MGTN_35654
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        <span class="whitespace-nowrap bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">In stock</span>
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        Accessories, Home and Kitchen
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        $15.85
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        ⭐
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        <span class="">Published</span>
-                        <span class="whitespace-nowrap">2022/08/21 at 8:47 am</span>
-                    </td>
-                    <td class="pl-4 pr-1 py-1">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="pl-4 pr-1 py-1 w-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-8 h-8 rounded-full" src="{{ asset('images/ui/user-avatar-32.png') }}" alt="Jese image">
-                    </th>
-                    <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Apple MacBook Pro 17"
-                    </th>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        MGTN_35654
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        <span class="whitespace-nowrap bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">In stock</span>
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        Accessories, Home and Kitchen
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        $15.85
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        ⭐
-                    </td>
-                    <td class="pl-4 pr-1 py-1 text-xs">
-                        <span class="">Published</span>
-                        <span class="whitespace-nowrap">2022/08/21 at 8:47 am</span>
-                    </td>
-                    <td class="pl-4 pr-1 py-1">
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    </td>
-                </tr>
+                @foreach($products as $product)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="pl-4 pr-1 py-1 w-4">
+                            <div class="flex items-center">
+                                <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                            </div>
+                        </td>
+                        <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <img class="w-8 h-8 rounded-full" src="{{ asset('images/ui/user-avatar-32.png') }}" alt="Jese image">
+                        </th>
+                        <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $product->name }}
+                        </th>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            {{ $product->sku ?? 'N/A' }}
+                        </td>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            <span class="whitespace-nowrap bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                                {{ $product->stock_status }}
+                            </span>
+                        </td>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            {{ $product->price ?? '-' }}
+                        </td>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            <div class="w-40 {{ count($product->categories) ? 'h-20' : '' }} overflow-y-auto">
+                                @forelse($product->categories as $category)
+                                    {{ $category->name }}@if( !$loop->last), @endif
+
+                                @empty -
+                                @endforelse
+                            </div>
+                        </td>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            ⭐
+                        </td>
+                        <td class="pl-4 pr-1 py-1 text-xs">
+                            <span class="">Published</span>
+                            <span class="whitespace-nowrap">2022/08/21 at 8:47 am</span>
+                        </td>
+                        <td class="pl-4 pr-1 py-1">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
             <nav class="flex justify-between items-center pt-4 px-4" aria-label="Table navigation">
