@@ -63,7 +63,7 @@
                     <th scope="col" class="py-3 px-4">
                         Categories
                     </th>
-                    <th scope="col" class="py-3 px-4">
+                    <th scope="col" class="py-3 px-4 w-8">
                         Featured
                     </th>
                     <th scope="col" class="py-3 px-4">
@@ -110,7 +110,7 @@
                             </div>
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            ⭐
+                            {{ ($product->featured) ? '⭐' : '✭' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             <span class="">Published</span>
