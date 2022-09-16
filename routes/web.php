@@ -63,7 +63,16 @@ Route::prefix('admin')
                Route::delete('/delete', [ProductsController::class, 'destroy'])->name('delete');
            });
 
-       Route::get('/categories', [ProductsController::class, 'index'])->name('categories');
+       Route::prefix('categories')
+           ->name('categories.')
+           ->group(function () {
+               Route::get('/', [\App\Http\Controllers\CategoriesController::class, 'index'])->name('index');
+               Route::post('/store', [\App\Http\Controllers\CategoriesController::class, 'store'])->name('store');
+               Route::delete('/delete/{id}', [\App\Http\Controllers\CategoriesController::class, 'destroy'])->name('delete');
+           });
+
+
+
        Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
 
        Route::post('upload-media', MediaController::class)->name('upload-media');

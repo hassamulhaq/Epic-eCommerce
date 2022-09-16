@@ -95,7 +95,7 @@ class MenuSeeder extends Seeder
                 'menu_type' => Constant::MENU_TYPE['route'],
                 'title' => 'Categories',
                 'route' => 'categories',
-                'route_name' => 'admin.categories',
+                'route_name' => 'admin.categories.index',
                 'icon_type' => 0,
                 'icon' => null,
             ],
