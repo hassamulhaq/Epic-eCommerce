@@ -18,4 +18,10 @@ class Constant
         'published' => 1,
         'trashed' => 2
     ];
+
+
+    const PLACEHOLDER_IMAGE = [
+        'path' => 'images/system/placeholder_image.jpg',
+        'alt' => 'placeholder'
+    ];
 }

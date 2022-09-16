@@ -84,7 +84,11 @@
                             </div>
                         </td>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-8 h-8 rounded-full" src="{{ asset('images/ui/user-avatar-32.png') }}" alt="Jese image">
+                            @if(!is_null($product->getMedia('thumbnail')->first()))
+                                <img class="w-8 h-8 rounded-full" src="{{ $product->getMedia('thumbnail')->first()->getUrl() }}" alt="">
+                            @else
+                                <img class="w-8 h-8 rounded-full" src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}" alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">
+                            @endif
                         </th>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $product->name }}
