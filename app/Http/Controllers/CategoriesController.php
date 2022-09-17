@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class CategoriesController extends Controller
         return view('commerce.categories.index', compact(['categories']));
     }
 
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $category = Category::updateOrCreate([
             'id' => $request->input('id')
