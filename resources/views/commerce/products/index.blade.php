@@ -105,7 +105,7 @@
                             {{ $product->price ?? '-' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            <div class="w-40 {{ count($product->categories) ? 'h-20' : '' }} overflow-y-auto">
+                            <div class="w-40 flex items-center {{ count($product->categories) ? 'h-20' : '' }} overflow-y-auto">
                                 @forelse($product->categories as $category)
                                     {{ $category->name }}@if( !$loop->last), @endif
 
@@ -117,8 +117,8 @@
                             {{ ($product->featured) ? '⭐' : '✭' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            <span class="">Published</span>
-                            <span class="whitespace-nowrap">2022/08/21 at 8:47 am</span>
+                            <span class="">Published: </span>
+                            <span class="whitespace-nowrap">{{ $product->created_at }}</span>
                         </td>
                         <td class="pl-4 pr-1 py-1">
                             <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
