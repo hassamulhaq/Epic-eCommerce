@@ -13,6 +13,9 @@ class Constant
         'dashboard' => 1
     ];
 
+    // prevent to delete this category_id
+    const UNCATEGORIZED_CATEGORY_ID = 1;
+
     const POST_STATUS = [
         'draft' => 0,
         'published' => 1,

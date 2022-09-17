@@ -75,8 +75,17 @@
                             {{ $category->description ?? 'N/A' }}
                         </td>
                         <td class="pl-4 pr-1 py-1">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            <a href="{{ route('admin.categories.delete', $category->id) }}" class="ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>
+                            <div class="flex">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <form action="{{ route('admin.categories.delete', $category->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <input type="hidden" name="id" value="{{ $category->id }}">
+                                    <input type="submit" value="Delete" class="ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">
+                                    {{--<a href="{{ route('admin.categories.delete', $category->id) }}" class="ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>--}}
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

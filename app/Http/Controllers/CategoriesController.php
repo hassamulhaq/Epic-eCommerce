@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Constant;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -37,7 +38,18 @@ class CategoriesController extends Controller
     {
     }
 
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
+        $request->validate(['id' => 'exists:categories,id']);
+
+
+        if ($request->input('id') == Constant::UNCATEGORIZED_CATEGORY_ID) {
+            $response = ['error' => 'You cannot delete this record'];
+        } else {
+            Category::where('id', '=', $request->input('id'))->delete();
+            $response = ['success' => 'Record Deleted'];
+        }
+
+        return redirect()->route('admin.categories.index')->with($response);
     }
 }
