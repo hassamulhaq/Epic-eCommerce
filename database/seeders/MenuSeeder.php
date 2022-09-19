@@ -106,7 +106,7 @@ class MenuSeeder extends Seeder
                 'menu_type' => Constant::MENU_TYPE['route'],
                 'title' => 'Collections',
                 'route' => 'collections',
-                'route_name' => 'admin.collections',
+                'route_name' => 'admin.collections.index',
                 'icon_type' => 0,
                 'icon' => null,
             ],

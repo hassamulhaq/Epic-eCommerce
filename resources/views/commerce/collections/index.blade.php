@@ -1,5 +1,6 @@
 {{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.dev --}}
 @extends('layouts.dashboard')
+
 @section('content')
     <div class="mb-6">
         <!-- Title -->
@@ -15,7 +16,7 @@
                 <!-- Search form -->
                 <form method="get" action="" class="relative">
                     <label for="action-search" class="d">Search</label>
-                    <input id="action-search" name="query" class="w-full rounded shadow-sm border border-gray-200 py-1.5 pl-10 pr-2.5 text-base text-slate-500 placeholder:text-slate-500" type="search" placeholder="Search by category">
+                    <input id="action-search" name="query" class="w-full rounded shadow-sm border border-gray-200 py-1.5 pl-10 pr-2.5 text-base text-slate-500 placeholder:text-slate-500" type="search" placeholder="Search by collections">
                     <button class="w-10 absolute right-0 left-0 top-0 bottom-0 float-left" type="submit" aria-label="Search">
                         <svg class="w-4 h-4 fill-gray-400  ml-3 mr-2" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"></path>
@@ -24,8 +25,8 @@
                     </button>
                 </form>
 
-                <!-- Create category modal button -->
-                @include('commerce.categories._particles.create_modal')
+                <!-- Create collection modal button -->
+                @include('commerce.collections._particles.create_modal')
 
             </div>
 
@@ -77,7 +78,7 @@
                         <td class="pl-4 pr-1 py-1">
                             <div class="flex">
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <form action="{{ route('admin.categories.delete', $collection->id) }}" method="post">
+                                <form action="{{ route('admin.collections.delete', $collection->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
 
@@ -126,4 +127,3 @@
 
 
 {{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
-<?php

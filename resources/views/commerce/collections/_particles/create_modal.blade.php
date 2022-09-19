@@ -1,29 +1,29 @@
 
 <!-- Modal toggle -->
 
-<a href="javascript:void(0)" class="btn ho xi ye" data-modal-toggle="createCategory-modal">
+<a href="javascript:void(0)" class="btn ho xi ye" data-modal-toggle="createCollection-modal">
     <svg class="oo sl du bf ub" viewBox="0 0 16 16">
         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
     </svg>
-    <span class="hidden trm nq">Create Category</span>
+    <span class="hidden trm nq">Create Collection</span>
 </a>
 
 <!-- Main modal -->
-<div id="createCategory-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+<div id="createCollection-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div class="flex justify-between items-center items-start p-4 rounded-t border-b dark:border-gray-600">
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Create New Category
+                    Create Collection
                 </h3>
-                <button type="button" data-modal-toggle="createCategory-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <button type="button" data-modal-toggle="createCollection-modal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
             <div class="py-6 px-6 lg:px-8">
-                <form class="" action="{{ route('admin.categories.store') }}" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form class="" action="{{ route('admin.collections.store') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
 
                     <div class="relative mb-3">
