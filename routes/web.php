@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\MenuController;
 use \App\Http\Controllers\ProductsController;
 use \App\Http\Controllers\MediaController;
+use \App\Http\Controllers\CollectionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,8 +73,17 @@ Route::prefix('admin')
            });
 
 
+       Route::prefix('collections')
+           ->name('collections.')
+           ->group(function () {
+               Route::get('/', [CollectionsController::class, 'index'])->name('index');
+               Route::post('/store', [CollectionsController::class, 'store'])->name('store');
+               Route::delete('/delete/{id}', [CollectionsController::class, 'destroy'])->name('delete');
+           });
 
-       Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
+
+
+       //Route::get('/collections', [ProductsController::class, 'index'])->name('collections');
 
        Route::post('upload-media', MediaController::class)->name('upload-media');
   });
