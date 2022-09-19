@@ -28,13 +28,14 @@
             <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
                 <div class="mb-4">
                     <label for="collection" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Collections</label>
-                    <select name="collections[]" id="collections" multiple="multiple" class="select2 w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                    <select name="collections[]" id="collections" multiple="multiple" class="select2 js-choices-multiple w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                         @if($collections)
                             @foreach($collections as $collection)
                                 <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                             @endforeach
                         @endif
                     </select>
+                    <div id="js-choices-message" class="message" style="display: none;"></div>
                 </div>
                 <div class="mb-4">
                     <label for="dropdownCategoriesButton" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Categories</label>
@@ -79,7 +80,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Tags (separated by comma)</label>
-                    <input type="text" id="tags" name="tags" class="selectize-tags w-full text-gray-900 rounded-md focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
+                    <input type="text" id="tags" name="tags" class="js-choices-unique w-full text-gray-900 rounded-md focus:ring-indigo-500 focus:border-indigo-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
                 </div>
             </div>
         </div>
@@ -262,9 +263,11 @@
         <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/dropzone.css") }}">
         <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
 
-        <!-- dropzone assets -->
-        <link rel="stylesheet" href="{{ asset("/plugins/selectize@v0.13.6/dist/css/selectize.css") }}">
-        <script type="text/javascript" src="{{  asset("/plugins/selectize@v0.13.6/dist/js/standalone/selectize.min.js") }}"></script>
+
+        <!-- choicesjs assets -->
+        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/base.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/choices.min.css') }}"/>
+        <script src="{{ asset('plugins/choicesjs@9.0.1/choices.min.js') }}"></script>
 
 
         <style>
@@ -302,20 +305,44 @@
     @push('js_after')
         <script>
 
-        $('.select2').select2({
-            placeholder: "Select Collection/s",
-            allowClear: true
-        });
+        const element = document.querySelector('.js-choices');
+        const choicesSelect = new Choices('.js-choices-multiple', {
+            allowHTML: true,
+            removeItemButton: true,
+            duplicateItemsAllowed: false,
+            placeholder: true,
+            placeholderValue: 'choose collection/s',
+            searchPlaceholderValue: null,
+            choices: [],
+        }).setChoices(
+            [
+                {value: '1', label: 'Uncategorized', selected: true},
+            ],
+            'value',
+            'label',
+            false
+        );
+        choicesSelect.passedElement.element.addEventListener(
+            'addItem',
+            function(event) {
+                document.getElementById('js-choices-message').innerHTML =
+                    'You just added "' + event.detail.label + '"';
+            }
+        );
+        choicesSelect.passedElement.element.addEventListener(
+            'removeItem',
+            function(event) {
+                document.getElementById('js-choices-message').innerHTML =
+                    'You just removed "' + event.detail.label + '"';
+            }
+        );
 
-        $(".selectize-tags").selectize({
-            delimiter: ",",
-            persist: false,
-            create: function (input) {
-                return {
-                    value: input,
-                    text: input,
-                };
-            },
+        // tags
+        const tagsUnique = new Choices('.js-choices-unique', {
+            allowHTML: true,
+            paste: false,
+            duplicateItemsAllowed: false,
+            editItems: true,
         });
 
         const $product_create_form = $('#product_create_form');
