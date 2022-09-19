@@ -1,5 +1,5 @@
 @if ($message = Session::get('success'))
-    <div class="fixed top-20 right-5" x-show="open" x-data="{ open: true }">
+    <div class="fixed top-20 right-5 z-10" x-show="open" x-data="{ open: true }">
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
@@ -21,7 +21,7 @@
 
 
 @if ($message = Session::get('error'))
-    <div class="fixed top-20 right-5" x-show="open" x-data="{ open: true }">
+    <div class="fixed top-20 right-5 z-10" x-show="open" x-data="{ open: true }">
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
@@ -43,7 +43,7 @@
 
 
 @if ($message = Session::get('warning'))
-    <div class="fixed top-20 right-5" x-show="open" x-data="{ open: true }">
+    <div class="fixed top-20 right-5 z-10" x-show="open" x-data="{ open: true }">
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
@@ -66,7 +66,7 @@
 
 
 @if ($message = Session::get('info'))
-    <div class="fixed top-20 right-5" x-show="open" x-data="{ open: true }">
+    <div class="fixed top-20 right-5 z-10" x-show="open" x-data="{ open: true }">
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
@@ -88,7 +88,7 @@
 
 
 @if ($errors->any())
-    <div class="fixed top-20 right-5" x-show="open" x-data="{ open: true }">
+    <div class="fixed top-20 right-5 z-10" x-show="open" x-data="{ open: true }">
         <div class="inline-flex ut vs vr rounded-sm text-sm bg-white bd border border-slate-200 g_">
             <div class="flex ou fe aj">
                 <div class="flex">
