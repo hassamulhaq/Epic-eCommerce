@@ -271,8 +271,20 @@
 
 
         <style>
-            .selectize-input {
-                padding: 0.75rem 0.625rem 0.375rem;
+            .choices {}
+            .choices__inner {
+                border-radius: 0.5rem;
+            }
+            .choices__list--multiple {}
+            .choices__list--multiple .choices__item {
+                background-color: #6366F1;
+                border: 1px solid #6366F1;
+            }
+            .choices[data-type*=select-multiple] .choices__button, .choices[data-type*=text] .choices__button {
+                border-left: 1px solid #ffffff;
+            }
+            .choices__input {
+                /*padding: 0.75rem 0.625rem 0.375rem;*/
                 --tw-border-opacity: 1;
                 border-color: rgb(209 213 219 / var(--tw-border-opacity));
                 border-radius: 0.5rem;
@@ -284,20 +296,14 @@
                 --tw-text-opacity: 1;
                 color: rgb(17 24 39 / var(--tw-text-opacity));
             }
-            .selectize-control.multi:hover {
-                outline: 2px solid transparent;
-                outline-offset: 2px;
-                --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
+            .is-focused .choices__inner, .is-open .choices__inner {
+                --tw-border-opacity: 1;
+                border: 1px solid rgb(88 80 236 / var(--tw-border-opacity));
+                --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
                 --tw-ring-offset-width: 0px;
                 --tw-ring-offset-color: #fff;
-                --tw-ring-color: #2563eb;
-                --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-                --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-                box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-                border-color: #2563eb;
-            }
-            .selectize-input.focus {
-                box-shadow: none !important;
+                --tw-ring-color: #1C64F2;
+                border-radius: 0.5rem;
             }
         </style>
     @endpush
@@ -315,9 +321,7 @@
             searchPlaceholderValue: null,
             choices: [],
         }).setChoices(
-            [
-                {value: '1', label: 'Uncategorized', selected: true},
-            ],
+            [],
             'value',
             'label',
             false
