@@ -121,7 +121,16 @@
                             <span class="whitespace-nowrap">{{ $product->created_at }}</span>
                         </td>
                         <td class="pl-4 pr-1 py-1">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <div class="flex">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <form action="{{ route('admin.products.delete', $product->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                    <input type="submit" value="Delete" class="cursor-pointer ml-2 font-medium text-red-600 dark:text-red-500 hover:underline">
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

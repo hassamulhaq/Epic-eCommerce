@@ -55,6 +55,10 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
     {
+        $product->delete();
+        $response = ['success' => 'Record Deleted'];
+
+        return redirect()->route('admin.products.index')->with($response);
     }
 
 

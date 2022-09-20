@@ -61,7 +61,7 @@ Route::prefix('admin')
                Route::get('/show/{id}', [ProductsController::class, 'show'])->name('show');
                Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('edit');
                Route::put('/update', [ProductsController::class, 'update'])->name('update');
-               Route::delete('/delete', [ProductsController::class, 'destroy'])->name('delete');
+               Route::delete('/delete/{product}', [ProductsController::class, 'destroy'])->name('delete');
            });
 
        Route::prefix('categories')
