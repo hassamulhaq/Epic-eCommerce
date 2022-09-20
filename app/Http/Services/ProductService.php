@@ -46,6 +46,8 @@ class ProductService
 
             $product->categories()->sync($request->input('categories'));
 
+            $product->collections()->sync($request->input('collections'));
+
 
             if ($request->has('thumbnail')) {
                 $product->addMedia(storage_path('tmp/uploads/' . $request->input('thumbnail')))->toMediaCollection('thumbnail');
