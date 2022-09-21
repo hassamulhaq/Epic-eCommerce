@@ -59,7 +59,7 @@ Route::prefix('admin')
                Route::get('/create', [ProductsController::class, 'create'])->name('create');
                Route::post('/store', [ProductsController::class, 'store'])->name('store');
                Route::get('/show/{id}', [ProductsController::class, 'show'])->name('show');
-               Route::get('/edit/{id}', [ProductsController::class, 'edit'])->name('edit');
+               Route::get('/edit/{product}', [ProductsController::class, 'edit'])->name('edit');
                Route::put('/update', [ProductsController::class, 'update'])->name('update');
                Route::delete('/delete/{product}', [ProductsController::class, 'destroy'])->name('delete');
            });

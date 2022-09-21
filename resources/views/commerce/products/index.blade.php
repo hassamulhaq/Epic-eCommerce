@@ -122,7 +122,7 @@
                         </td>
                         <td class="pl-4 pr-1 py-1">
                             <div class="flex">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <a href="{{ route('admin.products.edit', $product->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                 <form action="{{ route('admin.products.delete', $product->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
