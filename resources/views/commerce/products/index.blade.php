@@ -91,7 +91,7 @@
                             @endif
                         </th>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $product->name }}
+                            {{ $product->title }}
                         </th>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             {{ $product->sku ?? 'N/A' }}
@@ -107,7 +107,7 @@
                         <td class="pl-4 pr-1 py-1 text-xs">
                             <div class="w-40 flex items-center {{ count($product->categories) ? 'h-20' : '' }} overflow-y-auto">
                                 @forelse($product->categories as $category)
-                                    {{ $category->name }}@if( !$loop->last), @endif
+                                    {{ $category->title }}@if( !$loop->last), @endif
 
                                 @empty -
                                 @endforelse
