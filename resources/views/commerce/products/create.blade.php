@@ -576,6 +576,7 @@
         let keyupTimer;
         $('#title, #slug').keyup(function() {
             let title = this.value;
+            $('#slug').val('');
             clearTimeout(keyupTimer)
             keyupTimer = setTimeout(function () {
                 $.ajaxSetup({
