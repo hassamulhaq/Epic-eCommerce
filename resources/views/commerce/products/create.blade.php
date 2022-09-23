@@ -574,7 +574,7 @@
 
         // unique slug
         let keyupTimer;
-        $('#title').keyup(function() {
+        $('#title, #slug').keyup(function() {
             let title = this.value;
             clearTimeout(keyupTimer)
             keyupTimer = setTimeout(function () {
