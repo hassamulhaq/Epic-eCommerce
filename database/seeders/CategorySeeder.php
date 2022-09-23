@@ -10,27 +10,27 @@ class CategorySeeder extends Seeder
     {
         \DB::table('categories')->insert([
             [
-                'name' => 'Uncategorized',
+                'title' => 'Uncategorized',
                 'slug' => \Str::slug('Uncategorized')
             ],
             [
-                'name' => 'Men',
+                'title' => 'Men',
                 'slug' => \Str::slug('Men')
             ],
             [
-                'name' => 'Women',
+                'title' => 'Women',
                 'slug' => \Str::slug('Women')
             ],
             [
-                'name' => 'Shoes',
+                'title' => 'Shoes',
                 'slug' => \Str::slug('Shoes')
             ],
             [
-                'name' => 'Kitchen',
+                'title' => 'Kitchen',
                 'slug' => \Str::slug('Kitchen')
             ],
             [
-                'name' => 'Office',
+                'title' => 'Office',
                 'slug' => \Str::slug('Office')
             ]
         ]);

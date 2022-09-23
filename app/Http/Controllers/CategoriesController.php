@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Constant;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -20,8 +21,8 @@ class CategoriesController extends Controller
         $category = Category::updateOrCreate([
             'id' => $request->input('id')
         ], [
-            'name' => $request->input('name'),
-            'slug' => is_null($request->input('slug')) ? \Str::slug($request->input('name')) : \Str::slug($request->input('slug')),
+            'title' => $request->input('title'),
+            'slug' => $request->input('slug'),
             'description' => $request->input('short_description')
         ]);
 
@@ -51,5 +52,11 @@ class CategoriesController extends Controller
         }
 
         return redirect()->route('admin.categories.index')->with($response);
+    }
+
+
+    public function uniqueSlug(Request $request)
+    {
+        return SlugService::createSlug(Category::class, 'slug', $request->input('title'), ['unique' => true]);
     }
 }

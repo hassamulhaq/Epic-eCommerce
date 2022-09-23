@@ -8,6 +8,7 @@ use \App\Http\Controllers\MenuController;
 use \App\Http\Controllers\ProductsController;
 use \App\Http\Controllers\MediaController;
 use \App\Http\Controllers\CollectionsController;
+use \App\Http\Controllers\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,7 @@ Route::prefix('admin')
                Route::get('/', [\App\Http\Controllers\CategoriesController::class, 'index'])->name('index');
                Route::post('/store', [\App\Http\Controllers\CategoriesController::class, 'store'])->name('store');
                Route::delete('/delete/{id}', [\App\Http\Controllers\CategoriesController::class, 'destroy'])->name('delete');
+               Route::post('/unique-slug', [CategoriesController::class, 'uniqueSlug'])->name('unique-slug');
            });
 
 

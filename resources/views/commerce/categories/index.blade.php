@@ -66,7 +66,7 @@
                             </div>
                         </td>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $category->name }}
+                            {{ $category->title }}
                         </th>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             {{ $category->slug ?? 'N/A' }}
