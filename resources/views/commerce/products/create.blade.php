@@ -574,9 +574,10 @@
 
         // unique slug
         let keyupTimer;
-        $('#title, #slug').keyup(function() {
+        $('#title, #slug').on("keyup keydown change", function() {
             let title = this.value;
-            $('#slug').val('');
+            let $slug = $('#slug');
+            //$slug.val('');
             clearTimeout(keyupTimer)
             keyupTimer = setTimeout(function () {
                 $.ajaxSetup({
@@ -593,7 +594,7 @@
                     dataType: "HTML"
                 });
                 jqxhr.done(function(response) {
-                    $('#slug').val(response)
+                    $slug.val(response)
                 })
                 jqxhr.fail(function(response) {
                     console.log(response)
