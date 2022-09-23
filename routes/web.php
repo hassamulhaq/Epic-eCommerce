@@ -62,6 +62,7 @@ Route::prefix('admin')
                Route::get('/edit/{product}', [ProductsController::class, 'edit'])->name('edit');
                Route::put('/update', [ProductsController::class, 'update'])->name('update');
                Route::delete('/delete/{product}', [ProductsController::class, 'destroy'])->name('delete');
+               Route::post('unique-slug', [ProductsController::class, 'uniqueSlug'])->name('unique-slug');
            });
 
        Route::prefix('categories')

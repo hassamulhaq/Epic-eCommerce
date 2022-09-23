@@ -23,8 +23,8 @@ class ProductService
             $product = Product::updateOrCreate([
                 'id' => $request->input('id')
             ], [
-                'name' => $request->input('name'),
-                'slug' => is_null($request->input('slug')) ? \Str::slug($request->input('name')) : \Str::slug($request->input('slug')),
+                'title' => $request->input('title'),
+                'slug' => $request->input('slug'),
                 'short_description' => $request->input('short_description'),
                 //'category' => $request->input('category'),
                 'tags' => $request->input('tags'),

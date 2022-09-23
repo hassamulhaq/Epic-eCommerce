@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -22,13 +23,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class Product extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia, Sluggable;
 
     //protected $casts = [];
 
     protected $fillable = [
         'id',
-        'name',
+        'title',
         'slug',
         'short_description',
         'category_id',
@@ -63,5 +64,19 @@ class Product extends Model implements HasMedia
     public function thumbnail(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Product::class);
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+     public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }

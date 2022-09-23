@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->timestamps('published_at')->nullable()->after('status');
+            $table->timestamp('published_at')->nullable()->after('status');
         });
     }
 

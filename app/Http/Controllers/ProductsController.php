@@ -7,6 +7,7 @@ use App\Http\Services\ProductService;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Product;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,5 +62,10 @@ class ProductsController extends Controller
         return redirect()->route('admin.products.index')->with($response);
     }
 
+
+    public function uniqueSlug(Request $request)
+    {
+        return SlugService::createSlug(Product::class, 'slug', $request->input('title'), ['unique' => true]);
+    }
 
 }
