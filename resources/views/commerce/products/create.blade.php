@@ -573,26 +573,31 @@
 
 
         // unique slug
+        let keyupTimer;
         $('#title').keyup(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            })
-            const jqxhr = $.ajax({
-                url: "{{ route('admin.products.unique-slug') }}",
-                method: 'POST',
-                data: {
-                    title: this.value
-                },
-                dataType: "HTML"
-            });
-            jqxhr.done(function(response) {
-                $('#slug').val(response)
-            })
-            jqxhr.fail(function(response) {
-                console.log(response)
-            })
+            let title = this.value;
+            clearTimeout(keyupTimer)
+            keyupTimer = setTimeout(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                })
+                const jqxhr = $.ajax({
+                    url: "{{ route('admin.products.unique-slug') }}",
+                    method: 'POST',
+                    data: {
+                        title: title
+                    },
+                    dataType: "HTML"
+                });
+                jqxhr.done(function(response) {
+                    $('#slug').val(response)
+                })
+                jqxhr.fail(function(response) {
+                    console.log(response)
+                })
+            }, 800);
         });
     </script>
 @endpush
