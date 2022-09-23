@@ -82,6 +82,7 @@ Route::prefix('admin')
                Route::get('/', [CollectionsController::class, 'index'])->name('index');
                Route::post('/store', [CollectionsController::class, 'store'])->name('store');
                Route::delete('/delete/{id}', [CollectionsController::class, 'destroy'])->name('delete');
+               Route::post('/unique-slug', [CollectionsController::class, 'uniqueSlug'])->name('unique-slug');
            });
 
 

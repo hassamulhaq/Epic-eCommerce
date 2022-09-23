@@ -10,31 +10,31 @@ class CollectionSeeder extends Seeder
     {
         \DB::table('collections')->insert([
             [
-                'name' => 'Uncategorized',
+                'title' => 'Uncategorized',
                 'slug' => \Str::slug('Uncategorized')
             ],
             [
-                'name' => 'Featured Products',
+                'title' => 'Featured Products',
                 'slug' => \Str::slug('Featured Products')
             ],
             [
-                'name' => 'On Sale',
+                'title' => 'On Sale',
                 'slug' => \Str::slug('On Sale')
             ],
             [
-                'name' => 'New Arrivals',
+                'title' => 'New Arrivals',
                 'slug' => \Str::slug('New Arrivals')
             ],
             [
-                'name' => 'Summer Sale',
+                'title' => 'Summer Sale',
                 'slug' => \Str::slug('Summer Sale')
             ],
             [
-                'name' => 'Winter Sale',
+                'title' => 'Winter Sale',
                 'slug' => \Str::slug('Winter Sale')
             ],
             [
-                'name' => 'Only For Men',
+                'title' => 'Only For Men',
                 'slug' => \Str::slug('Only For Men')
             ]
         ]);

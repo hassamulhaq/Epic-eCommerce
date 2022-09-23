@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function create()
     {
-        $collections = Collection::all(['id', 'name']);
+        $collections = Collection::all(['id', 'title']);
         $categories = Category::all(['id', 'title']);
         return view('commerce.products.create', compact(['collections', 'categories']));
     }

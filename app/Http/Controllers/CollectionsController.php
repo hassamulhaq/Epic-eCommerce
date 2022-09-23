@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
 use App\Models\Collection;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class CollectionsController extends Controller
@@ -23,8 +24,8 @@ class CollectionsController extends Controller
         $collection = Collection::updateOrCreate([
             'id' => $request->input('id')
         ], [
-            'name' => $request->input('name'),
-            'slug' => is_null($request->input('slug')) ? \Str::slug($request->input('name')) : \Str::slug($request->input('slug')),
+            'title' => $request->input('title'),
+            'slug' => $request->input('slug'),
             'description' => $request->input('short_description')
         ]);
 
@@ -57,5 +58,11 @@ class CollectionsController extends Controller
         }
 
         return redirect()->route('admin.collections.index')->with($response);
+    }
+
+
+    public function uniqueSlug(Request $request)
+    {
+        return SlugService::createSlug(Collection::class, 'slug', $request->input('title'), ['unique' => true]);
     }
 }
