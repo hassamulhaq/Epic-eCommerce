@@ -47,7 +47,8 @@ class Product extends Model implements HasMedia
         'low_stock_amount',
         'stock_status',
         'description',
-        'featured'
+        'featured',
+        'published_at'
     ];
 
 

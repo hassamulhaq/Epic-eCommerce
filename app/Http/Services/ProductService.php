@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -42,6 +43,7 @@ class ProductService
                 'stock_status' => $request->input('stock_status'),
                 'description' => $request->input('description'),
                 'status' => $request->input('status'),
+                'published_at' => Carbon::now()->toDateTimeString()
             ]);
 
             $product->categories()->sync($request->input('categories'));
