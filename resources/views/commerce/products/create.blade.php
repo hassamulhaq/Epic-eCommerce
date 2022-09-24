@@ -316,7 +316,7 @@
     @endpush
 
     @push('js_after')
-        <script>
+        <script type="module">
 
         const element = document.querySelector('.js-choices');
         const choicesSelect = new Choices('.js-choices-multiple', {

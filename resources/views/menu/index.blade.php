@@ -340,7 +340,7 @@
         <!-- will remove sortablejs cdn later -->
 {{--        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>--}}
 
-        <script>
+        <script type="module">
 /*            new Sortable(routeListFetched, {
                 animation: 150,
                 ghostClass: 'mint-background-class'

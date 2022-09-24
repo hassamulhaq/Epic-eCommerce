@@ -9,11 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="{{ asset('/js/jquery-v3.6.0.js') }}"></script>
 
-    <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('/plugins/select2@4.1.0/select2.min.css') }}" rel="stylesheet" />
     @livewireStyles
 
     @stack('css_after')
@@ -124,19 +121,14 @@
 
 </div>
 
-<script src="{{ asset('/plugins/select2@4.1.0/select2.min.js') }}"></script>
+
 <script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
-<script src="{{ asset('/plugins/flowbite@1.5.3/flowbite.js') }}"></script>
-{{--<script src="{{ asset('/js/ui/vendors/chart.js') }}"></script>--}}
-{{--<script src="{{ asset('/js/ui/vendors/moment.js') }}"></script>--}}
-{{--<script src="{{ asset('/js/ui/vendors/chartjs-adapter-moment.js') }}"></script>--}}
-{{--<script src="{{ asset('/js/ui/dashboard-charts.js') }}"></script>--}}
 <script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>
-{{--<script src="{{ asset('/js/ui/flatpickr-init.js') }}"></script>--}}
 @livewireScripts
+
 @stack('js_after')
 
-<script>
+<script type="module">
     /*console.log("%cImportant!", "color: blue; font-size: x-large");*/
     $.ajaxSetup({
         headers: {
