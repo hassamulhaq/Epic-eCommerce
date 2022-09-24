@@ -122,7 +122,6 @@
 </div>
 
 
-<script src="{{ asset('/js/ui/vendors/alpinejs.min.js') }}"></script>
 <script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>
 @livewireScripts
 
