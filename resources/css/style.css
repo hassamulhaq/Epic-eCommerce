@@ -1,0 +1,5 @@
+a, a:focus, a:visited {
+    text-decoration: unset !important;
+    font-weight: unset !important;
+    color: unset !important;
+}
