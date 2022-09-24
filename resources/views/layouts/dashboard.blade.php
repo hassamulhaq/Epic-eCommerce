@@ -14,6 +14,7 @@
     <link href="{{ asset('/css/ui/vendors/flatpickr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
     <link href="{{ asset('/plugins/select2@4.1.0/select2.min.css') }}" rel="stylesheet" />
+    @livewireStyles
 
     @stack('css_after')
     @stack('before_body')
@@ -132,6 +133,7 @@
 {{--<script src="{{ asset('/js/ui/dashboard-charts.js') }}"></script>--}}
 <script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>
 {{--<script src="{{ asset('/js/ui/flatpickr-init.js') }}"></script>--}}
+@livewireScripts
 @stack('js_after')
 
 <script>
