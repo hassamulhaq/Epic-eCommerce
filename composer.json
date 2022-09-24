@@ -13,6 +13,7 @@
         "laravel/sanctum": "^v3.0.1",
         "laravel/tinker": "^2.7.2",
         "opcodesio/log-viewer": "^1.2.8",
+        "ramsey/uuid": "^4.5",
         "spatie/laravel-medialibrary": "10.4.5"
     },
     "require-dev": {
