@@ -26,7 +26,6 @@ class Product extends Model implements HasMedia
     use InteractsWithMedia, Sluggable;
 
     protected $casts = [
-        'status' => 'boolean',
         'published_at' => 'timestamp'
     ];
 

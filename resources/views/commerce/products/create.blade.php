@@ -4,7 +4,7 @@
 @section('content')
     <form action="{{ route('admin.products.store') }}" method="post" id="product_create_form" enctype="multipart/form-data" class="" autocomplete="off">
         @csrf
-        <input type="hidden" name="status" value="draft">
+        <input type="hidden" name="status" value="{{ \App\Helpers\Constant::PRODUCT_STATUS['published'] }}">
 
         <div class="lg:flex gap-3 mb-3">
             <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">

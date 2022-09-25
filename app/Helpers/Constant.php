@@ -25,6 +25,12 @@ class Constant
         'trashed' => 2
     ];
 
+    const PRODUCT_STATUS = [
+        'draft' => 0,
+        'published' => 1,
+        'trashed' => 2
+    ];
+
 
     const PLACEHOLDER_IMAGE = [
         'path' => 'images/system/placeholder_image.jpg',
