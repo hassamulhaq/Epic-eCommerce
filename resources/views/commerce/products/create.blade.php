@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="tags" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Add Attributes</label>
+                    <span class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Add Attributes</span>
                     <x-product-attribute-modal></x-product-attribute-modal>
                 </div>
             </div>
