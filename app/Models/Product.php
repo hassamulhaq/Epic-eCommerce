@@ -25,7 +25,10 @@ class Product extends Model implements HasMedia
 {
     use InteractsWithMedia, Sluggable;
 
-    //protected $casts = [];
+    protected $casts = [
+        'status' => 'boolean',
+        'published_at' => 'timestamp'
+    ];
 
     protected $fillable = [
         'id',
@@ -48,6 +51,7 @@ class Product extends Model implements HasMedia
         'stock_status',
         'description',
         'featured',
+        'status',
         'published_at'
     ];
 
