@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use JetBrains\PhpStorm\ArrayShape;
@@ -19,6 +20,10 @@ class ProductService
     #[ArrayShape(['status' => "string", 'status_code' => "int|mixed", 'success' => "string", 'error' => "string"])]
     public function store($request): array
     {
+
+
+
+
         \DB::beginTransaction();
         try {
             $product = Product::updateOrCreate([
@@ -49,6 +54,18 @@ class ProductService
             $product->categories()->sync($request->input('categories'));
 
             $product->collections()->sync($request->input('collections'));
+
+            // save attributes
+            if ($request->has('attribute.key') && $request->has('attribute.value')) {
+                $attributeArr = [];
+                $count = count($request->input('attribute.key'));
+                for ($i = 0; $i < $count; $i++) {
+                    $attributeArr[$i]['product_id'] = $product->id;
+                    $attributeArr[$i]['attribute'] = $request->input('attribute.key')[$i];
+                    $attributeArr[$i]['value'] = $request->input('attribute.value')[$i];
+                }
+                ProductAttribute::insert($attributeArr);
+            }
 
 
             if ($request->has('thumbnail')) {

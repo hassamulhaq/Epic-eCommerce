@@ -65,6 +65,11 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(Collection::class);
     }
 
+    public function attributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
+
     public function thumbnail(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
         return $this->morphOne(Product::class);
