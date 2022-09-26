@@ -37,7 +37,7 @@
 
 
 @push('js_after')
-    @parent
+
     <script type="module">
         let $attribute_js = $('#attribute_js');
         let counter = 0;
