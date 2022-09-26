@@ -29,6 +29,12 @@
     }
 </script>
 
+
+<!-- loader -->
+<x-screen-spinner />
+<!-- /_loader -->
+
+
 <!-- Page wrapper -->
 <div class="flex ss la">
     <!-- Sidebar -->
