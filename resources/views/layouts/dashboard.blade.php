@@ -112,7 +112,7 @@
         <main>
             @include('_particles.flash_message')
             <!-- theme:classes "vs jj ttm vl ou uf na" -->
-            <div class="vl ou uf na">
+            <div class="vs jj ttm vl ou uf na">
                 @yield('content')
             </div>
         </main>
