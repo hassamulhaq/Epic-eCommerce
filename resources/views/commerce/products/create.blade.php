@@ -269,12 +269,6 @@
         <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
 
 
-        <!-- choicesjs assets -->
-        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/base.min.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/choices.min.css') }}"/>
-        <script src="{{ asset('plugins/choicesjs@9.0.1/choices.min.js') }}"></script>
-
-
         <style>
             .indigoBtn:focus {
                 --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -323,94 +317,10 @@
     @push('js_after')
         <script type="module">
 
-        const element = document.querySelector('.js-choices');
-        const choicesSelect = new Choices('.js-choices-multiple', {
-            allowHTML: true,
-            removeItemButton: true,
-            duplicateItemsAllowed: false,
-            placeholder: true,
-            placeholderValue: 'choose collection/s',
-            searchPlaceholderValue: null,
-            choices: [],
-        }).setChoices(
-            [],
-            'value',
-            'label',
-            false
-        );
-        choicesSelect.passedElement.element.addEventListener(
-            'addItem',
-            function(event) {
-                document.getElementById('js-choices-message').innerHTML =
-                    'You just added "' + event.detail.label + '"';
-            }
-        );
-        choicesSelect.passedElement.element.addEventListener(
-            'removeItem',
-            function(event) {
-                document.getElementById('js-choices-message').innerHTML =
-                    'You just removed "' + event.detail.label + '"';
-            }
-        );
-
-        // tags
-        const tagsUnique = new Choices('.js-choices-unique', {
-            allowHTML: true,
-            paste: false,
-            duplicateItemsAllowed: false,
-            editItems: true,
-        });
-
-        const $product_create_form = $('#product_create_form');
-        const url = $product_create_form.attr('action');
-        const method = $product_create_form.attr('method');
-
-        $product_create_form.on('submit', function (e) {
-            e.preventDefault();
-
-            sendAjaxRequest();
-
-        });
-
-        // let typingTimer;                //timer identifier
-        // const doneTypingInterval = 3000;  //time in ms, 5 seconds for example
-        // const $input = $('input[type=text]');
-        // $input.on('keyup', function () {
-        //     clearTimeout(typingTimer);
-        //     typingTimer = setTimeout(sendAjaxRequest, doneTypingInterval);
-        // });
-
-        function sendAjaxRequest () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            })
-
-            const jqxhr = $.ajax({
-                url: url,
-                method: method,
-                data: $product_create_form.serialize(),
-                dataType: "html"
+            $('#title, #slug').on("keyup change", function () {
+                let $slug_input = $('#slug');
+                createUniqueSlug(this, $slug_input, "{{ route('admin.products.unique-slug') }}");
             });
-            jqxhr.done(function(response) {
-                console.log(response)
-            })
-            jqxhr.fail(function(response) {
-                console.log(response)
-            })
-            jqxhr.always(function(response) {
-                console.log(response)
-            });
-
-            // Perform other work here ...
-
-            // Set another completion function for the request above
-            jqxhr.always(function() {
-                //alert( "second complete" );
-            });
-        }
-
 
         /*
         * Dropzone script
@@ -577,36 +487,38 @@
         // single
 
 
-        // unique slug
-        let keyupTimer;
-        $('#title, #slug').on("keyup keydown change", function() {
-            let title = this.value;
-            let $slug = $('#slug');
-            //$slug.val('');
-            clearTimeout(keyupTimer)
-            keyupTimer = setTimeout(function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                })
+            // create product js
+            const $product_create_form = $('#product_create_form');
+            const url = $product_create_form.attr('action');
+            const method = $product_create_form.attr('method');
+            $product_create_form.on('submit', function (e) {
+                e.preventDefault();
+
+                createProductAjaxRequest();
+            });
+
+            function createProductAjaxRequest() {
+                $spinner.removeClass('invisible'); // spinner is defined in main.js
                 const jqxhr = $.ajax({
-                    url: "{{ route('admin.products.unique-slug') }}",
-                    method: 'POST',
-                    data: {
-                        title: title
-                    },
-                    dataType: "HTML"
+                    url: url,
+                    method: method,
+                    data: $product_create_form.serialize(),
+                    dataType: "JSON"
                 });
-                jqxhr.done(function(response) {
-                    $slug.val(response)
-                })
-                jqxhr.fail(function(response) {
+                jqxhr.done(function (response) {
                     console.log(response)
                 })
-            }, 800);
-        });
-    </script>
+                jqxhr.fail(function (response) {
+                    console.log(response)
+                })
+                jqxhr.always(function (response) {
+                    console.log(response)
+                    $spinner.addClass('invisible');
+                });
+            }
+
+            // END create product js
+        </script>
 @endpush
 
 @endsection

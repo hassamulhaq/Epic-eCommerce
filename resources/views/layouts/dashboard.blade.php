@@ -127,20 +127,15 @@
 
 </div>
 
-
-<script src="{{ asset('/js/ui/vendors/flatpickr.js') }}"></script>
+<script src="{{ asset('plugins/jquery-v3.6.0/jquery-v3.6.0.js') }}"></script>
+<!-- choices.js assets -->
+<link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/base.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/choices.min.css') }}"/>
+<script src="{{ asset('plugins/choicesjs@9.0.1/choices.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 @livewireScripts
 
 @stack('js_after')
-
-<script type="module">
-    /*console.log("%cImportant!", "color: blue; font-size: x-large");*/
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-    })
-</script>
 </body>
 </html>
 {{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
