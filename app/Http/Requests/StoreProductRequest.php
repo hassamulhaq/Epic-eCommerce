@@ -60,11 +60,12 @@ class StoreProductRequest extends FormRequest
     public function failedValidation(Validator $validator): void
     {
         $response = [
+            'success' => false,
             'status' => 'error',
             'status_code' => 422,
             'type' => 'validation_error',
             'message' => 'Validation Error',
-            'results' => $validator->errors()
+            'data' => $validator->errors()
         ];
 
 

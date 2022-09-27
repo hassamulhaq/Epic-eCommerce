@@ -31,7 +31,7 @@
 
 
 <!-- loader -->
-{{--<x-screen-spinner />--}}
+<x-screen-spinner />
 <!-- /_loader -->
 
 

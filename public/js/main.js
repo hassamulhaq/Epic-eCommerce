@@ -84,13 +84,11 @@ function createUniqueSlug(target, $slug_input = null, route) {
 function alertAjaxResponse(response) {
     if (response === '' || response === undefined || response === 'undefined') return false;
 
-    const elAjaxAlerts = document.querySelectorAll('.ajax_alert_block').length > 0;
-    if (elAjaxAlerts) {
-        $('.ajax_alert_block').remove();
-    }
+    const elAjaxAlertBlock = document.getElementById('ajax_alert_block');
+    if (elAjaxAlertBlock) elAjaxAlertBlock.remove();
 
-    $('body').append("<div class='ajax_alert_block'></div>");
-    $('.ajax_alert_block').html('').html(createJSAlertMarkup());
+    $('body').append("<div id='ajax_alert_block'></div>");
+    $('#ajax_alert_block').html('').html(createJSAlertMarkup());
 
 
     const $js_alert = $('.js_alert');
@@ -104,7 +102,7 @@ function alertAjaxResponse(response) {
 
     if (response.hasOwnProperty('responseText')) {
         response = JSON.parse(response.responseText);
-        if (response.status === 'error') {
+        if (response.success === false) {
             $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-red-300 rounded-lg bg-red-50 dark:bg-red-200')
             $js_svg.addClass('w-5 h-5 mr-2 text-red-900 dark:text-red-800')
             $js_title.addClass('mb-0 text-lg font-medium text-red-900 dark:text-red-800')
@@ -113,7 +111,7 @@ function alertAjaxResponse(response) {
 
             $js_title.text(response.message)
 
-            const errorObj = response.results;
+            const errorObj = response.data;
             let html = "<ul>";
             Object.keys(errorObj).forEach(function(key) {
                 //console.log(key, errorObj[key]);
@@ -124,8 +122,7 @@ function alertAjaxResponse(response) {
         }
     }
 
-    if (response.status === 'error') {
-        alert('op')
+    if (response.success === false) {
         $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-red-300 rounded-lg bg-red-50 dark:bg-red-200')
         $js_svg.addClass('w-5 h-5 mr-2 text-red-900 dark:text-red-800')
         $js_title.addClass('mb-0 text-lg font-medium text-red-900 dark:text-red-800')
@@ -134,7 +131,7 @@ function alertAjaxResponse(response) {
 
         $js_title.text(response.message)
 
-        const errorObj = response.results;
+        const errorObj = response.data;
         let html = "<ul>";
         Object.keys(errorObj).forEach(function(key) {
             //console.log(key, errorObj[key]);
@@ -145,7 +142,7 @@ function alertAjaxResponse(response) {
     }
 
 
-    if (response.status === 'success') {
+    if (response.success === true) {
         $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-green-300 rounded-lg bg-green-50 dark:bg-green-200')
         $js_svg.addClass('w-5 h-5 mr-2 text-green-700 dark:text-green-800')
         $js_title.addClass('mb-0 text-lg font-medium text-green-700 dark:text-green-800')
@@ -154,7 +151,7 @@ function alertAjaxResponse(response) {
 
         $js_title.text(response.message)
 
-        const successObj = response.results;
+        const successObj = response.data;
         let html = "<ul>";
         Object.keys(successObj).forEach(function(key) {
             html+= `<li><span class="font-medium">${key}: </span>${successObj[key]} </li>`
@@ -169,15 +166,18 @@ function alertAjaxResponse(response) {
 
 function createJSAlertMarkup() {
     return `
-    <div id="js_alert" class="js_alert" role="alert">
+    <div id="js_alert" class="js_alert max-w-screen-sm z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 rounded-lg" role="alert">
         <div class="flex items-center">
             <svg aria-hidden="true" class="js_svg w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             <span class="sr-only">Info</span>
-            <h3 class="js_title"></h3>
+            <h3 class="js_title mb-0 text-lg font-medium"></h3>
         </div>
-        <div class="js_message"></div>
+        <div class="js_message mt-2 mb-4 text-sm"></div>
         <div class="flex">
-            <button data-dismiss-target="#js_alert" aria-label="Close" type="button" class="js_button_dismiss" onclick="dismissJSAlert(this)">Dismiss</button>
+            <button data-dismiss-target="#js_alert" aria-label="Close" type="button" class="js_button_dismiss text-white font-medium text-xs px-3 py-1.5 mr-2 text-center inline-flex rounded-lg items-center"
+             onclick="dismissJSAlert(this)">
+             Dismiss
+             </button>
         </div>
     </div>
     `;

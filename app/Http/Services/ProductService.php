@@ -81,19 +81,21 @@ class ProductService
 
             \DB::commit();
             $this->response = [
+                'success' => true,
                 'status' => 'success',
                 'status_code' => ResponseAlias::HTTP_CREATED,
                 'message' => 'Task Completed!',
-                'results' => []
+                'data' => []
             ];
         } catch (\Exception $e) {
             \DB::rollback();
             $this->response = [
+                'success' => false,
                 'status' => 'error',
                 'status_code' => $e->getCode(),
                 'type' => 'try_catch exception',
                 'message' => 'Something went wrong!',
-                'results' => ['message' => $e->getMessage()]
+                'data' => ['message' => $e->getMessage()]
             ];
         }
 
