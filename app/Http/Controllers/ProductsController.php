@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Services\ProductService;
 use App\Models\Category;
 use App\Models\Collection;
@@ -36,9 +37,9 @@ class ProductsController extends Controller
     /**
      * @throws \Throwable
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $response = $this->productService->store($request);
+        $response = $this->productService->store($request->validated());
         return \response()->json($response);
     }
 

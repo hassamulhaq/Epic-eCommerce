@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Helpers\Constant;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use Carbon\Carbon;
@@ -18,64 +19,63 @@ class ProductService
      * @throws \Throwable
      */
     #[ArrayShape(['status' => "string", 'status_code' => "int|mixed", 'success' => "string", 'error' => "string"])]
-    public function store($request): array
+    public function store($request): \Illuminate\Http\JsonResponse
     {
-
-
-
-
         \DB::beginTransaction();
         try {
-            $product = Product::updateOrCreate([
-                'id' => $request->input('id')
-            ], [
-                'title' => $request->input('title'),
-                'slug' => $request->input('slug'),
-                'short_description' => $request->input('short_description'),
-                //'category' => $request->input('category'),
-                'tags' => $request->input('tags'),
-                'length' => $request->input('dimensions.length'),
-                'width' => $request->input('dimensions.width'),
-                'height' => $request->input('dimensions.height'),
-                'weight' => $request->input('weight'),
-                'sku' => $request->input('sku'),
-                'mid_code' => $request->input('mid_code'),
-                'price' => $request->input('price'),
-                'regular_price' => $request->input('regular_price'),
-                'stock_quantity' => $request->input('stock_quantity'),
-                'backorders' => $request->input('backorders'),
-                'low_stock_amount' => $request->input('low_stock_amount'),
-                'stock_status' => $request->input('stock_status'),
-                'description' => $request->input('description'),
-                'status' => $request->input('status'),
-                'published_at' => Carbon::now()->toDateTimeString()
-            ]);
+            $product = Product::create(
+                [
+                    'title' => $request['title'],
+                    'slug' => $request['slug'],
+                    'short_description' => $request['short_description'],
+                    'tags' => $request['tags'],
+                    'length' => $request['dimensions']['length'],
+                    'width' => $request['dimensions']['width'],
+                    'height' => $request['dimensions']['height'],
+                    'weight' => $request['weight'],
+                    'sku' => $request['sku'],
+                    'mid_code' => $request['mid_code'],
+                    'price' => $request['price'],
+                    'regular_price' => $request['regular_price'],
+                    'stock_quantity' => $request['stock_quantity'],
+                    'backorders' => $request['backorders'],
+                    'low_stock_amount' => $request['low_stock_amount'],
+                    'stock_status' => $request['stock_status'],
+                    'description' => $request['description'],
+                    'status' => $request['status'],
+                    'published_at' => Carbon::now()->toDateTimeString()
+                ]);
 
-            $product->categories()->sync($request->input('categories'));
 
-            $product->collections()->sync($request->input('collections'));
+            if (array_key_exists('categories', $request)) {
+                $product->categories()->sync($request['categories']);
+            }
+
+            if (array_key_exists('collections', $request)) {
+                $product->collections()->sync($request['collections']);
+            }
 
             // save attributes
-            if ($request->has('attribute.key') && $request->has('attribute.value')) {
+            if (array_key_exists('attribute', $request)) {
                 $attributeArr = [];
-                $count = count($request->input('attribute.key'));
+                $count = count($request['attribute']['key']);
                 for ($i = 0; $i < $count; $i++) {
                     $attributeArr[$i]['product_id'] = $product->id;
-                    $attributeArr[$i]['attribute'] = $request->input('attribute.key')[$i];
-                    $attributeArr[$i]['value'] = $request->input('attribute.value')[$i];
+                    $attributeArr[$i]['attribute'] = $request['attribute']['key'][$i];
+                    $attributeArr[$i]['value'] = $request['attribute']['value'][$i];
                 }
                 ProductAttribute::insert($attributeArr);
             }
 
 
-            if ($request->has('thumbnail')) {
-                $product->addMedia(storage_path('tmp/uploads/' . $request->input('thumbnail')))->toMediaCollection('thumbnail');
+            if (array_key_exists('thumbnail', $request)) {
+                $product->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $request['thumbnail']))->toMediaCollection('thumbnail');
             }
 
             // move media
-            if ($request->has('gallery')) {
-                foreach ($request->input('gallery', []) as $file) {
-                    $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('gallery');
+            if (array_key_exists('gallery', $request)) {
+                foreach ($request['gallery'] as $file) {
+                    $product->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $file))->toMediaCollection('gallery');
                 }
             }
 
@@ -83,17 +83,18 @@ class ProductService
             $this->response = [
                 'status' => 'success',
                 'status_code' => ResponseAlias::HTTP_CREATED,
-                'message' => 'Task Succeed!'
+                'messages' => ['message' => 'Task Succeed!']
             ];
         } catch (\Exception $e) {
             \DB::rollback();
             $this->response = [
                 'status' => 'error',
                 'status_code' => $e->getCode(),
-                'message' => $e->getMessage()
+                'type' => 'try_catch exception',
+                'messages' => ['message' => $e->getMessage()]
             ];
         }
 
-        return $this->response;
+        return \response()->json($this->response);
     }
 }

@@ -25,6 +25,8 @@ class Constant
         'trashed' => 2
     ];
 
+    const MEDIA_TMP_PATH = 'tmp/uploads/';
+
     const PRODUCT_STATUS = [
         'draft' => 0,
         'published' => 1,
