@@ -82,28 +82,15 @@ function createUniqueSlug(target, $slug_input = null, route) {
 *  Dynamic AJax Alerts
 * */
 function alertAjaxResponse(response) {
-    console.log(response)
-    if (response === '' || response === undefined || response === 'undefined') return;
+    if (response === '' || response === undefined || response === 'undefined') return false;
 
-    if (response.hasOwnProperty('responseJSON')) {
-
-    }
-
-
-    // let response = paramResponse;
-    // console.log(JSON.parse(paramResponse))
-
-
-    // const response = paramResponse.responseJSON;
-    // console.log(response)
-
-    const elAjaxAlerts = document.querySelectorAll('.ajax_alerts').length > 0;
+    const elAjaxAlerts = document.querySelectorAll('.ajax_alert_block').length > 0;
     if (elAjaxAlerts) {
-        $('.ajax_alerts').remove();
+        $('.ajax_alert_block').remove();
     }
 
-    $('body').append("<div class='ajax_alerts'></div>");
-    $('.ajax_alerts').html('').html(createJSAlertMarkup());
+    $('body').append("<div class='ajax_alert_block'></div>");
+    $('.ajax_alert_block').html('').html(createJSAlertMarkup());
 
 
     const $js_alert = $('.js_alert');
@@ -115,50 +102,62 @@ function alertAjaxResponse(response) {
     $js_title.text('...')
     $js_message.text('...')
 
-    if (response.hasOwnProperty('status') && response.status === 'error' && response.hasOwnProperty('errors')) {
+    if (response.hasOwnProperty('responseText')) {
+        response = JSON.parse(response.responseText);
+        if (response.status === 'error') {
+            $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-red-300 rounded-lg bg-red-50 dark:bg-red-200')
+            $js_svg.addClass('w-5 h-5 mr-2 text-red-900 dark:text-red-800')
+            $js_title.addClass('mb-0 text-lg font-medium text-red-900 dark:text-red-800')
+            $js_message.addClass('mt-2 mb-4 text-sm text-red-900 dark:text-red-800')
+            $js_button.addClass('text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-red-800 dark:hover:bg-red-900')
+
+            $js_title.text(response.message)
+
+            const errorObj = response.results;
+            let html = "<ul>";
+            Object.keys(errorObj).forEach(function(key) {
+                //console.log(key, errorObj[key]);
+                html+= `<li><span class="font-medium">${key}: </span>${errorObj[key]} </li>`
+            });
+            html+="</ul>";
+            $js_message.html(html)
+        }
+    }
+
+    if (response.status === 'error') {
+        alert('op')
         $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-red-300 rounded-lg bg-red-50 dark:bg-red-200')
         $js_svg.addClass('w-5 h-5 mr-2 text-red-900 dark:text-red-800')
         $js_title.addClass('mb-0 text-lg font-medium text-red-900 dark:text-red-800')
         $js_message.addClass('mt-2 mb-4 text-sm text-red-900 dark:text-red-800')
         $js_button.addClass('text-white bg-red-900 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-red-800 dark:hover:bg-red-900')
 
-        $js_title.text('Error')
+        $js_title.text(response.message)
+
+        const errorObj = response.results;
+        let html = "<ul>";
+        Object.keys(errorObj).forEach(function(key) {
+            //console.log(key, errorObj[key]);
+            html+= `<li><span class="font-medium">${key}: </span>${errorObj[key]} </li>`
+        });
+        html+="</ul>";
+        $js_message.html(html)
     }
 
-    if (response.hasOwnProperty('status') && response.status === 'success') {
+
+    if (response.status === 'success') {
         $js_alert.addClass('invisible z-50 fixed bottom-0 right-0 mr-6 p-4 mb-4 border border-green-300 rounded-lg bg-green-50 dark:bg-green-200')
         $js_svg.addClass('w-5 h-5 mr-2 text-green-700 dark:text-green-800')
         $js_title.addClass('mb-0 text-lg font-medium text-green-700 dark:text-green-800')
         $js_message.addClass('mt-2 mb-4 text-sm text-green-700 dark:text-green-800')
         $js_button.addClass('text-green-700 bg-transparent border border-green-700 hover:bg-green-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-green-800 dark:text-green-800 dark:hover:text-white')
 
-        $js_title.text('Success')
-    }
+        $js_title.text(response.message)
 
-
-    if (response.hasOwnProperty('message') && !response.hasOwnProperty('errors')) {
-        //$js_title.text(response.message)
-        //$js_title.text('Error 02')
-    }
-
-    if (response.hasOwnProperty('status') && response.status === 'error') {
+        const successObj = response.results;
         let html = "<ul>";
-        Object.keys(response).forEach(function(key) {
-            console.log(key, response[key]);
-            html+= `<li><span class="font-medium">${key}: </span>${response[key]} </li>`
-        });
-        html+="</ul>";
-        $js_message.html(html)
-    }
-
-    // errors mostly occurred if validations failed
-    if (response.status !== 'success' && paramResponse.responseJSON.hasOwnProperty('errors')) {
-        const response = paramResponse.responseJSON;
-        const errorObj = response.errors;
-        let html = "<ul>";
-        Object.keys(errorObj).forEach(function(key) {
-            //console.log(key, errorObj[key]);
-            html+= `<li><span class="font-medium">${key}: </span>${errorObj[key]} </li>`
+        Object.keys(successObj).forEach(function(key) {
+            html+= `<li><span class="font-medium">${key}: </span>${successObj[key]} </li>`
         });
         html+="</ul>";
         $js_message.html(html)
@@ -178,12 +177,14 @@ function createJSAlertMarkup() {
         </div>
         <div class="js_message"></div>
         <div class="flex">
-            <button data-dismiss-target="#js_alert" aria-label="Close" type="button" class="js_button_dismiss" onclick="dismissJSAlert(this)">
-                Dismiss
-            </button>
+            <button data-dismiss-target="#js_alert" aria-label="Close" type="button" class="js_button_dismiss" onclick="dismissJSAlert(this)">Dismiss</button>
         </div>
     </div>
     `;
+}
+
+function prepareDangerAlert(response) {
+
 }
 
 function dismissJSAlert(target) {

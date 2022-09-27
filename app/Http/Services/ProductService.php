@@ -19,7 +19,7 @@ class ProductService
      * @throws \Throwable
      */
     #[ArrayShape(['status' => "string", 'status_code' => "int|mixed", 'success' => "string", 'error' => "string"])]
-    public function store($request): \Illuminate\Http\JsonResponse
+    public function store($request): array
     {
         \DB::beginTransaction();
         try {
@@ -83,7 +83,8 @@ class ProductService
             $this->response = [
                 'status' => 'success',
                 'status_code' => ResponseAlias::HTTP_CREATED,
-                'messages' => ['message' => 'Task Succeed!']
+                'message' => 'Task Completed!',
+                'results' => []
             ];
         } catch (\Exception $e) {
             \DB::rollback();
@@ -91,10 +92,11 @@ class ProductService
                 'status' => 'error',
                 'status_code' => $e->getCode(),
                 'type' => 'try_catch exception',
-                'messages' => ['message' => $e->getMessage()]
+                'message' => 'Something went wrong!',
+                'results' => ['message' => $e->getMessage()]
             ];
         }
 
-        return \response()->json($this->response);
+        return $this->response;
     }
 }

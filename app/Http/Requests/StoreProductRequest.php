@@ -64,7 +64,7 @@ class StoreProductRequest extends FormRequest
             'status_code' => 422,
             'type' => 'validation_error',
             'message' => 'Validation Error',
-            'errors' => $validator->errors()
+            'results' => $validator->errors()
         ];
 
 

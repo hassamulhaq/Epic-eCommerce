@@ -503,7 +503,7 @@
                     url: url,
                     method: method,
                     data: $product_create_form.serialize(),
-                    dataType: "JSON"
+                    dataType: "JSON",
                 });
                 jqxhr.done(function (response) {
                     console.log(response)
@@ -513,8 +513,8 @@
                     alertAjaxResponse(response);
                 })
                 jqxhr.always(function (response) {
-                    console.log(response)
-                    alertAjaxResponse(response);
+                    //console.log(response)
+                    //alertAjaxResponse(response);
                 });
 
                 $spinner.addClass('invisible');
