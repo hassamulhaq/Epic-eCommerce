@@ -13,11 +13,11 @@
                     <span class="text-xs">To start selling, all you need is a name, price, and image</span>
                 </div>
                 <div class="relative mb-3">
-                    <input type="text" id="title" name="title" value="pp" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
-                    <label for="title"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Name</label>
+                    <input type="text" id="title" name="title" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                    <label for="title" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Name</label>
                 </div>
                 <div class="relative mb-3">
-                    <input type="text" name="slug" id="slug" value="pp" class="block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                    <input type="text" name="slug" id="slug" class="block px-2.5 pb-1.5 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
                     <label for="slug" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">Slug</label>
                 </div>
                 <div class="relative mb-3">
@@ -249,7 +249,7 @@
                     <h1 class="text-2xl text-grey-90">Publish/Draft</h1>
                 </div>
                 <div class="mb-2 mt-2">
-                    <input type="submit" value="Publish" class="flex items-center justify-center bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-indigo-50 text-white font-semibold h-12 px-6 rounded-lg w-full sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
+                    <input type="submit" value="Publish" class="flex items-center justify-center cursor-pointer bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-indigo-50 text-white font-semibold h-12 px-6 rounded-lg w-full sm:w-auto dark:bg-sky-500 dark:highlight-white/20 dark:hover:bg-sky-400">
                 </div>
             </div>
         </div>
@@ -316,6 +316,7 @@
 
     @push('js_after')
         <script type="module">
+            const $spinner = $('#screen-spinner');
 
             $('#title, #slug').on("keyup change", function () {
                 let $slug_input = $('#slug');
@@ -514,10 +515,9 @@
                 })
                 jqxhr.always(function (response) {
                     //console.log(response)
-                    //alertAjaxResponse(response);
+                    $spinner.addClass('invisible');
+                    alertAjaxResponse(response);
                 });
-
-                $spinner.addClass('invisible');
             }
 
             // END create product js
