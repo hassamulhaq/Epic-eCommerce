@@ -27,7 +27,6 @@
 
                 <!-- Create collection modal button -->
                 @include('commerce.collections._particles.create_modal')
-
             </div>
 
         </div>

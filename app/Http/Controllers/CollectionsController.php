@@ -6,9 +6,13 @@ use App\Helpers\Constant;
 use App\Models\Collection;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CollectionsController extends Controller
 {
+
+    protected array $response = [];
+
     public function index()
     {
         $collections = Collection::paginate(30);
@@ -29,9 +33,27 @@ class CollectionsController extends Controller
             'description' => $request->input('short_description')
         ]);
 
-        if (!$collection) return redirect()->back()->with(['error' => 'Something went wrong']);
+        if (!$collection) {
+            $this->response = [
+                'success' => false,
+                'status' => 'error',
+                'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,
+                'type' => 'try_catch exception',
+                'message' => 'Something went wrong!',
+                'data' => []
+            ];
+            return \response()->json($this->response);
+        }
 
-        return redirect()->back()->with(['success' => 'Action succeed!']);
+        $this->response = [
+            'success' => true,
+            'status' => 'success',
+            'status_code' => ResponseAlias::HTTP_CREATED,
+            'message' => 'Action succeed!',
+            'data' => []
+        ];
+
+        return \response()->json($this->response);
     }
 
     public function show(Collection $collection)

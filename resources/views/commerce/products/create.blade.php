@@ -2,12 +2,12 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <form action="{{ route('admin.products.store') }}" method="post" id="product_create_form" enctype="multipart/form-data" class="" autocomplete="off">
+    <form action="{{ route('admin.products.store') }}" method="post" id="product_create_form" enctype="multipart/form-data" class="ajax_form" autocomplete="off">
         @csrf
         <input type="hidden" name="status" value="{{ \App\Helpers\Constant::PRODUCT_STATUS['published'] }}">
 
         <div class="lg:flex gap-3 mb-3">
-            <div class="w-full lg:w-3/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+            <div class="w-full lg:w-3/4 bg-white shadow-md sm:rounded-lg border rounded-lg p-4">
                 <div class="mb-6">
                     <h1 class="text-2xl text-grey-90">General</h1>
                     <span class="text-xs">To start selling, all you need is a name, price, and image</span>
@@ -25,7 +25,7 @@
                     <label for="short_description" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/4 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 left-1">Short Description</label>
                 </div>
             </div>
-            <div class="w-full lg:w-1/4 bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+            <div class="w-full lg:w-1/4 bg-white shadow-md sm:rounded-lg border rounded-lg p-4">
                 <div class="mb-4">
                     <label for="collection" class="block mb-0.5 text-sm font-medium text-gray-900 dark:text-gray-300">Collections</label>
                     <select name="collections[]" id="collections" multiple="multiple" class="select2 js-choices-multiple w-full p-1.5 bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500">
@@ -122,7 +122,7 @@
 
         <!-- Stock & Inventory -->
         <div class="lg:flex gap-3 mb-3">
-            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+            <div class="w-full bg-white shadow-md sm:rounded-lg border rounded-lg p-4">
                 <div class="mb-6">
                     <h1 class="text-2xl text-grey-90">Stock & Inventory</h1>
                     <span class="text-xs">To start selling, all you need is a name, price, and image</span>
@@ -227,7 +227,7 @@
 
         <!-- Description -->
         <div class="lg:flex gap-3 mb-3">
-            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+            <div class="w-full bg-white shadow-md sm:rounded-lg border rounded-lg p-4">
                 <div class="mb-6">
                     <h1 class="text-2xl text-grey-90">Description</h1>
                     <span class="text-xs">Detail about product</span>
@@ -243,8 +243,8 @@
         <!-- END Stock & Inventory -->
 
         <!-- submit -->
-        <div class="lg:flex gap-3 mb-3">
-            <div class="w-full bg-white rounded-sm shadow-md sm:rounded-lg border rounded p-4">
+        <div class="lg:flex gap-3 mb-3 mt-20">
+            <div class="w-full bg-white shadow-md sm:rounded-lg border rounded-lg p-4">
                 <div class="mb-6">
                     <h1 class="text-2xl text-grey-90">Publish/Draft</h1>
                 </div>
@@ -267,6 +267,10 @@
         <!-- dropzone assets -->
         <link rel="stylesheet" href="{{ asset("/plugins/dropzone@6.0.0-beta.2/dropzone.css") }}">
         <script src="{{ asset("plugins/dropzone@6.0.0-beta.2/dropzone-min.js") }}"></script>
+
+        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/base.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/choices.min.css') }}"/>
+        <script src="{{ asset('plugins/choicesjs@9.0.1/choices.min.js') }}"></script>
 
 
         <style>
@@ -316,12 +320,51 @@
 
     @push('js_after')
         <script type="module">
-            const $spinner = $('#screen-spinner');
 
-            $('#title, #slug').on("keyup change", function () {
+            import { createUniqueSlug, ajaxRequest } from "{{ asset('js/main.js') }}";
+
+            $('#title, #slug').on("keyup", function () {
                 let $slug_input = $('#slug');
                 createUniqueSlug(this, $slug_input, "{{ route('admin.products.unique-slug') }}");
             });
+
+            // js-choices
+            const element = document.querySelector('.js-choices');
+            const choicesSelect = new Choices('.js-choices-multiple', {
+                allowHTML: true,
+                removeItemButton: true,
+                duplicateItemsAllowed: false,
+                choices: [],
+            }).setChoices(
+                [],
+                'value',
+                'label',
+                false
+            );
+            choicesSelect.passedElement.element.addEventListener(
+                'addItem',
+                function (event) {
+                    document.getElementById('js-choices-message').innerHTML =
+                        'You just added "' + event.detail.label + '"';
+                }
+            );
+            choicesSelect.passedElement.element.addEventListener(
+                'removeItem',
+                function (event) {
+                    document.getElementById('js-choices-message').innerHTML =
+                        'You just removed "' + event.detail.label + '"';
+                }
+            );
+
+
+            // tags
+            const tagsUnique = new Choices('.js-choices-unique', {
+                allowHTML: true,
+                paste: false,
+                duplicateItemsAllowed: false,
+                editItems: true,
+            });
+
 
         /*
         * Dropzone script
@@ -329,7 +372,9 @@
         // disable autodiscover
         Dropzone.autoDiscover = false;
 
-        //const filesize = 5;
+        const $product_create_form = $('#product_create_form ');
+
+            //const filesize = 5;
         const allowMaxFilesize = 5;
         const allowMaxFiles = 5;
 
@@ -489,36 +534,9 @@
 
 
             // create product js
-            const $product_create_form = $('#product_create_form');
-            const url = $product_create_form.attr('action');
-            const method = $product_create_form.attr('method');
-            $product_create_form.on('submit', function (e) {
-                e.preventDefault();
-
-                createProductAjaxRequest();
-            });
-
-            function createProductAjaxRequest() {
-                $spinner.removeClass('invisible'); // spinner is defined in main.js
-                const jqxhr = $.ajax({
-                    url: url,
-                    method: method,
-                    data: $product_create_form.serialize(),
-                    dataType: "JSON",
-                });
-                jqxhr.done(function (response) {
-                    console.log(response)
-                    alertAjaxResponse(response);
-                })
-                jqxhr.fail(function (response) {
-                    alertAjaxResponse(response);
-                })
-                jqxhr.always(function (response) {
-                    //console.log(response)
-                    $spinner.addClass('invisible');
-                    alertAjaxResponse(response);
-                });
-            }
+            $(document).on('submit', '.ajax_form', function (e) {
+                ajaxRequest(e);
+            })
 
             // END create product js
         </script>

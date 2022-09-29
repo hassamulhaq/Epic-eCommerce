@@ -2,10 +2,10 @@
 <!-- Modal toggle -->
 
 <a href="javascript:void(0)" class="btn ho xi ye" data-modal-toggle="createCollection-modal">
-    <svg class="oo sl du bf ub" viewBox="0 0 16 16">
+    <svg class="oo sl du bf ub text-white" viewBox="0 0 16 16">
         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z"></path>
     </svg>
-    <span class="hidden trm nq">Create Collection</span>
+    <span class="hidden trm nq text-white">Create Collection</span>
 </a>
 
 <!-- Main modal -->
@@ -23,7 +23,7 @@
                 </button>
             </div>
             <div class="py-6 px-6 lg:px-8">
-                <form class="" action="{{ route('admin.collections.store') }}" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form class="ajax_form" action="{{ route('admin.collections.store') }}" method="post" enctype="multipart/form-data" autocomplete="off">
                     @csrf
 
                     <div class="relative mb-3">
@@ -49,37 +49,19 @@
     </div>
 </div>
 
-
 @push('js_after')
-    <script>
-        // unique slug
-        let keyupTimer;
-        $('#title, #slug').on("keyup keydown change", function() {
-            let title = this.value;
-            let $slug = $('#slug');
-            //$slug.val('');
-            clearTimeout(keyupTimer)
-            keyupTimer = setTimeout(function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                })
-                const jqxhr = $.ajax({
-                    url: "{{ route('admin.collections.unique-slug') }}",
-                    method: 'POST',
-                    data: {
-                        title: title
-                    },
-                    dataType: "HTML"
-                });
-                jqxhr.done(function(response) {
-                    $slug.val(response)
-                })
-                jqxhr.fail(function(response) {
-                    console.log(response)
-                })
-            }, 800);
+    <script type="module">
+
+        import { createUniqueSlug, ajaxRequest } from "{{ asset('js/main.js') }}";
+
+        $(document).on('submit', '.ajax_form', function (e) {
+            ajaxRequest(e);
+        })
+
+
+        $('#title, #slug').on("keyup", function () {
+            let $slug_input = $('#slug');
+            createUniqueSlug(this, $slug_input, "{{ route('admin.collections.unique-slug') }}");
         });
     </script>
 @endpush

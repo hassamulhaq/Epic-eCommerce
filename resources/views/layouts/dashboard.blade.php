@@ -128,11 +128,6 @@
 </div>
 
 
-<!-- choices.js assets -->
-<link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/base.min.css') }}"/>
-<link rel="stylesheet" href="{{ asset('/plugins/choicesjs@9.0.1/choices.min.css') }}"/>
-<script src="{{ asset('plugins/choicesjs@9.0.1/choices.min.js') }}"></script>
-
 <script type="module" src="{{ asset('js/main.js') }}"></script>
 @livewireScripts
 
