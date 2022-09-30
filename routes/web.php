@@ -9,6 +9,7 @@ use \App\Http\Controllers\ProductsController;
 use \App\Http\Controllers\MediaController;
 use \App\Http\Controllers\CollectionsController;
 use \App\Http\Controllers\CategoriesController;
+use \App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,7 @@ use \App\Http\Controllers\CategoriesController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/old/dashboard', function () {
     return view('dashboard');
@@ -91,6 +92,9 @@ Route::prefix('admin')
 
        Route::post('upload-media', MediaController::class)->name('upload-media');
   });
+
+
+Route::get('shop', [ShopController::class, 'index'])->name('shop');
 
 
 require __DIR__.'/auth.php';
