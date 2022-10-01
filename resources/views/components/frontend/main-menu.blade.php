@@ -2,10 +2,20 @@
     <div class="flex-1">
         <ul class="items-stretch space-x-3 lg:flex ml-6">
             <li class="flex">
-                <a rel="noopener noreferrer" href="{{ route('home') }}" class="flex items-center px-4 -mb-1 border-b-2 border-transparent text-indigo-600 border-indigo-600">Home</a>
+                <a rel="noopener noreferrer" href="{{ route('home') }}"
+                   class="flex items-center px-4 -mb-1 border-b-2 border-transparent text-indigo-600
+                   {{ (request()->routeIs('home')) ? 'border-indigo-600' : '' }}
+                   ">
+                    Home
+                </a>
             </li>
             <li class="flex">
-                <a rel="noopener noreferrer" href="{{ route('shop') }}" class="flex items-center px-4 -mb-1 border-b-2 border-transparent">Shop</a>
+                <a rel="noopener noreferrer" href="{{ route('shop') }}"
+                   class="flex items-center px-4 -mb-1 border-b-2 border-transparent
+                    {{ (request()->routeIs('shop')) ? 'border-indigo-600' : '' }}
+                ">
+                    Shop
+                </a>
             </li>
             <li class="flex">
                 <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 border-transparent">Link</a>

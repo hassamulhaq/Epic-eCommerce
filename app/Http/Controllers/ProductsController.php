@@ -69,4 +69,10 @@ class ProductsController extends Controller
         return SlugService::createSlug(Product::class, 'slug', $request->input('title'), ['unique' => true]);
     }
 
+
+    public function singleProduct(Product $product)
+    {
+        @dd($product);
+    }
+
 }

@@ -97,4 +97,11 @@ Route::prefix('admin')
 Route::get('shop', [ShopController::class, 'index'])->name('shop');
 
 
+Route::prefix('product')
+    ->name('product.')
+    ->group(function () {
+        Route::get('/{product:slug}', [ProductsController::class, 'singleProduct'])->name('product:slug');
+    });
+
+
 require __DIR__.'/auth.php';
