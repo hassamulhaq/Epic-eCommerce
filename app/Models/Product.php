@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -31,6 +32,7 @@ class Product extends Model implements HasMedia
 
     protected $fillable = [
         'id',
+        'uuid',
         'title',
         'slug',
         'short_description',
@@ -53,6 +55,21 @@ class Product extends Model implements HasMedia
         'status',
         'published_at'
     ];
+
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = Uuid::uuid4()->toString();
+            }
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
 
 
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
