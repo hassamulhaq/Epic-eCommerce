@@ -10,6 +10,8 @@ use \App\Http\Controllers\MediaController;
 use \App\Http\Controllers\CollectionsController;
 use \App\Http\Controllers\CategoriesController;
 use \App\Http\Controllers\ShopController;
+use \App\Http\Controllers\AuthController;
+use \App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,5 +105,22 @@ Route::prefix('product')
         Route::get('/{product:slug}', [ProductsController::class, 'singleProduct'])->name('product:slug');
     });
 
+
+// customers
+Route::prefix('customer')
+    ->name('customer.')
+    ->middleware(['auth:sanctum'])
+    ->group(function () {
+        Route::get('/get', [AuthController::class, 'get'])->name('get-profile');
+        Route::put('/profile', [AuthController::class, 'update'])->name('profile-update');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        /**
+         * Customer wishlist routes.
+         */
+        Route::get('/wishlist', [WishlistController::class, 'index'])->name('index');
+        Route::post('/wishlist/{product:id}', [WishlistController::class, 'addOrRemove'])->name('wishlist.add-or-remove');
+        Route::post('/wishlist/{product_id}/move-to-cart', [WishlistController::class, 'moveToCart'])->name('wishlist.move-to-cart');
+    });
 
 require __DIR__.'/auth.php';

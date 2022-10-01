@@ -34,17 +34,23 @@
                                         </span>
                                     </ins>
                                 </span>
-                                <div class="product-add-to-cart mt-2" data-nectar-quickview="true">
-                                    <a href="/cart/?add-to-cart={{ $product->id }}"
-                                       data-quantity="1"
-                                       class="add_to_cart_button ajax_add_to_cart bg-gray-100 p-1.5 rounded font-light"
-                                       data-product_id="{{ $product->id }}"
-                                       data-product_sku="{{ $product->sku }}"
-                                       aria-label="Add “Beanie” to your cart"
-                                       rel="nofollow">
-                                        <i class="normal icon-cart"></i>
-                                        <span>Add to cart</span>
-                                    </a>
+                                <div class="product-add-to-cart flex items-center mt-2" data-quickview="true">
+                                    <form id="wishlist-{{ $product->id }}" action="{{ route('customer.wishlist.add-or-remove', $product->id) }}" method="post">
+                                        @csrf
+
+                                        <a href="javascript:void(0)"
+                                           title="Add product to wishlist"
+                                           data-quantity="1"
+                                           class="add_to_cart_button ajax_add_to_cart bg-gray-100 p-1.5 rounded font-light hover:text-white hover:bg-indigo-500 duration-300"
+                                           data-product_id="{{ $product->id }}"
+                                           data-product_sku="{{ $product->sku }}"
+                                           aria-label="Add “Beanie” to your cart"
+                                           rel="nofollow"
+                                           onclick="document.getElementById('wishlist-{{ $product->id }}').submit();">
+                                            <i class="normal icon-cart"></i>
+                                            <span>Add to cart</span>
+                                        </a>
+                                    </form>
                                     <a class="quick_view no-ajaxy p-1.5 font-light" data-product-id="{{ $product->id }}">
                                         <i class="normal icon-eye"></i>
                                         <span>Quick View</span>
