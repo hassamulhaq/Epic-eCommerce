@@ -56,5 +56,13 @@
                 </div>
         @endforeach
         </div>
+
+        <nav class="flex justify-between items-center pt-4 px-4 mt-6" aria-label="Table navigation">
+            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $products->count() }}</span>
+                Total <span class="font-semibold text-gray-900 dark:text-white">{{ $products->total() }}</span>
+            </span>
+            {!! $products->appends(['sort' => 'asc'])->links() !!}
+        </nav>
     </div>
 </section>

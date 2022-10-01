@@ -13,7 +13,7 @@ class ShopController extends Controller
             ->whereStatus('1')
             ->with('categories')
             //->with('thumbnail')
-            ->get();
+            ->paginate(18);
         return view('frontend.shop.index', compact('products'));
     }
 }
