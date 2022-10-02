@@ -72,7 +72,8 @@ class ProductsController extends Controller
 
     public function singleProduct(Product $product)
     {
-        @dd($product);
+
+        return view('frontend.shop.simple-product', compact(['product']));
     }
 
 }
