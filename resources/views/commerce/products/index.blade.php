@@ -91,7 +91,7 @@
                             @endif
                         </th>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $product->title }}
+                            { \Illuminate\Support\Str::limit($product->title, 40) }}
                         </th>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             {{ $product->sku ?? 'N/A' }}
