@@ -1,8 +1,13 @@
 {
-    "name": "laravel/laravel",
+    "name": "hassamulhaq/Epic-eCommerce",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "A free and open-source ecommerce application.",
+    "keywords": [
+        "ecommerce",
+        "online store",
+        "estore"
+    ],
+    "homepage": "https://epic-ecommerce.hassam.dev",
     "license": "MIT",
     "require": {
         "php": "^8.1.0",

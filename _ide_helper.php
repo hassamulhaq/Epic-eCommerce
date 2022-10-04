@@ -18051,6 +18051,73 @@
      
 }
 
+    namespace Spatie\Flash { 
+            /**
+     * 
+     *
+     * @mixin \Spatie\Flash\Message
+     */ 
+        class Flash {
+                    /**
+         * 
+         *
+         * @see \Spatie\Flash\Flash::levels()
+         * @param string $message
+         * @static 
+         */ 
+        public static function info($message)
+        {
+                        return \Spatie\Flash\Flash::info($message);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Flash\Flash::levels()
+         * @param string $message
+         * @static 
+         */ 
+        public static function danger($message)
+        {
+                        return \Spatie\Flash\Flash::danger($message);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Flash\Flash::levels()
+         * @param string $message
+         * @static 
+         */ 
+        public static function success($message)
+        {
+                        return \Spatie\Flash\Flash::success($message);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Flash\Flash::levels()
+         * @param string $message
+         * @static 
+         */ 
+        public static function warning($message)
+        {
+                        return \Spatie\Flash\Flash::warning($message);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Flash\Flash::levels()
+         * @param string $message
+         * @static 
+         */ 
+        public static function dark($message)
+        {
+                        return \Spatie\Flash\Flash::dark($message);
+        }
+         
+    }
+     
+}
+
 
 namespace  { 
             class App extends \Illuminate\Support\Facades\App {}
