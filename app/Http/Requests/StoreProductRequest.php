@@ -21,7 +21,7 @@ class StoreProductRequest extends FormRequest
             'dimensions.width' => 'nullable',
             'dimensions.height' => 'nullable',
             'weight' => 'nullable',
-            'sku' => 'nullable',
+            'sku' => 'required|string|max:100',
             'mid_code' => 'nullable',
             'price' => 'required|numeric',
             'regular_price' => 'required|numeric|gte:price',
