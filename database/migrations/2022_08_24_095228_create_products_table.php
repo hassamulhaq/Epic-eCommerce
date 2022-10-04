@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->string('backorders')->nullable();
             $table->string('low_stock_amount')->nullable();
             $table->string('stock_status')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->tinyInteger('status')->default(\App\Helpers\Constant::POST_STATUS['draft'])->comment('0=draft, 1=published, 2=trashed');
             $table->timestamps();
         });

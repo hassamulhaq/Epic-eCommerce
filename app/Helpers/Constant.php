@@ -33,6 +33,14 @@ class Constant
         'trashed' => 2
     ];
 
+    const PRODUCT_STOCK_STATUS = [
+        'instock', 'outofstock', 'onbackorder'
+    ];
+
+    const PRODUCT_BACKORDERS = [
+        'no', 'notify', 'yes'
+    ];
+
 
     const PLACEHOLDER_IMAGE = [
         'path' => 'images/system/placeholder_image.jpg',
