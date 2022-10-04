@@ -7,7 +7,7 @@
             ->whereTitle(\App\Helpers\Constant::FRONTEND_MAIN_MENU['frontend'])
             ->first();
         @endphp
-        <ul class="items-stretch space-x-3 lg:flex ml-6">
+        <ul class="items-stretch space-x-3 lg:flex">
             @foreach($menu->submenu as $route)
                 <li class="flex">
                     <a rel="noopener noreferrer" href="{{ route($route->route_name) }}"
