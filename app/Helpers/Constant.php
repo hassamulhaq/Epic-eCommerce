@@ -13,6 +13,10 @@ class Constant
         'dashboard' => 1
     ];
 
+    const FRONTEND_MAIN_MENU = [
+        'frontend' => 'Frontend'
+    ];
+
     // prevent to delete this category_id
     const UNCATEGORIZED_CATEGORY_ID = 1;
 

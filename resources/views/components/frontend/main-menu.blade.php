@@ -1,25 +1,22 @@
 <div class="lg:flex flex-1 items-center hidden">
     <div class="flex-1">
+        @php
+            $menu = \App\Models\Menu::with('submenu.childRoutes')
+            ->whereNull(['parent_id', 'child_id'])
+            ->whereMenuType(\App\Helpers\Constant::MENU_TYPE['menu'])
+            ->whereTitle(\App\Helpers\Constant::FRONTEND_MAIN_MENU['frontend'])
+            ->first();
+        @endphp
         <ul class="items-stretch space-x-3 lg:flex ml-6">
-            <li class="flex">
-                <a rel="noopener noreferrer" href="{{ route('home') }}"
-                   class="flex items-center px-4 -mb-1 border-b-2 border-transparent text-indigo-600
-                   {{ (request()->routeIs('home')) ? 'border-indigo-600' : '' }}
-                   ">
-                    Home
-                </a>
-            </li>
-            <li class="flex">
-                <a rel="noopener noreferrer" href="{{ route('shop') }}"
-                   class="flex items-center px-4 -mb-1 border-b-2 border-transparent
-                    {{ (request()->routeIs('shop')) ? 'border-indigo-600' : '' }}
-                ">
-                    Shop
-                </a>
-            </li>
-            <li class="flex">
-                <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 border-transparent">Link</a>
-            </li>
+            @foreach($menu->submenu as $route)
+                <li class="flex">
+                    <a rel="noopener noreferrer" href="{{ route($route->route_name) }}"
+                       class="flex items-center px-4 py-1 -mb-1 border-b-2 border-transparent
+                        {{ (request()->routeIs($route->route_name)) ? 'border-indigo-600' : '' }}">
+                        {{ $route->title }}
+                    </a>
+                </li>
+            @endforeach
         </ul>
     </div>
 
