@@ -110,6 +110,19 @@ class MenuSeeder extends Seeder
                 'icon_type' => 0,
                 'icon' => null,
             ],
+
+            // Front-page menu item
+            [
+                'id' => 10,
+                'parent_id' => 1,
+                'child_id' => null, // null = no child
+                'menu_type' => Constant::MENU_TYPE['route'],
+                'title' => 'Frontend',
+                'route' => '/',
+                'route_name' => 'home',
+                'icon_type' => 1,
+                'icon' => '<svg class="ub so oi" viewBox="0 0 24 24"><path class="du g_" d="M19 5h1v14h-2V7.414L5.707 19.707 5 19H4V5h2v11.586L18.293 4.293 19 5Z"></path><path class="du gq" d="M5 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm14 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8ZM5 23a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm14 0a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"></path></svg>',
+            ],
         ]);
     }
 }
