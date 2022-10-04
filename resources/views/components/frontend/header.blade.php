@@ -1,4 +1,4 @@
-<header class="text-gray-800 bg-gray-100 hassamulhaq">
+<header class="text-gray-800 bg-gray-100 hassamulhaq px-2 md:px-0">
     <div class="header-top hidden md:block h-6 bg-gray-200">
         <div class="container mx-auto pt-0.5">
             <ul class="info-store list-unstyled flex items-center gap-2">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="whitespace-nowrap text-sm">CART / ₨ 0</span>
-                    <img src="{{ asset('images/system/shopping-cart-svgrepo.svg') }}" alt="cart" class="h-10">
+                    <img src="{{ asset('images/system/shopping-cart-svgrepo.svg') }}" alt="cart" class="h-6 md:h-8">
                 </div>
                 <div class="hidden md:block">
                     <button type="button" class="bg-indigo-600 text-sm text-white px-4 py-1.5 rounded-full">Wishlist 🤍</button>
