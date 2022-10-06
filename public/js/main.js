@@ -146,13 +146,17 @@ export function ajaxRequest(e) {
 
     const url = $form.attr('action')
     const method = $form.attr('method')
+    const formData = new FormData($form[0]);
 
     showSpinner();
     const jqxhr = $.ajax({
         url: url,
         method: method,
-        data: $form.serialize(),
-        dataType: "JSON",
+        data: formData,
+        cache:false,
+        contentType: false,
+        processData: false,
+        dataType: "JSON"
     });
     jqxhr.done(function (response) {
         if (SHOW_CONSOLE_MSG) console.log('done:', response)
