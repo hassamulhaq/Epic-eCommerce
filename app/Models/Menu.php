@@ -50,9 +50,6 @@ class Menu extends Model
 
     //protected $casts = ['menu_type' => Constant::MENU_TYPE];
 
-    protected $keyType = 'string';
-    public $incrementing = false;
-
 
 //    public function submenu(): \Illuminate\Database\Eloquent\Relations\BelongsTo
 //    {
