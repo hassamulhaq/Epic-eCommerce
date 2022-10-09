@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('collection_product', function (Blueprint $table) {
-            //$table->id();
+            $table->id();
             $table->uuid()->unique();
             $table->uuid('collection_id')->nullable(); //->constrained('collections')->cascadeOnDelete();
             $table->uuid('product_id')->nullable();  //->constrained('products')->cascadeOnDelete();
             $table->timestamps();
 
-            $table->foreign('collection_id')->references('id')->on('collections')->cascadeOnDelete();
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreign('collection_id')->references('uuid')->on('collections')->cascadeOnDelete();
+            $table->foreign('product_id')->references('uuid')->on('products')->cascadeOnDelete();
         });
     }
 

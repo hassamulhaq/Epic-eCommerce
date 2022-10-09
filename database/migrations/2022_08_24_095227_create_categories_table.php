@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            //$table->id();
-            $table->uuid('id')->unique();
+            $table->id();
+            $table->uuid()->unique();
             $table->string('title', 255);
             $table->string('slug', 300);
             $table->text('description')->nullable();

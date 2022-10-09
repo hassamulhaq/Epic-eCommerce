@@ -10,20 +10,27 @@ class ProductAttribute extends Model
 
     protected $fillable = [
         'attribute',
-        'value'
+        'value',
+        'uuid'
     ];
 
-    protected $keyType = 'string';
-    public $incrementing = false;
+    //protected $primaryKey = 'uuid';
+    //protected $keyType = 'string';
+    //public $incrementing = false;
 
     public static function boot() {
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->id)) {
-                $model->id = Uuid::uuid4()->toString();
+            if (empty($model->uuid)) {
+                $model->uuid = Uuid::uuid4()->toString();
             }
         });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 
 }

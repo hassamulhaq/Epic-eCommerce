@@ -11,32 +11,32 @@ class CategorySeeder extends Seeder
     {
         \DB::table('categories')->insert([
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Uncategorized',
                 'slug' => \Str::slug('Uncategorized')
             ],
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Men',
                 'slug' => \Str::slug('Men')
             ],
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Women',
                 'slug' => \Str::slug('Women')
             ],
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Shoes',
                 'slug' => \Str::slug('Shoes')
             ],
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Kitchen',
                 'slug' => \Str::slug('Kitchen')
             ],
             [
-                'id' => Uuid::uuid4()->toString(),
+                'uuid' => Uuid::uuid4()->toString(),
                 'title' => 'Office',
                 'slug' => \Str::slug('Office')
             ]

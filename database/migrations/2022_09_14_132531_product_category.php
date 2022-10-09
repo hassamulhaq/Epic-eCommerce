@@ -8,14 +8,14 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('product_category', function (Blueprint $table) {
-            //$table->id();
-            $table->uuid('id')->unique();
+            $table->id();
+            $table->uuid()->unique();
             $table->uuid('product_id')->nullable();//->constrained('products')->cascadeOnDelete();
             $table->uuid('category_id')->nullable();//->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->foreign('product_id')->references('uuid')->on('products')->cascadeOnDelete();
+            $table->foreign('category_id')->references('uuid')->on('categories')->cascadeOnDelete();
         });
     }
 

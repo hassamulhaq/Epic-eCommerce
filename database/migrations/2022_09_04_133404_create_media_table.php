@@ -10,11 +10,8 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            //$table->morphs('model');
-            $table->uuidMorphs('model');
-
-
+            //$table->morphs('model'); // default
+            $table->uuidMorphs('model'); // modified
             $table->uuid('uuid')->nullable()->unique();
             $table->string('collection_name');
             $table->string('name');
