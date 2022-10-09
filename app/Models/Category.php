@@ -12,6 +12,9 @@ class Category extends Model
 
     protected $fillable = ['title', 'slug', 'description', 'short_description'];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_category');

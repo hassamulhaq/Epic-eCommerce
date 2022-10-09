@@ -11,4 +11,7 @@ class ProductAttribute extends Model
         'attribute',
         'value'
     ];
+
+    protected $keyType = 'string';
+    public $incrementing = false;
 }

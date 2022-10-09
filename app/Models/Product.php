@@ -57,6 +57,9 @@ class Product extends Model implements HasMedia
         'published_at'
     ];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     public static function boot() {
         parent::boot();
 
@@ -67,10 +70,10 @@ class Product extends Model implements HasMedia
         });
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
+//    public function getRouteKeyName(): string
+//    {
+//        return 'id';
+//    }
 
 
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

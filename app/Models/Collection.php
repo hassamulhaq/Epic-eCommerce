@@ -11,6 +11,9 @@ class Collection extends Model
 
     protected $fillable = ['title', 'slug', 'description'];
 
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     /**
      * Return the sluggable configuration array for this model.
      *
