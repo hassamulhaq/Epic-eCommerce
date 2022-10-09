@@ -8,6 +8,7 @@ use App\Models\ProductAttribute;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use JetBrains\PhpStorm\ArrayShape;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductService
@@ -60,6 +61,7 @@ class ProductService
                 $attributeArr = [];
                 $count = count($request['attribute']['key']);
                 for ($i = 0; $i < $count; $i++) {
+                    $attributeArr[$i]['id'] = Uuid::uuid4()->toString();
                     $attributeArr[$i]['product_id'] = $product->id;
                     $attributeArr[$i]['attribute'] = $request['attribute']['key'][$i];
                     $attributeArr[$i]['value'] = $request['attribute']['value'][$i];

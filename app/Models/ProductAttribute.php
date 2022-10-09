@@ -9,7 +9,6 @@ class ProductAttribute extends Model
 {
 
     protected $fillable = [
-        'id',
         'attribute',
         'value'
     ];
