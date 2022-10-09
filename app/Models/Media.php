@@ -8,7 +8,4 @@ use Ramsey\Uuid\Uuid;
 class Media extends Model
 {
 
-    protected $primaryKey = 'uuid';
-    protected $keyType = 'string';
-    public $incrementing = false;
 }

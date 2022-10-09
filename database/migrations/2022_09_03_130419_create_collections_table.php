@@ -9,10 +9,10 @@ return new class extends Migration {
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->unique();
             $table->string('title', 200);
             $table->string('slug');
             $table->text('description')->nullable();
+
             $table->timestamps();
         });
     }

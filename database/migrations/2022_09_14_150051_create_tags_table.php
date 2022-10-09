@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->uuid()->unique();
             $table->string('tags', 500)->nullable();
+
             $table->timestamps();
         });
     }

@@ -32,7 +32,6 @@ class Product extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'uuid',
         'title',
         'slug',
         'short_description',
@@ -56,25 +55,6 @@ class Product extends Model implements HasMedia
         'published_at'
     ];
 
-    //protected $primaryKey = 'uuid';
-    //protected $keyType = 'string';
-    //public $incrementing = false;
-
-    public static function boot() {
-        parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->uuid)) {
-                $model->uuid = Uuid::uuid4()->toString();
-            }
-        });
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'uuid';
-    }
-
 
     public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
@@ -83,7 +63,7 @@ class Product extends Model implements HasMedia
 
     public function collections(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Collection::class);
+        return $this->belongsToMany(Collection::class, 'product_collection');
     }
 
     public function attributes(): \Illuminate\Database\Eloquent\Relations\HasMany

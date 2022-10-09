@@ -7,12 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('product_attributes', function (Blueprint $table) {
-            // EAV table for products
+        Schema::create('product_collection', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->string('attribute')->nullable();
-            $table->string('value')->nullable();
+            $table->foreignId('collection_id')->constrained('collections')->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -20,6 +18,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('product_attributes');
+        Schema::dropIfExists('product_collection');
     }
 };
