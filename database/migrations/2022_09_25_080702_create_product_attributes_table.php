@@ -9,12 +9,15 @@ return new class extends Migration {
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             // EAV table for products
-            $table->id();
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
+            //$table->id();
+            $table->uuid('id')->unique();
+            $table->uuid('product_id')->nullable(); //->constrained('products')->cascadeOnDelete();
             $table->string('attribute')->nullable();
             $table->string('value')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
         });
     }
 

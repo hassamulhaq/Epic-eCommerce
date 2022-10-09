@@ -162,7 +162,7 @@ export function ajaxRequest(e) {
         if (SHOW_CONSOLE_MSG) console.log('done:', response)
         removeSpinner()
         alertAjaxResponse(response);
-        $form.trigger('reset')
+        if (response.success) $form.trigger('reset')
     })
     jqxhr.fail(function (response) {
         if (SHOW_CONSOLE_MSG) console.log('fail:', response)

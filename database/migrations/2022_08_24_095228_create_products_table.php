@@ -8,7 +8,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
+            $table->uuid('id')->unique();
             $table->string('title', 200);
             $table->string('slug')->unique();
             $table->string('short_description', 1000)->nullable();

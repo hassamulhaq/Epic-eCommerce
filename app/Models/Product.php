@@ -33,7 +33,6 @@ class Product extends Model implements HasMedia
 
     protected $fillable = [
         'id',
-        'uuid',
         'title',
         'slug',
         'short_description',
@@ -64,8 +63,8 @@ class Product extends Model implements HasMedia
         parent::boot();
 
         static::creating(function ($model) {
-            if (empty($model->uuid)) {
-                $model->uuid = Uuid::uuid4()->toString();
+            if (empty($model->id)) {
+                $model->id = Uuid::uuid4()->toString();
             }
         });
     }

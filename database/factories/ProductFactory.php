@@ -19,7 +19,7 @@ class ProductFactory extends Factory
         $title = $this->faker->sentence();
 
         return [
-            'uuid' => Uuid::uuid4()->toString(),
+            'id' => Uuid::uuid4()->toString(),
             'title' => $title,
             'slug' => Str::slug($title),
             'short_description' => $this->faker->text(),
