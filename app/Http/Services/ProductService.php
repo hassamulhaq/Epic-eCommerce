@@ -61,8 +61,8 @@ class ProductService
                 $attributeArr = [];
                 $count = count($request['attribute']['key']);
                 for ($i = 0; $i < $count; $i++) {
-                    $attributeArr[$i]['id'] = Uuid::uuid4()->toString();
-                    $attributeArr[$i]['product_id'] = $product->id;
+                    $attributeArr[$i]['uuid'] = Uuid::uuid4()->toString();
+                    $attributeArr[$i]['product_id'] = $product->getRouteKey(); // we set in Model uuid as route key
                     $attributeArr[$i]['attribute'] = $request['attribute']['key'][$i];
                     $attributeArr[$i]['value'] = $request['attribute']['value'][$i];
                 }
