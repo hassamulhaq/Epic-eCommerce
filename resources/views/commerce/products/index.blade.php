@@ -75,7 +75,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
+                @foreach($products as $index => $product)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="pl-4 pr-1 py-1 w-4">
                             <div class="flex items-center">
@@ -91,18 +91,18 @@
                             @endif
                         </th>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ \Illuminate\Support\Str::limit($product->title, 40) }}
+                            {{ \Illuminate\Support\Str::limit($product->productFlat->title, 40) }}
                         </th>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            {{ $product->sku ?? 'N/A' }}
+                            {{ $product->productFlat->sku ?? 'N/A' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             <span class="whitespace-nowrap bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-                                {{ $product->stock_status }}
+                                {{ $product->productFlat->stock_status }}
                             </span>
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            {{ $product->price ?? '-' }}
+                            {{ $product->productFlat->price ?? '-' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             <div class="w-40 flex items-center {{ count($product->categories) ? 'h-20' : '' }} overflow-y-auto">
@@ -114,7 +114,7 @@
                             </div>
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            {{ ($product->featured) ? '⭐' : '✭' }}
+                            {{ ($product->productFlat->featured) ? '⭐' : '✭' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
                             <span class="">Published: </span>

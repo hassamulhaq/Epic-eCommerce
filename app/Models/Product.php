@@ -81,8 +81,8 @@ class Product extends Model implements HasMedia
 //    }
 
     // used in factory
-    public function productFlat(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productFlat(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(ProductFlat::class, 'product_id');
+        return $this->hasOne(ProductFlat::class, 'product_id');
     }
 }
