@@ -40,4 +40,20 @@ class ProductHelper
         'path' => 'images/system/placeholder_image.jpg',
         'alt' => 'placeholder'
     ];
+
+
+    const IS_FEATURED = [
+        'default' => 0,
+        'true' => 1
+    ];
+
+    const IS_NEW = [
+        'default' => 0,
+        'true' => 1
+    ];
+
+    const IS_SOLD_INDIVIDUAL = [
+        'default' => 0,
+        'true' => 1
+    ];
 }

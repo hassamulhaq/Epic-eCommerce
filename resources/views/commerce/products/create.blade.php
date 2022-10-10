@@ -130,7 +130,7 @@
                 <div class=""><h6 class="inter-base-semibold text-grey-90 mr-1.5">General & Shipping</h6></div>
                 <div class="flex flex-col mb-2 mt-2">
                     <div class="md:flex lg:flex md:flex-1 lg:flex-1 md:gap-x-8 lg:gap-x-8">
-                        <div class="flex-1 grid grid-cols-2 gap-x-2 gap-y-4 mb-2.5 mt-2.5">
+                        <div class="flex-1 grid grid-cols-2 content-start gap-x-2 mb-2.5 mt-2.5">
                             <div class="mb-3">
                                 <div class="relative">
                                     <input type="text" id="length" name="dimensions[length]" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
@@ -155,8 +155,24 @@
                                     <label for="weight" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Weight (grams)</label>
                                 </div>
                             </div>
+
+
+                            <div class="mb-3 flex items-center block h-12 px-2.5 pb-2.5 pt-4 w-full rounded-lg border border-1 border-gray-300 appearance-none dark:border-gray-600">
+                                <input id="featured" type="checkbox" name="featured" value="1" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="featured" class="py-3 ml-2 mb-0 w-full text-sm text-gray-500 dark:text-gray-300">featured</label>
+                            </div>
+                            <div class="mb-3 flex items-center block h-12 px-2.5 pb-2.5 pt-4 w-full rounded-lg border border-1 border-gray-300 appearance-none dark:border-gray-600">
+                                <input id="new" type="checkbox" name="new" value="1" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="new" class="py-3 ml-2 mb-0 w-full text-sm text-gray-500 dark:text-gray-300">New</label>
+                            </div>
+                            <div class="mb-3 flex items-center block h-12 px-2.5 pb-2.5 pt-4 w-full rounded-lg border border-1 border-gray-300 appearance-none dark:border-gray-600">
+                                <input id="sold_individual" type="checkbox" name="sold_individual" value="1" class="w-4 h-4 text-indigo-600 bg-gray-100 rounded border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="sold_individual" class="py-3 ml-2 mb-0 w-full text-sm text-gray-500 dark:text-gray-300">Sold Individual</label>
+                            </div>
+
                         </div>
-                        <div class="flex-1 grid grid-cols-2 gap-x-2 gap-y-4 mb-2.5 mt-2.5">
+
+                        <div class="flex-1 grid grid-cols-2 gap-x-2 mb-2.5 content-start mt-2.5">
                             <div class="mb-3">
                                 <div class="relative">
                                     <input type="text" id="width" name="sku" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
@@ -171,6 +187,12 @@
                             </div>
                             <div class="mb-3">
                                 <div class="relative">
+                                    <input type="text" id="product_number" name="product_number" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="product_number"  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Product Number</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
                                     <input type="number" id="price" name="price" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
                                     <label for="price" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Price</label>
                                 </div>
@@ -179,6 +201,30 @@
                                 <div class="relative">
                                     <input type="number" id="regular_price" name="regular_price" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
                                     <label for="regular_price" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Regular Price</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="number" id="cost" name="cost" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="cost" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Cost</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="number" id="special_price" name="special_price" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="special_price" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Special Price</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="date" id="special_price_from" name="special_price_from" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="special_price_from" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Special Price From</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="relative">
+                                    <input type="date" id="special_price_to" name="special_price_to" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-indigo-500 focus:outline-none focus:border-indigo-600 peer" placeholder=" " />
+                                    <label for="special_price_to" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-indigo-600 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Special Price To</label>
                                 </div>
                             </div>
                         </div>

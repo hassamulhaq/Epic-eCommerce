@@ -3,8 +3,10 @@
 namespace App\Http\Services;
 
 use App\Helpers\Constant;
+use App\Helpers\ProductHelper;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\ProductFlat;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use JetBrains\PhpStorm\ArrayShape;
@@ -24,28 +26,38 @@ class ProductService
     {
         \DB::beginTransaction();
         try {
-            $product = Product::create(
-                [
-                    'title' => $request['title'],
-                    'slug' => $request['slug'],
-                    'short_description' => $request['short_description'],
-                    'tags' => $request['tags'],
-                    'length' => $request['dimensions']['length'],
-                    'width' => $request['dimensions']['width'],
-                    'height' => $request['dimensions']['height'],
-                    'weight' => $request['weight'],
-                    'sku' => $request['sku'],
-                    'mid_code' => $request['mid_code'],
-                    'price' => $request['price'],
-                    'regular_price' => $request['regular_price'],
-                    'stock_quantity' => $request['stock_quantity'],
-                    'backorders' => $request['backorders'],
-                    'low_stock_amount' => $request['low_stock_amount'],
-                    'stock_status' => $request['stock_status'],
-                    'description' => $request['description'],
-                    'status' => $request['status'],
-                    'published_at' => Carbon::now()->toDateTimeString()
-                ]);
+            $product = Product::create($request);
+
+            $productFlat = ProductFlat::create([
+                'product_id' => $product->id,
+                'title' => $request['title'],
+                'slug' => $request['slug'],
+                'short_description' => $request['short_description'],
+                'tags' => $request['tags'],
+                'length' => $request['dimensions']['length'],
+                'width' => $request['dimensions']['width'],
+                'height' => $request['dimensions']['height'],
+                'weight' => $request['weight'],
+                'sku' => $request['sku'],
+                'mid_code' => $request['mid_code'],
+                'product_number' => $request['product_number'],
+                'price' => $request['price'],
+                'regular_price' => $request['regular_price'],
+                'cost' => $request['cost'],
+                'special_price' => $request['special_price'],
+                'special_price_from' => $request['special_price_from'],
+                'special_price_to' => $request['special_price_to'],
+                'stock_quantity' => $request['stock_quantity'],
+                'backorders' => $request['backorders'],
+                'low_stock_amount' => $request['low_stock_amount'],
+                'stock_status' => $request['stock_status'],
+                'description' => $request['description'],
+                'featured' => $request['featured'] ?? ProductHelper::IS_FEATURED['default'],
+                'new' => $request['new'] ?? ProductHelper::IS_NEW['default'],
+                'sold_individual' => $request['sold_individual'] ?? ProductHelper::IS_SOLD_INDIVIDUAL['default'],
+                'status' => $request['status'],
+                'published_at' => Carbon::now()->toDateTimeString()
+            ]);
 
 
             if (array_key_exists('categories', $request)) {

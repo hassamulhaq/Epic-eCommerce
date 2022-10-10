@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ProductHelper;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,10 +14,15 @@ class ProductFlat extends Model
     protected $table = 'product_flat';
 
     protected $casts = [
-        'published_at' => 'timestamp'
+        'published_at' => 'timestamp',
+        'featured' => 'int',
+        'new' => 'int',
+        'sold_individual' => 'int',
+        'status' => 'int'
     ];
 
     protected $fillable = [
+        'product_id',
         'title',
         'slug',
         'short_description',
