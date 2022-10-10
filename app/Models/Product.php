@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,6 +33,7 @@ class Product extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'uuid',
         'title',
         'slug',
         'short_description',
@@ -89,4 +91,21 @@ class Product extends Model implements HasMedia
             ]
         ];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating( function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = Str::uuid()->toString();
+            }
+        });
+
+    }
+
+//    public function getKeyName(): string
+//    {
+//        return 'uuid';
+//    }
 }

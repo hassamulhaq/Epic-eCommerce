@@ -10,7 +10,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::factory()
-            ->count(30)
+            ->count(6)
             ->create();
     }
 }
