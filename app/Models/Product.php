@@ -26,7 +26,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  */
 class Product extends Model implements HasMedia
 {
-    use InteractsWithMedia, Sluggable, HasFactory;
+    use InteractsWithMedia, HasFactory;
 
     protected $casts = [
         'published_at' => 'timestamp'
