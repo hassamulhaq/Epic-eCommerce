@@ -34,26 +34,9 @@ class Product extends Model implements HasMedia
 
     protected $fillable = [
         'uuid',
-        'title',
-        'slug',
-        'short_description',
-        'category_id',
-        'tags',
-        'length',
-        'width',
-        'height',
-        'weight',
+        'type',
         'sku',
-        'mid_code',
-        'price',
-        'regular_price',
-        'stock_quantity',
-        'backorders',
-        'low_stock_amount',
-        'stock_status',
-        'description',
-        'featured',
-        'status',
+        'additional',
         'published_at'
     ];
 
@@ -78,19 +61,7 @@ class Product extends Model implements HasMedia
         return $this->morphOne(Product::class);
     }
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-     public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'title'
-            ]
-        ];
-    }
+
 
     protected static function boot()
     {
@@ -108,4 +79,10 @@ class Product extends Model implements HasMedia
 //    {
 //        return 'uuid';
 //    }
+
+    // used in factory
+    public function productFlat(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductFlat::class, 'product_id');
+    }
 }
