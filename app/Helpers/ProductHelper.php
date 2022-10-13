@@ -30,9 +30,9 @@ class ProductHelper
      * just add new entry at very bottom
      * */
     const PRODUCT_TYPE = [
-        'simple' => 0,
-        'variable' => 1,
-        'external' => 2
+        'simple' => 1,
+        'variable' => 2,
+        'external' => 3
     ];
 
 

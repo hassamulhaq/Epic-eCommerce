@@ -99,8 +99,8 @@ Route::prefix('admin')
 Route::get('shop', [ShopController::class, 'index'])->name('shop');
 
 
-Route::prefix('product')
-    ->name('product.')
+Route::prefix('products')
+    ->name('products.')
     ->group(function () {
         Route::get('/{product:slug}', [ProductsController::class, 'singleProduct'])->name('product:slug');
     });

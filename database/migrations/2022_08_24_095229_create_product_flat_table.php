@@ -10,6 +10,7 @@ return new class extends Migration {
     {
         Schema::create('product_flat', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->string('title', 200);
             $table->string('slug')->unique();
@@ -37,6 +38,7 @@ return new class extends Migration {
             $table->tinyInteger('new')->default(ProductHelper::IS_NEW['default'])->comment('0=not_new, 1=new');
             $table->tinyInteger('sold_individual')->default(ProductHelper::IS_SOLD_INDIVIDUAL['default'])->comment('0=no, 1=yes');
             $table->tinyInteger('status')->default(ProductHelper::PRODUCT_STATUS['draft'])->comment('0=draft, 1=published, 2=trashed');
+            $table->foreignId('parent_id')->nullable()->constrained('product_flat');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });

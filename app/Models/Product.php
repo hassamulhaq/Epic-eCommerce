@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ProductHelper;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,20 +25,20 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Product extends Model implements HasMedia
+class Product extends Model
 {
-    use InteractsWithMedia, HasFactory;
+    use HasFactory;
 
     protected $casts = [
-        'published_at' => 'timestamp'
+        'type' => 'string',
+        'sku' => 'string'
     ];
 
     protected $fillable = [
-        'uuid',
         'type',
         'sku',
         'additional',
-        'published_at'
+        'parent_id'
     ];
 
 
@@ -61,28 +62,14 @@ class Product extends Model implements HasMedia
         return $this->morphOne(Product::class);
     }
 
-
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        self::creating( function ($model) {
-            if (empty($model->uuid)) {
-                $model->uuid = Str::uuid()->toString();
-            }
-        });
-
-    }
-
-//    public function getKeyName(): string
-//    {
-//        return 'uuid';
-//    }
-
     // used in factory
     public function productFlat(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(ProductFlat::class, 'product_id');
+    }
+
+    public function publishedProductFlat(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->productFlat()->where('status', ProductHelper::PRODUCT_STATUS['published']);
     }
 }

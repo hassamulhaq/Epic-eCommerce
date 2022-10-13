@@ -21,8 +21,11 @@ class ProductFlatFactory extends Factory
         $title = $this->faker->sentence();
         $slug = Str::slug($title);
 
+        $uuid = Str::uuid()->toString();
+
         return [
             //'product_id' => $product->id,
+            'uuid' => $uuid,
             'title' => $title,
             'slug' => $slug,
             'short_description' => $this->faker->text(),
@@ -46,7 +49,7 @@ class ProductFlatFactory extends Factory
             'status' => Arr::random(ProductHelper::PRODUCT_STATUS),
             'published_at' => Carbon::now(),
             'created_at' => Carbon::now(),
-            'updated_at' => null,
+            'updated_at' => null
         ];
     }
 }

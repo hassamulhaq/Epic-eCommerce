@@ -71,9 +71,8 @@ class ProductsController extends Controller
     }
 
 
-    public function singleProduct(Product $product)
+    public function singleProduct(ProductFlat $product)
     {
-
         return view('frontend.shop.simple-product', compact(['product']));
     }
 

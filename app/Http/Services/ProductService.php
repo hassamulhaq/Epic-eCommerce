@@ -9,6 +9,7 @@ use App\Models\ProductAttribute;
 use App\Models\ProductFlat;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -24,11 +25,14 @@ class ProductService
     #[ArrayShape(['status' => "string", 'status_code' => "int|mixed", 'success' => "string", 'error' => "string"])]
     public function store($request): array
     {
+        $published_at = Carbon::now()->toDateTimeString();
+
         \DB::beginTransaction();
+
         try {
             $product = Product::create($request);
 
-            $productFlat = ProductFlat::create([
+            $productFlat = $product->productFlat()->create([
                 'product_id' => $product->id,
                 'title' => $request['title'],
                 'slug' => $request['slug'],
@@ -56,7 +60,7 @@ class ProductService
                 'new' => $request['new'] ?? ProductHelper::IS_NEW['default'],
                 'sold_individual' => $request['sold_individual'] ?? ProductHelper::IS_SOLD_INDIVIDUAL['default'],
                 'status' => $request['status'],
-                'published_at' => Carbon::now()->toDateTimeString()
+                'published_at' => $published_at
             ]);
 
 
@@ -82,13 +86,13 @@ class ProductService
 
 
             if (array_key_exists('thumbnail', $request)) {
-                $product->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $request['thumbnail']))->toMediaCollection('thumbnail');
+                $productFlat->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $request['thumbnail']))->toMediaCollection('thumbnail');
             }
 
             // move media
             if (array_key_exists('gallery', $request)) {
                 foreach ($request['gallery'] as $file) {
-                    $product->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $file))->toMediaCollection('gallery');
+                    $productFlat->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $file))->toMediaCollection('gallery');
                 }
             }
 

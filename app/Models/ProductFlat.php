@@ -6,10 +6,13 @@ use App\Helpers\ProductHelper;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class ProductFlat extends Model
+class ProductFlat extends Model implements HasMedia
 {
-    use Sluggable, HasFactory;
+    use Sluggable, HasFactory, InteractsWithMedia;
 
     protected $table = 'product_flat';
 
@@ -23,6 +26,7 @@ class ProductFlat extends Model
 
     protected $fillable = [
         'product_id',
+        'uuid',
         'title',
         'slug',
         'short_description',
@@ -65,4 +69,20 @@ class ProductFlat extends Model
             ]
         ];
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating( function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = Str::uuid()->toString();
+            }
+        });
+    }
+
+//    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+//    {
+//        return $this->belongsToMany(Category::class, 'product_category', 'product_id');
+//    }
 }
