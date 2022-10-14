@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Events\ProductCreatedEvent;
 use App\Helpers\Constant;
 use App\Helpers\ProductHelper;
 use App\Models\Product;
@@ -95,6 +96,9 @@ class ProductService
                     $productFlat->addMedia(storage_path(Constant::MEDIA_TMP_PATH . $file))->toMediaCollection('gallery');
                 }
             }
+
+            // send mail notification
+            \Event::dispatch(new ProductCreatedEvent($product));
 
             \DB::commit();
             $this->response = [
