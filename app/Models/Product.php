@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\ProductHelper;
+use App\Interfaces\ProductInterface;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Product extends Model
+class Product extends Model implements ProductInterface
 {
     use HasFactory;
 
