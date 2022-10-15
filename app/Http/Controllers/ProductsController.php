@@ -73,6 +73,7 @@ class ProductsController extends Controller
 
     public function singleProduct(ProductFlat $product)
     {
+        $product->load('categories');
         return view('frontend.shop.simple-product', compact(['product']));
     }
 

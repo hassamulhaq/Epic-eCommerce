@@ -6,6 +6,7 @@ class ProductHelper
 {
         // prevent to delete this category_id
     const UNCATEGORIZED_CATEGORY_ID = 1;
+    const UNCATEGORIZED_CATEGORY_TITLE = 'Uncategorized';
 
     // prevent to delete this collection_id
     const UNCATEGORIZED_COLLECTION_ID = 1;

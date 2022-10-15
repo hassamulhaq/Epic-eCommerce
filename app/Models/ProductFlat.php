@@ -81,8 +81,8 @@ class ProductFlat extends Model implements HasMedia
         });
     }
 
-//    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-//    {
-//        return $this->belongsToMany(Category::class, 'product_category', 'product_id');
-//    }
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'product_category', 'product_id');
+    }
 }

@@ -12,6 +12,7 @@ use \App\Http\Controllers\CategoriesController;
 use \App\Http\Controllers\ShopController;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\WishlistController;
+use \App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,6 +122,25 @@ Route::prefix('customer')
         Route::get('/wishlist', [WishlistController::class, 'index'])->name('index');
         Route::post('/wishlist/{product:id}', [WishlistController::class, 'addOrRemove'])->name('wishlist.add-or-remove');
         Route::post('/wishlist/{product_id}/move-to-cart', [WishlistController::class, 'moveToCart'])->name('wishlist.move-to-cart');
+    });
+
+
+// customers
+Route::prefix('customer')
+    ->name('customer.')
+    ->middleware(['guest'])
+    ->group(function () {
+
+        /**
+         * Add to cart.
+         */
+        Route::prefix('cart')
+            ->name('cart.')
+            ->group( function () {
+                Route::get('/', [CartController::class, 'cart'])->name('cart');
+                Route::post('/', [CartController::class, 'addToCart'])->name('add-to-cart');
+                Route::delete('/remove-to-cart', [CartController::class, 'removeToCart'])->name('remove-to-cart');
+            });
     });
 
 require __DIR__.'/auth.php';
