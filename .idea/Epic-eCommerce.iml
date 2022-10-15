@@ -145,9 +145,17 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/cviebrock/eloquent-sluggable" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/laravel-flash" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yajra/laravel-datatables-oracle" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/rinvex/countries" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/giggsey/locale" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/giggsey/libphonenumber-for-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/caching" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-str" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-arr" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-collection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/coollection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/countries" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/colinodell/json5" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/laravel-permission" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

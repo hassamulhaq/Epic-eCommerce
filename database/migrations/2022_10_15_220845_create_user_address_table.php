@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('user_address', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->unique();
-            $table->foreignId('user_id')->default(\App\Helpers\UserHelper::ROLE_CUSTOMER)->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('address_id')->nullable()->constrained('addresses')->nullOnDelete();
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('user_address');
     }
 };

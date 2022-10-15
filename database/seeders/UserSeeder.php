@@ -13,14 +13,44 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'name' => 'hassam',
+                'id' => 1,
+                'uuid' => Str::uuid()->toString(),
+                'role_id' => 1,
+                'first_name' => 'hassam',
+                'last_name' => null,
+                'username' => 'hassam',
                 'email' => 'devhassam@yahoo.com',
                 'password' => Hash::make('password'),
             ],
             [
-                'name' => Str::random(10),
-                'email' => Str::random(10).'@gmail.com',
+                'id' => 2,
+                'uuid' => Str::uuid()->toString(),
+                'role_id' => 2,
+                'username' => 'admin',
+                'first_name' => 'admin',
+                'last_name' => null,
+                'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
+            ],
+            [
+                'id' => 3,
+                'uuid' => Str::uuid()->toString(),
+                'role_id' => 3,
+                'username' => 'customer',
+                'first_name' => 'customer',
+                'last_name' => null,
+                'email' => 'customer@example.com',
+                'password' => Hash::make('password'),
+            ],
+            [
+                'id' => 4, // don't change id, it used as guest_id in UserHelper.php
+                'uuid' => Str::uuid()->toString(),
+                'role_id' => 4,
+                'first_name' => 'guest',
+                'last_name' => 'user',
+                'username' => 'guest',
+                'email' => 'guest@example.com',
+                'password' => Hash::make('password')
             ]
         ]);
     }

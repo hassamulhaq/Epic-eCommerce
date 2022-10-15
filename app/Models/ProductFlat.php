@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Helpers\ProductHelper;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -76,7 +76,7 @@ class ProductFlat extends Model implements HasMedia
 
         self::creating( function ($model) {
             if (empty($model->uuid)) {
-                $model->uuid = Str::uuid()->toString();
+                $model->uuid = Uuid::uuid4()->toString();
             }
         });
     }
