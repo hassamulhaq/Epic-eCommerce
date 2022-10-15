@@ -33,7 +33,8 @@ class ProductHelper
     const PRODUCT_TYPE = [
         'simple' => 1,
         'variable' => 2,
-        'external' => 3
+        'external' => 3,
+        'grouped' => 4,
     ];
 
 
