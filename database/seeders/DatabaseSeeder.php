@@ -27,7 +27,12 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             CollectionSeeder::class,
             CategorySeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            LocalesTableSeeder::class,
+            CurrencyTableSeeder::class,
+            CountriesTableSeeder::class,
+            StatesTableSeeder::class,
+            CountryStateTranslationSeeder::class
         ]);
     }
 }
