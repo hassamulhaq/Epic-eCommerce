@@ -19,6 +19,7 @@
         "laravel/framework": "^v9.27.0",
         "laravel/sanctum": "^v3.0.1",
         "laravel/tinker": "^v2.7.2",
+        "laraveldaily/laravel-permissions-ui": "^0.1.0",
         "livewire/livewire": "^v2.10.7",
         "opcodesio/log-viewer": "^v1.6.2",
         "pragmarx/countries": "^v0.8.2",
