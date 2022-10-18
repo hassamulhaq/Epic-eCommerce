@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\UserHelper;
 use App\Http\Requests\AddToCartRequest;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\ProductFlat;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -55,23 +56,20 @@ class CartController extends Controller
         try {
             $cart = Cart::updateOrCreate([
                 'user_id' => $userId
-            ], [
-                    'user_id' => $userId
-                ]
-            );
-
+            ]);
             ($cart->wasRecentlyCreated) ? $cart->update(['items_count' => 1]) : $cart->increment('items_count');
 
-            $cart->cartItems()->create([
-                'product_id' => $productFlat->product_id, // product, product_flat:product_id both are same and hasOne relation
-                'quantity' => $request->input('quantity'),
+            $cartItem = $cart->cartItems()->updateOrCreate([
+                'product_id' => $productFlat->product_id,
+                //'quantity' => $request->input('quantity'),
             ]);
+            ($cartItem->wasRecentlyCreated) ? $cartItem->update(['quantity' => $request->input('quantity')]) : $cartItem->increment('quantity', $request->input('quantity'));
 
             \DB::commit();
             $this->response = [
                 'success' => true,
                 'status_code' => 201,
-                'reload' => false,
+                'reload' => true,
                 'message' => __('cart.product_added_to_cart'),
                 'data' => []
             ];
@@ -79,7 +77,7 @@ class CartController extends Controller
         } catch (\Exception $e) {
             \DB::rollback();
             $this->response = [
-                'success' => false,
+                'success' => true,
                 'status' => 'error',
                 'status_code' => $e->getCode(),
                 'type' => 'try_catch exception',

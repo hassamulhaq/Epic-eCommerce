@@ -137,10 +137,12 @@ Route::prefix('customer')
         Route::prefix('cart')
             ->name('cart.')
             ->group( function () {
-                Route::get('/', [CartController::class, 'cart'])->name('cart');
+                //Route::get('/', [CartController::class, 'cart'])->name('index');
                 Route::post('/', [CartController::class, 'addToCart'])->name('add-to-cart');
                 Route::delete('/remove-to-cart', [CartController::class, 'removeToCart'])->name('remove-to-cart');
             });
     });
+
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
 
 require __DIR__.'/auth.php';

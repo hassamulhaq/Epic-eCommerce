@@ -35,8 +35,7 @@
                     <input type="text" id="search" name="search" placeholder="Search..." class="w-full h-10 bg-gray-100 rounded-full border border-indigo-300">
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="whitespace-nowrap text-sm">CART / ₨ 0</span>
-                    <img src="{{ asset('images/system/shopping-cart-svgrepo.svg') }}" alt="cart" class="h-6 md:h-8">
+                    <x-cart-icon-dropdown></x-cart-icon-dropdown>
                 </div>
                 <div class="hidden md:block">
                     <button type="button" class="bg-indigo-600 text-sm text-white px-4 py-1.5 rounded-full">Wishlist 🤍</button>

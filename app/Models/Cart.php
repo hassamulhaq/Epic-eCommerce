@@ -32,4 +32,9 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class, 'cart_id');
     }
+
+    public function CartItemsWithProduct(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->cartItems()->with('product.productFlat');
+    }
 }

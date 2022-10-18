@@ -201,6 +201,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\FlashServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\CartServiceProvider::class,
     ],
 
     /*
