@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('name');
             $table->uuid()->unique()->after('id');
-            $table->foreignId('role_id')->after('id')->constrained('roles');
+            $table->foreignId('role_id')->nullable()->after('id')->constrained('roles');
             $table->string('username')->unique()->after('role_id');
             $table->string('first_name')->nullable()->after('username');
             $table->string('last_name')->nullable()->after('first_name');

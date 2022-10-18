@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\UserHelper;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -22,19 +23,33 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // create roles and assign created permissions
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
 
-        Role::create(['name' => 'admin'])
-            ->givePermissionTo(['edit products', 'delete products', 'publish products', 'update products']);
+//        Role::unguard();
+//
+//        $role = Role::create([
+//            'id' => UserHelper::ROLE_GUEST,
+//            'name' => 'guest'
+//        ]);
+//        $role->givePermissionTo(['place order']);
+
+        Role::create([
+            'id' => UserHelper::ROLE_SUPER_ADMIN,
+            'name' => 'super-admin'
+        ])->givePermissionTo(Permission::all());
 
 
         // this can be done as separate statements
-        $role = Role::create(['name' => 'customer']);
-        $role->givePermissionTo('place order');
+        $role = Role::create([
+            'id' => UserHelper::ROLE_ADMIN,
+            'name' => 'admin'
+        ]);
+        $role->givePermissionTo('edit products', 'delete products', 'publish products', 'update products');
 
         // or may be done by chaining
-        $role = Role::create(['name' => 'guest']);
+        $role = Role::create([
+            'id' => UserHelper::ROLE_CUSTOMER,
+            'name' => 'customer'
+        ]);
         $role->givePermissionTo(['place order']);
     }
 }

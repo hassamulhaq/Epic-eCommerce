@@ -128,7 +128,7 @@ Route::prefix('customer')
 // customers
 Route::prefix('customer')
     ->name('customer.')
-    ->middleware(['guest'])
+    ->middleware(['web'])
     ->group(function () {
 
         /**

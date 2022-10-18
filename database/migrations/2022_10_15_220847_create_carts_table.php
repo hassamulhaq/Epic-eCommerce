@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->foreignId('user_id')->default(\App\Helpers\UserHelper::ROLE_CUSTOMER)->constrained('users');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }
