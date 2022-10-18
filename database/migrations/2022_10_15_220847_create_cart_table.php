@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             //$table->uuid()->unique();
             $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->integer('items_count')->nullable()->default(0);
             $table->timestamps();
         });
     }

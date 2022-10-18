@@ -10,7 +10,7 @@ class Cart extends Model
 {
     protected $table = 'cart';
 
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'items_count'];
 
     protected $casts = [
         //'user_id' => UserHelper::ROLE_GUEST // default user_id in-case of guest checkout
