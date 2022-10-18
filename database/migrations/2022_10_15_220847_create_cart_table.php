@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('cart', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->unique();
+            //$table->uuid()->unique();
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
@@ -17,6 +17,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('cart');
     }
 };

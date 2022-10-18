@@ -42,18 +42,19 @@ class CartController extends Controller
     }
 
     public function addToCart(AddToCartRequest $request) {
-        $product = ProductFlat::whereUuid($request->input('product_uuid'))->first();
+        $productFlat = ProductFlat::whereUuid($request->input('product_uuid'))->first();
 
         $userId = (auth()->guest()) ? UserHelper::ROLE_GUEST :  auth()->id();
 
-        \DB::transaction( function () use ($userId) {
+        \DB::transaction( function () use ($userId, $productFlat, $request) {
             $cart = Cart::create([
                 'user_id' => $userId
             ]);
 
-            dd($cart);
+            $cart->cartItems()->create([
+                'product_id' => $productFlat->product_id, // product, product_flat:product_id both are same and hasOne relation
+                'quantity' => $request->integer('quantity', 1),
+            ]);
         });
-
-        Cart::create($request->validated());
     }
 }
