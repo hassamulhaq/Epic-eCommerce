@@ -29,6 +29,7 @@
         "yajra/laravel-datatables-oracle": "10.0.*"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-ide-helper": "^2.12.3",
         "fakerphp/faker": "^1.20.0",
         "laravel/breeze": "^v1.14.0",
@@ -68,7 +69,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper"
+            ]
         }
     },
     "config": {
