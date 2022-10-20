@@ -9,9 +9,21 @@ return new class extends Migration {
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-
-
-
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained('products')->nullOnDelete();
+            $table->string('product_type')->nullable()->default(\App\Helpers\ProductHelper::PRODUCT_TYPE['simple']);
+            $table->string('sku')->index();
+            $table->string('total_weight')->nullable();
+            $table->string('base_total_weight')->nullable();
+            $table->string('item_quantity')->nullable();
+            $table->decimal('price', 12, 4)->default(0)->comment('per_item_price');
+            $table->decimal('base_price', 12, 4)->default(0)->comment('per_item_price');
+            $table->decimal('tax_percent', 12, 4)->nullable()->default(0);
+            $table->decimal('total_tax', 12, 4)->nullable();
+            $table->decimal('base_total_tax', 12, 4)->nullable();
+            $table->decimal('total', 12, 4)->default(0);
+            $table->decimal('base_total', 12, 4)->default(0);
+            $table->json('additional')->nullable();
             $table->timestamps();
         });
     }
