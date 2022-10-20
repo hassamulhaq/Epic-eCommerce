@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained('products')->nullOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete();
             $table->string('product_type')->nullable()->default(\App\Helpers\ProductHelper::PRODUCT_TYPE['simple']);
             $table->string('sku')->index();
             $table->string('total_weight')->nullable();

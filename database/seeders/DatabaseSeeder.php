@@ -32,7 +32,10 @@ class DatabaseSeeder extends Seeder
             CurrencyTableSeeder::class,
             CountriesTableSeeder::class,
             StatesTableSeeder::class,
-            CountryStateTranslationSeeder::class
+            CountryStateTranslationSeeder::class,
+            PaymentTypeSeeder::class,
+            PaymentMethodSeeder::class,
+            UserPaymentMethodSeeder::class
         ]);
     }
 }

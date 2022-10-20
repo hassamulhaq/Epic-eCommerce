@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->decimal('shipping_tax', 12, 4)->default(0);
             $table->decimal('grand_total', 12, 4)->default(0);
             $table->decimal('base_grand_total', 12, 4)->default(0)->comment('without including additional charges');
-            $table->foreignId('payment_method_id')->constrained('payment_methods')->nullOnDelete();
+            $table->foreignId('payment_method_id')->nullable()->constrained('payment_methods')->nullOnDelete();
             $table->string('payment_method_title')->nullable();
             $table->string('transaction_id')->nullable()->comment('Unique transaction ID.');
             $table->dateTime('date_paid')->nullable();

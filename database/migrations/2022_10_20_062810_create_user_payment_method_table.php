@@ -10,8 +10,9 @@ return new class extends Migration {
         Schema::create('user_payment_method', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('payment_method_id')->constrained('payment_methods')->nullOnDelete();
+            $table->foreignId('payment_method_id')->nullable()->constrained('payment_methods')->nullOnDelete();
             $table->tinyInteger('is_default')->default(0);
+            $table->tinyInteger('status')->default(1)->comment('0=disabled, 1=enabled');
             $table->timestamps();
         });
     }
