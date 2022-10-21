@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductFlat;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\False_;
 
 class CartController extends Controller
 {
@@ -55,7 +56,19 @@ class CartController extends Controller
         \DB::beginTransaction();
         try {
             $cart = Cart::updateOrCreate([
-                'user_id' => $userId
+                'user_id' => $userId,
+                'is_guest' => is_null($userId),
+                'is_active' => true,
+                'cart_currency_code' => '$',
+                'grand_total' => 0,
+                'base_grand_total' => 0,
+                'sub_total' => 0,
+                'base_sub_total' => 0,
+                'tax_total' => 0,
+                'base_tax_total' => 0,
+                'discount_amount' => 0,
+                'base_discount_amount' => 0,
+                'conversion_time' => now()
             ]);
             ($cart->wasRecentlyCreated) ? $cart->update(['items_count' => 1]) : $cart->increment('items_count');
 
