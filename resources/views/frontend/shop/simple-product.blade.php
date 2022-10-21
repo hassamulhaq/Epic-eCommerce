@@ -80,8 +80,11 @@
                                                    placeholder="" inputmode="numeric">
                                             <input type="button" value="+" class="plus-button cursor-pointer text-indigo-700 border-0 hover:bg-indigo-500 hover:text-white font-medium text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-indigo-800">
                                         </div>
+                                    @else
+                                        <label><input type="hidden" name="quantity" value="1" step="1" min="1" max="1"></label>
                                     @endif
-                                    <button type="submit"
+
+                                        <button type="submit"
                                             title="Add product to wishlist"
                                             data-quantity="1"
                                             class="add_to_cart_button ajax_add_to_cart capitalize bg-indigo-500 px-6 py-2.5 rounded-sm font-light text-white hover:bg-indigo-700 duration-300"

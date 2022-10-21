@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::table('cart_items', function (Blueprint $table) {
             $table->string('sku')->index()->nullable();
-            $table->decimal('weight', 12, 4)->default(0);
-            $table->decimal('total_weight', 12, 4)->default(0);
+            $table->decimal('weight', 8, 2)->default(0);
+            $table->decimal('total_weight', 8, 2)->default(0);
             $table->tinyInteger('item_count')->nullable();
             $table->string('price')->nullable();
             $table->string('base_price')->nullable();

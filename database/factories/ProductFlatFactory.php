@@ -33,7 +33,7 @@ class ProductFlatFactory extends Factory
             'length' => $this->faker->randomNumber(),
             'width' => $this->faker->randomNumber(),
             'height' => $this->faker->randomNumber(),
-            'weight' => $this->faker->randomNumber(),
+            'weight' => Arr::random([0, 700, 500, 1200, 2400, 5000, 7000]),
             //'sku' => '0', // comes from parent_table defined in Product Factory
             'mid_code' => $this->faker->word(),
             'price' => $this->faker->randomDigit(),
