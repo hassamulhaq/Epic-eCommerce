@@ -6,11 +6,13 @@
             <div class="flex mt-8 gap-y-8">
                 <div class="w-3/5">
                     <div class="p-2 rounded-lg hover:drop-shadow-sm">
-                    @if(!is_null($product->getMedia('thumbnail')->first()))
-                        <img class="object-cover rounded w-full" src="{{ $product->getMedia('thumbnail')->first()->getUrl() }}" alt="{{ $product->title }}">
-                    @else
-                        <img class="object-cover rounded w-full" src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}" alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">
-                    @endif
+                        <div class="product-image-wrapper">
+                            @if(!is_null($product->getMedia('thumbnail')->first()))
+                                <img class="block rounded lightense" data-lightense-background="rgba(0, 0, 0, .96)" src="{{ $product->getMedia('thumbnail')->first()->getUrl() }}" alt="{{ $product->title }}">
+                            @else
+                                <img class="block rounded lightense" src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}" alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="w-2/5">
@@ -136,6 +138,10 @@
                     inputNumber.dispatchEvent(change);
                 })
             })
+
+            window.addEventListener('load', function () {
+                Lightense('img:not(.no-lightense), .lightense');
+            }, false);
         </script>
     @endpush
 @endsection
