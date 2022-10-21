@@ -6,9 +6,10 @@
             <div class="flex mt-8 gap-y-8">
                 <div class="w-3/5">
                     <div class="p-2 rounded-lg hover:drop-shadow-sm">
-                        <div class="product-image-wrapper">
+                        <div class="product-image-wrapper relative">
                             @if(!is_null($product->getMedia('thumbnail')->first()))
-                                <img class="block rounded lightense" data-lightense-background="rgba(0, 0, 0, .96)" src="{{ $product->getMedia('thumbnail')->first()->getUrl() }}" alt="{{ $product->title }}">
+                                <img class="block rounded lightense" data-lightense-background="rgba(104,117,245,0.3)" src="{{ $product->getMedia('thumbnail')->first()->getUrl() }}" alt="{{ $product->title }}">
+                                <div class="absolute top-2 left-2 z-10 bg-red-500 text-white px-1">{{ ($product->new) ? 'New' : '' }}</div>
                             @else
                                 <img class="block rounded lightense" src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}" alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">
                             @endif
@@ -19,7 +20,7 @@
                     <div class="product-add-to-cart mt-2" data-quickview="true">
                         <div>
                             <span class="inline-block w-12 h-1 bg-indigo-500"></span>
-                            <h1 class="mt-1 text-2xl font-bold tracking-wide uppercase lg:text-4xl">
+                            <h1 class="mt-1 text-2xl font-bold tracking-wide uppercase">
                                 {{ $product->title }}
                             </h1>
                         </div>
@@ -47,20 +48,39 @@
                                 {{ $product->short_description }}
                             </div>
                         </div>
+                        <div class="stock_wrapper">
+                            @if(!is_null($product->stock_quantity))
+                                <div class="p-1 bg-gray-300 text-white bg-green-400 inline-block text-sm rounded-sm">
+                                    In Stock {{ $product->stock_quantity}}
+                                </div>
+                            @endif
+                                @if($product->stock_status === \App\Helpers\ProductHelper::PRODUCT_STOCK_STATUS[1])
+                                    <div class="p-1 bg-gray-300 text-white bg-red-700 inline-block text-sm rounded-sm">
+                                        {{ Str::ucfirst(\App\Helpers\ProductHelper::PRODUCT_STOCK_STATUS['1']) }}
+                                    </div>
+                                @endif
+                            @if($product->sold_individual)
+                                <div class="p-1 bg-gray-300 text-white bg-green-400 inline-block text-sm rounded-sm">
+                                    Sold Individual
+                                </div>
+                            @endif
+                        </div>
                         <div class="flex items-center mt-6 mb-4">
                             <form id="wishlist-{{ $product->uuid }}" action="{{ route('customer.cart.add-to-cart') }}" method="post" enctype="multipart/form-data">
                                 @csrf
 
                                 <input type="hidden" name="product_uuid" value="{{ $product->uuid }}">
                                 <div class="flex gap-2">
-                                    <div class="quantity-buttons flex justify-between bg-gray-50 border border-indigo-500 rounded-sm shadow-sm">
-                                        <input type="button" value="-" class="minus-button cursor-pointer text-indigo-700 border-0 hover:bg-indigo-500 hover:text-white font-medium text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-indigo-800">
-                                        <input type="number" id="quantity_{{ $product->uuid }}"
-                                               class="input-text qty border-0 w-28 focus:ring-0"
-                                               step="1" min="1" max="{{ $product->stock_quantity ?? 1 }}" name="quantity" value="1" title="Qty" size="4"
-                                               placeholder="" inputmode="numeric">
-                                        <input type="button" value="+" class="plus-button cursor-pointer text-indigo-700 border-0 hover:bg-indigo-500 hover:text-white font-medium text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-indigo-800">
-                                    </div>
+                                    @if(!$product->sold_individual)
+                                        <div class="quantity-buttons flex justify-between bg-gray-50 border border-indigo-500 rounded-sm shadow-sm">
+                                            <input type="button" value="-" class="minus-button cursor-pointer text-indigo-700 border-0 hover:bg-indigo-500 hover:text-white font-medium text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-indigo-800">
+                                            <input type="number" id="quantity_{{ $product->uuid }}"
+                                                   class="input-text qty border-0 w-28 focus:ring-0"
+                                                   step="1" min="1" max="{{ $product->stock_quantity ?? 1 }}" name="quantity" value="1" title="Qty" size="4"
+                                                   placeholder="" inputmode="numeric">
+                                            <input type="button" value="+" class="plus-button cursor-pointer text-indigo-700 border-0 hover:bg-indigo-500 hover:text-white font-medium text-sm p-2.5 text-center inline-flex items-center dark:border-indigo-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-indigo-800">
+                                        </div>
+                                    @endif
                                     <button type="submit"
                                             title="Add product to wishlist"
                                             data-quantity="1"

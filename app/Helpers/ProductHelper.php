@@ -21,6 +21,12 @@ class ProductHelper
         'instock', 'outofstock', 'onbackorder'
     ];
 
+//    const PRODUCT_STOCK_STATUS = [
+//        'instock' => 'Instock',
+//        'outofstock' => 'Out Of stock',
+//        'onbackorder' => 'On Back Order'
+//    ];
+
     const PRODUCT_BACKORDERS = [
         'no', 'notify', 'yes'
     ];

@@ -31,7 +31,11 @@ class ProductService
         \DB::beginTransaction();
 
         try {
-            $product = Product::create($request);
+            $product = Product::create([
+                'type' => $request['type'] ?? ProductHelper::PRODUCT_TYPE['simple'],
+                'sku' => $request['sku'],
+                'additional' => $request['additional'] ?? null
+            ]);
 
             $productFlat = $product->productFlat()->create([
                 'product_id' => $product->id,
