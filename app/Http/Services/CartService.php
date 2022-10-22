@@ -4,13 +4,16 @@ namespace App\Http\Services;
 
 use App\Helpers\CartHelper;
 use App\Helpers\UserHelper;
+use App\Helpers\VAT_Helper;
 use App\Interfaces\CartServiceInterface;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductFlat;
+use App\Traits\VAT_Trait;
 
 class CartService implements CartServiceInterface
 {
+    use VAT_Trait;
 
     protected array $response = [];
 
@@ -150,12 +153,12 @@ class CartService implements CartServiceInterface
             'weight' => (float) $productFlat->weight,
             'total_weight' => (float) $productFlat->weight * $request['quantity'],
             'item_count' => (int) 1, // on create item_count is 1, on update value may be different
-            'price' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price),
+            'price' => (float) $this->calcAddVatToAmount(VAT_Helper::VAT_PERCENTAGE, $productFlat->price),
             'base_price' => (float) $productFlat->price,
-            'total' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
+            'total' => (float) $this->calcAddVatToAmount(VAT_Helper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
             'base_total' => (float) $productFlat->price * $request['quantity'],
-            'tax_percent' => CartHelper::VAT_PERCENTAGE,
-            'tax_amount' => $this->taxAmountIncludedVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
+            'tax_percent' => VAT_Helper::VAT_PERCENTAGE,
+            'tax_amount' => $this->calcVatAddedValue(VAT_Helper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
             'discount_percent' => 0,
             'discount_amount' => 0
         ]);
@@ -179,29 +182,6 @@ class CartService implements CartServiceInterface
 //            'discount_amount' => 0
 //        ]);
 //    }
-
-    public function calculateIncludeVAT($vat_percentage, $amount): float|int
-    {
-        return $amount * (1 + $vat_percentage / 100);
-
-        //or simple
-        /*
-         * calculate 20% tax on x-amount
-         * ((20 % 100) * x-amount) + x-amount
-         * */
-    }
-
-    public function calculateExcludeVAT($vat_percentage, $amount): float|int
-    {
-        return $amount - $amount / (1 + $vat_percentage / 100);
-    }
-
-    public function taxAmountIncludedVAT($vat_percentage, $amount): float
-    {
-        $amount_including_vat = $this->calculateIncludeVAT($vat_percentage, $amount);
-
-        return round($amount_including_vat - $amount, 2);
-    }
 
 
 }
