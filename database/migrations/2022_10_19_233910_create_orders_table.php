@@ -15,12 +15,12 @@ return new class extends Migration {
             $table->integer('total_item_count')->nullable();
             $table->integer('total_quantity_ordered')->nullable();
             $table->string('order_currency_code')->nullable();
-            $table->decimal('discount_total', 12, 4)->default(0);
-            $table->decimal('base_discount_total', 12, 4)->default(0);
-            $table->decimal('shipping_total', 12, 4)->default(0);
-            $table->decimal('shipping_tax', 12, 4)->default(0);
-            $table->decimal('grand_total', 12, 4)->default(0);
-            $table->decimal('base_grand_total', 12, 4)->default(0)->comment('without including additional charges');
+            $table->decimal('discount_total', 12, 2)->default(0);
+            $table->decimal('base_discount_total', 12, 2)->default(0);
+            $table->decimal('shipping_total', 12, 2)->default(0);
+            $table->decimal('shipping_tax', 12, 2)->default(0);
+            $table->decimal('grand_total', 12, 2)->default(0);
+            $table->decimal('base_grand_total', 12, 2)->default(0)->comment('without including additional charges');
             $table->foreignId('payment_method_id')->nullable()->constrained('payment_methods')->nullOnDelete();
             $table->string('payment_method_title')->nullable();
             $table->string('transaction_id')->nullable()->comment('Unique transaction ID.');

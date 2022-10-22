@@ -19,8 +19,7 @@ return new class extends Migration {
             $table->integer('length')->nullable();
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
-            //$table->integer('weight')->nullable();
-            $table->decimal('weight', 8, 2)->default(0);
+            $table->decimal('weight', 12, 2)->default(0);
             $table->string('sku')->unique();
             $table->string('mid_code', 50)->nullable();
             $table->string('product_number')->nullable();

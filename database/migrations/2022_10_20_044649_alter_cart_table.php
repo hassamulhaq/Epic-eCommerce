@@ -9,14 +9,14 @@ return new class extends Migration {
     {
         Schema::table('cart', function (Blueprint $table) {
             $table->string('cart_currency_code')->nullable();
-            $table->decimal('grand_total', 12, 4)->nullable()->default(0);
-            $table->decimal('base_grand_total', 12, 4)->nullable()->default(0)->comment('without including additional charges');
-            $table->decimal('sub_total', 12, 4)->nullable()->default(0);
-            $table->decimal('base_sub_total', 12, 4)->nullable()->default(0)->comment('without including additional charges');
-            $table->decimal('tax_total', 12, 4)->nullable()->default(0);
-            $table->decimal('base_tax_total', 12, 4)->nullable()->default(0);
-            $table->decimal('discount_amount', 12, 4)->nullable()->default(0);
-            $table->decimal('base_discount_amount', 12, 4)->nullable()->default(0)->comment('without including additional charges');
+            $table->decimal('grand_total', 12, 2)->nullable()->default(0);
+            $table->decimal('base_grand_total', 12, 2)->nullable()->default(0)->comment('without including additional charges');
+            $table->decimal('sub_total', 12, 2)->nullable()->default(0);
+            $table->decimal('base_sub_total', 12, 2)->nullable()->default(0)->comment('without including additional charges');
+            $table->decimal('tax_total', 12, 2)->nullable()->default(0);
+            $table->decimal('base_tax_total', 12, 2)->nullable()->default(0);
+            $table->decimal('discount_amount', 12, 2)->nullable()->default(0);
+            $table->decimal('base_discount_amount', 12, 2)->nullable()->default(0)->comment('without including additional charges');
             $table->dateTime('conversion_time')->nullable();
         });
     }
