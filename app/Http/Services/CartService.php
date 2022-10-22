@@ -4,11 +4,12 @@ namespace App\Http\Services;
 
 use App\Helpers\CartHelper;
 use App\Helpers\UserHelper;
+use App\Interfaces\CartServiceInterface;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductFlat;
 
-class CartService
+class CartService implements CartServiceInterface
 {
 
     protected array $response = [];
@@ -20,22 +21,37 @@ class CartService
         $this->userId = (auth()->guest()) ? UserHelper::ROLE_GUEST :  auth()->id();
     }
 
+    public function findProductByUuid($uuid): ProductFlat
+    {
+        return ProductFlat::whereUuid($uuid)->first();
+    }
+
+    public function findCartItemByCardIdAndProductId($cartId, $productId): CartItem
+    {
+        return CartItem::whereCartId($cartId)->whereProductId($productId)->firstOrFail();
+    }
+
+    public function findCartItemByCardId($cartId): CartItem
+    {
+        return CartItem::whereCartId($cartId)->firstOrFail();
+    }
+
     /**
      * @throws \Throwable
      */
     public function store($request): array
     {
-        $productFlat = ProductFlat::whereUuid($request['product_uuid'])->first();
+        $productFlat = $this->findProductByUuid($request['product_uuid']);
 
         \DB::beginTransaction();
         try {
-            $isItemAlreadyInCart = Cart::where(['user_id' => $this->userId])->first();
+            $cartObj = Cart::where(['user_id' => $this->userId, 'is_guest' => is_null($this->userId), 'is_active' => true])->first();
 
             // new cart
-            if( ! is_object($isItemAlreadyInCart )) $this->newCart($productFlat, $request);
+            if( ! is_object($cartObj )) $this->newCart($productFlat, $request);
 
             // update existing cart
-            if ( is_object($isItemAlreadyInCart) ) $this->updateCart($productFlat, $request);
+            if ( is_object($cartObj) ) $this->updateCart($cartObj, $productFlat, $request);
 
             \DB::commit();
             $this->response = [
@@ -61,8 +77,7 @@ class CartService
     }
 
 
-
-    private function newCart(ProductFlat $productFlat, $request): void
+    public function newCart(ProductFlat $productFlat, $request): void
     {
         $cart = Cart::create([
             'user_id' => $this->userId,
@@ -73,112 +88,108 @@ class CartService
         ]);
 
         // entry in cart_items
-        $cartItem = $cart->cartItems()->create([
-            'product_id' => $productFlat->product_id,
-            'quantity' => $request['quantity'],
-            'sku' => $productFlat->sku,
-            'weight' => $productFlat->weight,
-            'total_weight' => $productFlat->weight * $request['quantity'],
-            'item_count' => 1, // on create item_count is 1, on update value may be different
-            'price' => $productFlat->price,
-            'base_price' => $productFlat->price,
-            'total' => $productFlat->price * $request['quantity'],
-            'base_total' => $productFlat->price * $request['quantity'],
-            'tax_percent' => 0,
-            'tax_amount' => 0,
-            'discount_percent' => 0,
-            'discount_amount' => 0,
-        ]);
+        $newCartItem = $this->createCartItem($cart, $productFlat, $request);
 
-        // update main cart after entry in cart_items
-        $cart->update([
-            'items_count' => $cart->increment('items_count'),
-            'grand_total' => $cart->grand_total + $cartItem->total,
-            'base_grand_total' => $cart->grand_total + $cartItem->base_total,
-            'sub_total' => $cart->grand_total + $cartItem->total,
-            'base_sub_total' => $cart->grand_total + $cartItem->base_total,
-            'tax_total' => 0,
-            'base_tax_total' => 0,
+        // update cart after entry in cart_items
+        $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+    }
+
+
+    public function updateCart(Cart $cart, ProductFlat $productFlat, $request): void
+    {
+        //$cartItem = $this->findCartItemByCardIdAndProductId($cart->id, $productFlat->id);
+
+        $newCartItem = $this->createCartItem($cart, $productFlat, $request);
+
+        // update cart after entry in cart_items
+        $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+
+        /*
+         * enable below code if you want to update same cart_item if cart_id, product_id both same.
+         * then also update updateCartAfterInsertingCartItems() function
+         * */
+        // if same product not exists then create new one
+//        if ( ! is_object($cartItem) ) {
+//            $newCartItem = $this->createCartItem($cart, $productFlat, $request);
+//
+//            // update cart after entry in cart_items
+//            $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+//        } else {
+//            $this->updateCartItem($cart, $cartItem, $productFlat, $request);
+//
+//            // update main cart after entry in cart_items
+//            $this->updateCartAfterInsertingCartItems($cart, $cartItem);
+//        }
+    }
+
+
+    public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool
+    {
+        $cartItem = $this->findCartItemByCardId($cart->id);
+
+        return $cart->update([
+            'items_count' => $cartItem->count(),
+            'grand_total' => $this->calculateIncludeVAT($cartItem->tax_percent, $cartItem->tax_amount, $cartItem->sum('base_total')) - $cartItem->discount_amount,
+            'base_grand_total' => $cartItem->sum('base_total'),
+            'sub_total' => $cartItem->sum('total'),
+            'base_sub_total' => $cartItem->sum('base_total'),
+            'tax_total' => $cartItem->tax_amount * $cartItem->quantity,
+            'base_tax_total' => $cartItem->tax_amount * $cartItem->quantity,
             'discount_amount' => 0,
             'base_discount_amount' => 0,
             'conversion_time' => now()
         ]);
     }
 
-
-    private function updateCart(ProductFlat $productFlat, $request): void
+    public function createCartItem(Cart $cart, ProductFlat $productFlat, array $request): \Illuminate\Database\Eloquent\Model|CartItem
     {
-        $cart = Cart::where(['user_id' => $this->userId, 'is_guest' => is_null($this->userId), 'is_active' => true])->first();
-        $cartItemObj = CartItem::whereCartId($cart->id)
-            ->whereProductId($productFlat->id)->first();
-
-        // if same product not exists then create new one
-        if( ! is_object($cartItemObj) ) {
-            $cartItem = $cart->cartItems()->create([
-                'product_id' => $productFlat->product_id,
-                'quantity' => $request['quantity'],
-                'sku' => $productFlat->sku,
-                'weight' => $productFlat->weight,
-                'total_weight' => $productFlat->weight * $request['quantity'],
-                'item_count' => 1, // on create item_count is 1, on update value may be different
-                'price' => $productFlat->price,
-                'base_price' => $productFlat->price,
-                'total' => $productFlat->price * $request['quantity'],
-                'base_total' => $productFlat->price * $request['quantity'],
-                'tax_percent' => 0,
-                'tax_amount' => 0,
-                'discount_percent' => 0,
-                'discount_amount' => 0,
-            ]);
-
-            #todo start here, item_count not add
-            $cart->update([
-                'items_count' => $cart->increment('items_count', $cart->cartItems()->count()),
-                'grand_total' => $cart->grand_total + $cartItem->total,
-                'base_grand_total' => $cart->grand_total + $cartItem->base_total,
-                'sub_total' => $cart->grand_total + $cartItem->total,
-                'base_sub_total' => $cart->grand_total + $cartItem->base_total,
-                'tax_total' => 0,
-                'base_tax_total' => 0,
-                'discount_amount' => 0,
-                'base_discount_amount' => 0,
-                'conversion_time' => now()
-            ]);
-        }
-
-        // if same product exists then update its attributes [https://github.com/hassamulhaq @devhassam]
-        if ( is_object($cartItemObj) ) {
-            $cart->cartItems()->update([
-                'quantity' => $cartItemObj->increment('quantity', $request['quantity']),
-                'weight' => $productFlat->weight,
-                'total_weight' => $cartItemObj->weight + ($productFlat->weight * $request['quantity']),
-                'item_count' => $cartItemObj->increment('item_count'), // on create item_count is 1, on update value may be different
-                'price' => $productFlat->price, // both okay if we remove price, base_price from here
-                'base_price' => $productFlat->price,
-                'total' => $cartItemObj->price + ($productFlat->price * $request['quantity']),
-                'base_total' => $cartItemObj->price + ($productFlat->price * $request['quantity']),
-                'tax_percent' => 0,
-                'tax_amount' => 0,
-                'discount_percent' => 0,
-                'discount_amount' => 0
-            ]);
-
-            // update main cart after entry in cart_items
-            //$cartItem = CartItem::where(['cart_id' => $cart->id, 'product_id' => $productFlat->id])->first();
-            $cart->update([
-                'items_count' => $cart->increment('items_count', $cart->cartItems()->count()),
-                'grand_total' => $cart->grand_total + $cartItemObj->total,
-                'base_grand_total' => $cart->grand_total + $cartItemObj->base_total,
-                'sub_total' => $cart->grand_total + $cartItemObj->total,
-                'base_sub_total' => $cart->grand_total + $cartItemObj->base_total,
-                'tax_total' => 0,
-                'base_tax_total' => 0,
-                'discount_amount' => 0,
-                'base_discount_amount' => 0,
-                'conversion_time' => now()
-            ]);
-        }
-
+        return $cart->cartItems()->create([
+            'product_id' => (int) $productFlat->product_id,
+            'quantity' => (int) $request['quantity'],
+            'sku' => (string) $productFlat->sku,
+            'weight' => (float) $productFlat->weight,
+            'total_weight' => (float) $productFlat->weight * $request['quantity'],
+            'item_count' => (int) 1, // on create item_count is 1, on update value may be different
+            'price' => (float) $productFlat->price,
+            'base_price' => (float) $productFlat->price,
+            'total' => (float) $productFlat->price * $request['quantity'],
+            'base_total' => (float) $productFlat->price * $request['quantity'],
+            'tax_percent' => CartHelper::VAT_PERCENTAGE,
+            'tax_amount' => CartHelper::VAT_AMOUNT,
+            'discount_percent' => 0,
+            'discount_amount' => 0
+        ]);
     }
 
+    public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool
+    {
+        return $cart->cartItems()->update([
+            'quantity' => (int) $cartItem->quantity + $request['quantity'],
+            'weight' => (float) $productFlat->weight,
+            'total_weight' => (float) $cartItem->weight + ($productFlat->weight * $request['quantity']),
+            'item_count' => (int) $cartItem->item_count + 1, // on create item_count is 1, on update value may be different
+            'price' => (float) $productFlat->price, // both okay if we remove price, base_price from here
+            'base_price' => (float) $productFlat->price,
+            'total' => (float) $cartItem->total + ($productFlat->price * $request['quantity']),
+            'base_total' => (float) $cartItem->base_total + ($productFlat->price * $request['quantity']),
+            'tax_percent' => CartHelper::VAT_PERCENTAGE,
+            'tax_amount' => CartHelper::VAT_AMOUNT,
+            'discount_percent' => 0,
+            'discount_amount' => 0
+        ]);
+    }
+
+    public function calculateIncludeVAT($vat_percentage, $vat_amount, $base_total): float|int
+    {
+        return $base_total * ($vat_amount + $vat_percentage / 100);
+    }
+
+    public function calculateExcludeVAT($vat_percentage, $vat_amount, $base_total): float|int
+    {
+        return $base_total - $base_total / ($vat_amount + $vat_percentage / 100);
+    }
+
+
 }
+
+// [https://github.com/hassamulhaq @devhassam]
