@@ -8,7 +8,7 @@ trait VAT_Trait
 {
     public function calcAddVatToAmount(float $amount, int $vat_percentage = VAT_Helper::VAT_PERCENTAGE): float|int
     {
-        return $amount * (1 + $vat_percentage / 100);
+        return round($amount * (1 + $vat_percentage / 100), 2);
 
         //or simple
         /*
@@ -30,14 +30,14 @@ trait VAT_Trait
 
     public function calcExcludeVatFromAmount(float $amount, int $vat_percentage = VAT_Helper::VAT_PERCENTAGE): float|int
     {
-        return $amount - $amount / (1 + $vat_percentage / 100);
+        return round($amount - $amount / (1 + $vat_percentage / 100), 2);
 
         // e.g Net amount: 7.50
     }
 
     public function calcVatExcludedValue(float $amount, int $vat_percentage = VAT_Helper::VAT_PERCENTAGE): float|int
     {
-        return $amount - $amount / (1 + $vat_percentage / 100);
+        return round($amount - $amount / (1 + $vat_percentage / 100), 2);
 
         // e.g VAT excluded: 1.50
     }
