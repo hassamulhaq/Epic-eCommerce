@@ -8,7 +8,7 @@ class CartHelper
 
     const DEFAULT_CART_CURRENCY_CODE = '$';
 
-    const VAT_PERCENTAGE = 20; // 20%
+    const VAT_PERCENTAGE = 0.20; // 20%
     const VAT_AMOUNT = 1.20;
 }
 
