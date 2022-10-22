@@ -133,8 +133,8 @@ class CartService implements CartServiceInterface
             'base_grand_total' => $cartItem->sum('base_total'),
             'sub_total' => $cartItem->sum('total'),
             'base_sub_total' => $cartItem->sum('base_total'),
-            'tax_total' => $cartItem->tax_amount * $cartItem->quantity,
-            'base_tax_total' => $cartItem->tax_amount * $cartItem->quantity,
+            'tax_total' => $cartItem->sum('tax_amount') - $cartItem->discount_amount,
+            'base_tax_total' => $cartItem->sum('tax_amount'),
             'discount_amount' => 0,
             'base_discount_amount' => 0,
             'conversion_time' => now()
@@ -150,17 +150,18 @@ class CartService implements CartServiceInterface
             'weight' => (float) $productFlat->weight,
             'total_weight' => (float) $productFlat->weight * $request['quantity'],
             'item_count' => (int) 1, // on create item_count is 1, on update value may be different
-            'price' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, CartHelper::VAT_AMOUNT, $productFlat->price),
+            'price' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price),
             'base_price' => (float) $productFlat->price,
-            'total' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, CartHelper::VAT_AMOUNT, $productFlat->price * $request['quantity']),
+            'total' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
             'base_total' => (float) $productFlat->price * $request['quantity'],
             'tax_percent' => CartHelper::VAT_PERCENTAGE,
-            'tax_amount' => CartHelper::VAT_AMOUNT,
+            'tax_amount' => $this->taxAmountIncludedVAT(CartHelper::VAT_PERCENTAGE, $productFlat->price * $request['quantity']),
             'discount_percent' => 0,
             'discount_amount' => 0
         ]);
     }
 
+// don't remove
 //    public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool
 //    {
 //        return $cart->cartItems()->update([
@@ -179,14 +180,27 @@ class CartService implements CartServiceInterface
 //        ]);
 //    }
 
-    public function calculateIncludeVAT($vat_percentage, $vat_amount, $base_total): float|int
+    public function calculateIncludeVAT($vat_percentage, $amount): float|int
     {
-        return $base_total * ($vat_amount + $vat_percentage / 100);
+        return $amount * (1 + $vat_percentage / 100);
+
+        //or simple
+        /*
+         * calculate 20% tax on x-amount
+         * ((20 % 100) * x-amount) + x-amount
+         * */
     }
 
-    public function calculateExcludeVAT($vat_percentage, $vat_amount, $base_total): float|int
+    public function calculateExcludeVAT($vat_percentage, $amount): float|int
     {
-        return $base_total - $base_total / ($vat_amount + $vat_percentage / 100);
+        return $amount - $amount / (1 + $vat_percentage / 100);
+    }
+
+    public function taxAmountIncludedVAT($vat_percentage, $amount): float
+    {
+        $amount_including_vat = $this->calculateIncludeVAT($vat_percentage, $amount);
+
+        return round($amount_including_vat - $amount, 2);
     }
 
 

@@ -22,12 +22,15 @@ interface CartServiceInterface
 
     public function createCartItem(Cart $cart, ProductFlat $productFlat, array $request): \Illuminate\Database\Eloquent\Model|CartItem;
 
+    // don't remove
     //public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool;
 
     public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool;
 
-    public function calculateIncludeVAT(float $vat_percentage, float $vat_amount, float $base_total): float|int;
+    public function calculateIncludeVAT(float $vat_percentage, float $amount): float|int;
 
-    public function calculateExcludeVAT(float $vat_percentage, float $vat_amount, float $base_total): float|int;
+    public function calculateExcludeVAT(float $vat_percentage, float $amount): float|int;
+
+    public function taxAmountIncludedVAT($vat_percentage, $amount): float;
 
 }
