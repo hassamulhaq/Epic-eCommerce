@@ -27,12 +27,12 @@ interface CartServiceInterface
 
     public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool;
 
-    public function calcAddVatToAmount(float $vat_percentage, float $amount): float|int;
+    public function calcAddVatToAmount(float $amount, int $vat_percentage): float|int;
 
-    public function calcVatAddedValue(float $vat_percentage, float $amount): float|int;
+    public function calcVatAddedValue(float $amount, int $vat_percentage): float|int;
 
-    public function calcExcludeVatFromAmount(float $vat_percentage, float $amount): float|int;
+    public function calcExcludeVatFromAmount(float $amount, int $vat_percentage): float|int;
 
-    public function calcVatExcludedValue(float $vat_percentage, float $amount): float|int;
+    public function calcVatExcludedValue(float $amount, int $vat_percentage): float|int;
 
 }
