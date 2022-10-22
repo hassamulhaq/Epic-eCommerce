@@ -22,7 +22,7 @@ interface CartServiceInterface
 
     public function createCartItem(Cart $cart, ProductFlat $productFlat, array $request): \Illuminate\Database\Eloquent\Model|CartItem;
 
-    public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool;
+    //public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool;
 
     public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool;
 

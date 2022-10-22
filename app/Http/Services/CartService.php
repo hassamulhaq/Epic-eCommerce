@@ -161,23 +161,23 @@ class CartService implements CartServiceInterface
         ]);
     }
 
-    public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool
-    {
-        return $cart->cartItems()->update([
-            'quantity' => (int) $cartItem->quantity + $request['quantity'],
-            'weight' => (float) $productFlat->weight,
-            'total_weight' => (float) $cartItem->weight + ($productFlat->weight * $request['quantity']),
-            'item_count' => (int) $cartItem->item_count + 1, // on create item_count is 1, on update value may be different
-            'price' => (float) $productFlat->price, // both okay if we remove price, base_price from here
-            'base_price' => (float) $productFlat->price,
-            'total' => (float) $cartItem->total + ($productFlat->price * $request['quantity']),
-            'base_total' => (float) $cartItem->base_total + ($productFlat->price * $request['quantity']),
-            'tax_percent' => CartHelper::VAT_PERCENTAGE,
-            'tax_amount' => CartHelper::VAT_AMOUNT,
-            'discount_percent' => 0,
-            'discount_amount' => 0
-        ]);
-    }
+//    public function updateCartItem(Cart $cart, CartItem $cartItem, ProductFlat $productFlat, array $request): bool
+//    {
+//        return $cart->cartItems()->update([
+//            'quantity' => (int) $cartItem->quantity + $request['quantity'],
+//            'weight' => (float) $productFlat->weight,
+//            'total_weight' => (float) $cartItem->weight + ($productFlat->weight * $request['quantity']),
+//            'item_count' => (int) $cartItem->item_count + 1, // on create item_count is 1, on update value may be different
+//            'price' => (float) $productFlat->price, // both okay if we remove price, base_price from here
+//            'base_price' => (float) $productFlat->price,
+//            'total' => (float) $cartItem->total + ($productFlat->price * $request['quantity']),
+//            'base_total' => (float) $cartItem->base_total + ($productFlat->price * $request['quantity']),
+//            'tax_percent' => CartHelper::VAT_PERCENTAGE,
+//            'tax_amount' => CartHelper::VAT_AMOUNT,
+//            'discount_percent' => 0,
+//            'discount_amount' => 0
+//        ]);
+//    }
 
     public function calculateIncludeVAT($vat_percentage, $vat_amount, $base_total): float|int
     {
