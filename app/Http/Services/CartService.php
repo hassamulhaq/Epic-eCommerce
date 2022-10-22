@@ -129,7 +129,7 @@ class CartService implements CartServiceInterface
 
         return $cart->update([
             'items_count' => $cartItem->count(),
-            'grand_total' => $this->calculateIncludeVAT($cartItem->tax_percent, $cartItem->tax_amount, $cartItem->sum('base_total')) - $cartItem->discount_amount,
+            'grand_total' => $cartItem->sum('total') - $cartItem->discount_amount,
             'base_grand_total' => $cartItem->sum('base_total'),
             'sub_total' => $cartItem->sum('total'),
             'base_sub_total' => $cartItem->sum('base_total'),
@@ -150,9 +150,9 @@ class CartService implements CartServiceInterface
             'weight' => (float) $productFlat->weight,
             'total_weight' => (float) $productFlat->weight * $request['quantity'],
             'item_count' => (int) 1, // on create item_count is 1, on update value may be different
-            'price' => (float) $productFlat->price,
+            'price' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, CartHelper::VAT_AMOUNT, $productFlat->price),
             'base_price' => (float) $productFlat->price,
-            'total' => (float) $productFlat->price * $request['quantity'],
+            'total' => (float) $this->calculateIncludeVAT(CartHelper::VAT_PERCENTAGE, CartHelper::VAT_AMOUNT, $productFlat->price * $request['quantity']),
             'base_total' => (float) $productFlat->price * $request['quantity'],
             'tax_percent' => CartHelper::VAT_PERCENTAGE,
             'tax_amount' => CartHelper::VAT_AMOUNT,
