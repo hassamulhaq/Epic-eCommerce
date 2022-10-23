@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Helpers\CartHelper;
-use App\Helpers\UserHelper;
 use App\Helpers\VAT_Helper;
 use App\Interfaces\CartServiceInterface;
 use App\Models\Cart;
@@ -50,25 +49,23 @@ class CartService implements CartServiceInterface
             $cartObj = Cart::where(['user_id' => $this->getUserId(), 'is_guest' => is_null($this->getUserId()), 'is_active' => true])->first();
 
             // new cart
-            if( ! is_object($cartObj )) $this->newCart($productFlat, $request);
+            if( ! is_object($cartObj )) $res = $this->newCart($productFlat, $request);
 
             // update existing cart
-            if ( is_object($cartObj) ) $this->updateCart($cartObj, $productFlat, $request);
+            if ( is_object($cartObj) ) $res = $this->updateCart($cartObj, $productFlat, $request);
 
             \DB::commit();
-            $this->response = [
-                'success' => true,
-                'status_code' => 201,
-                'reload' => true,
-                'message' => __('cart.product_added_to_cart'),
-                'data' => []
-            ];
+
+            $res['reload'] = true;
+            $res['status_code'] = 201;
+            $this->response = $res;
 
         } catch (\Exception $e) {
             \DB::rollback();
             $this->response = [
                 'success' => false,
                 'status_code' => $e->getCode(),
+                'reload' => false,
                 'type' => 'try_catch exception',
                 'message' => 'Something went wrong!',
                 'data' => ['message' => $e->getMessage()]
@@ -79,7 +76,7 @@ class CartService implements CartServiceInterface
     }
 
 
-    public function newCart(ProductFlat $productFlat, $request): void
+    public function newCart(ProductFlat $productFlat, $request): array
     {
         $cart = Cart::create([
             'user_id' => $this->getUserId(),
@@ -88,23 +85,32 @@ class CartService implements CartServiceInterface
             'cart_currency_code' => CartHelper::DEFAULT_CART_CURRENCY_CODE,
             'conversion_time' => now()
         ]);
+        if (! is_object($cart) ) return ['success' => false, 'message' => 'Error! Cart not created', 'data' => ['function newCart()']];
 
         // entry in cart_items
         $newCartItem = $this->createCartItem($cart, $productFlat, $request);
 
         // update cart after entry in cart_items
-        $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+        $is_updated = $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+        if (! $is_updated ) return ['success' => false, 'message' => 'Error! Cart not updated after adding cart item', 'data' => ['function newCart()']];
+
+        return $this->response = [
+            'success' => true,
+            'message' => __('cart.product_added_to_cart'),
+            'data' => ["Item ({$productFlat->title}) is added to cart!"]
+        ];
     }
 
 
-    public function updateCart(Cart $cart, ProductFlat $productFlat, $request): void
+    public function updateCart(Cart $cart, ProductFlat $productFlat, $request): array
     {
         //$cartItem = $this->findCartItemByCardIdAndProductId($cart->id, $productFlat->id);
 
         $newCartItem = $this->createCartItem($cart, $productFlat, $request);
 
         // update cart after entry in cart_items
-        $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+        $is_updated = $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
+        if (! $is_updated ) return ['success' => false, 'message' => 'Error! Cart not updated after adding cart item', 'data' => ['function updateCart()']];
 
         /*
          * enable below code if you want to update same cart_item if cart_id, product_id both same.
@@ -122,6 +128,12 @@ class CartService implements CartServiceInterface
 //            // update main cart after entry in cart_items
 //            $this->updateCartAfterInsertingCartItems($cart, $cartItem);
 //        }
+
+        return $this->response = [
+            'success' => true,
+            'message' => __('cart.product_added_to_cart'),
+            'data' => ["Item {$productFlat->title} is added to cart!", "Cart updated"]
+        ];
     }
 
 
