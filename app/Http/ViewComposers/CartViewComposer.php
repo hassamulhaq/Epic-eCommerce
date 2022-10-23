@@ -13,12 +13,12 @@ class CartViewComposer
     public function compose(View $view): void
     {
         $userId = $this->getUserId();
-        $cartItems = Cart::with('CartItemsWithProduct')
+        $cart = Cart::with('CartItemsWithProduct')
             ->whereUserId($userId)
             ->whereIsActive(true)
             ->whereIsGuest(is_null($userId))
             ->first();
 
-        $view->with('cartItems', $cartItems);
+        $view->with('cart', $cart);
     }
 }
