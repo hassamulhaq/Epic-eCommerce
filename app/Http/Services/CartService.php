@@ -10,18 +10,17 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductFlat;
 use App\Traits\VAT_Trait;
+use App\Traits\UserHelperTrait;
 
 class CartService implements CartServiceInterface
 {
-    use VAT_Trait;
+    use VAT_Trait, UserHelperTrait;
 
     protected array $response = [];
 
-    protected string|int|null $userId;
-
     public function __construct()
     {
-        $this->userId = (auth()->guest()) ? UserHelper::ROLE_GUEST :  auth()->id();
+
     }
 
     public function findProductByUuid($uuid): ProductFlat
@@ -48,7 +47,7 @@ class CartService implements CartServiceInterface
 
         \DB::beginTransaction();
         try {
-            $cartObj = Cart::where(['user_id' => $this->userId, 'is_guest' => is_null($this->userId), 'is_active' => true])->first();
+            $cartObj = Cart::where(['user_id' => $this->getUserId(), 'is_guest' => is_null($this->getUserId()), 'is_active' => true])->first();
 
             // new cart
             if( ! is_object($cartObj )) $this->newCart($productFlat, $request);
@@ -83,8 +82,8 @@ class CartService implements CartServiceInterface
     public function newCart(ProductFlat $productFlat, $request): void
     {
         $cart = Cart::create([
-            'user_id' => $this->userId,
-            'is_guest' => is_null($this->userId), // guest=null
+            'user_id' => $this->getUserId(),
+            'is_guest' => is_null($this->getUserId()), // guest=null
             'is_active' => true,
             'cart_currency_code' => CartHelper::DEFAULT_CART_CURRENCY_CODE,
             'conversion_time' => now()

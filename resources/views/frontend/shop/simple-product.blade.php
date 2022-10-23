@@ -66,7 +66,7 @@
                             @endif
                         </div>
                         <div class="flex items-center mt-6 mb-4">
-                            <form id="wishlist-{{ $product->uuid }}" action="{{ route('customer.cart.add-to-cart') }}" method="post" enctype="multipart/form-data">
+                            <form id="wishlist-{{ $product->uuid }}" action="{{ route('customer.cart.add-to-cart') }}" method="post" enctype="multipart/form-data" class="ajax_form">
                                 @csrf
 
                                 <input type="hidden" name="product_uuid" value="{{ $product->uuid }}">
@@ -134,6 +134,8 @@
     @endpush
     @push('js_after')
         <script type="module">
+            import { ajaxRequest } from "{{ asset('js/main.js') }}";
+
             /**
              * Minus and Plus buttons to NUMBER type INPUTS
              */
@@ -165,6 +167,10 @@
             window.addEventListener('load', function () {
                 Lightense('img:not(.no-lightense), .lightense');
             }, false);
+
+            $(document).on('submit', '.ajax_form', function (e) {
+                ajaxRequest(e);
+            })
         </script>
     @endpush
 @endsection

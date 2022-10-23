@@ -163,6 +163,11 @@ export function ajaxRequest(e) {
         removeSpinner()
         alertAjaxResponse(response);
         if (response.success) $form.trigger('reset')
+        if (response.reload) {
+            setTimeout(function(){
+                window.location.reload();
+            }, 1500);
+        }
     })
     jqxhr.fail(function (response) {
         if (SHOW_CONSOLE_MSG) console.log('fail:', response)
