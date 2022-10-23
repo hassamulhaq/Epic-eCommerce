@@ -107,8 +107,8 @@ class ProductService
             \DB::commit();
             $this->response = [
                 'success' => true,
-                'status' => 'success',
                 'status_code' => ResponseAlias::HTTP_CREATED,
+                'reload' => false,
                 'message' => 'Task Completed!',
                 'data' => []
             ];
@@ -116,8 +116,8 @@ class ProductService
             \DB::rollback();
             $this->response = [
                 'success' => false,
-                'status' => 'error',
                 'status_code' => $e->getCode(),
+                'reload' => false,
                 'type' => 'try_catch exception',
                 'message' => 'Something went wrong!',
                 'data' => ['message' => $e->getMessage()]
