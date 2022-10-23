@@ -7,11 +7,11 @@ $cartItems => relations:
 --}}
 
 @php
-    $cartItemsCount = (!is_null($cartItems) ? $cartItems->CartItemsWithProduct->count() : 0)
+    $cartItemsCount = (!is_null($cart) ? $cart->CartItemsWithProduct->count() : 0)
 @endphp
 
 <button id="dropdownCartButton" data-dropdown-toggle="dropdownNotification" class="inline-flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400" type="button">
-    <span class="whitespace-nowrap text-sm">CART ({{ $cartItemsCount }}) / ₨ 0</span>
+    <span class="whitespace-nowrap text-sm">CART ({{ $cartItemsCount }}) / {{ \App\Helpers\CartHelper::DEFAULT_CART_CURRENCY_CODE }} {{ $cart->grand_total ?? 0 }} </span>
     <img src="{{ asset('images/system/shopping-cart-svgrepo.svg') }}" alt="cart" class="h-6 md:h-8" aria-hidden="true" fill="currentColor">
     <div class="flex relative">
         <div class="inline-flex relative -top-2 right-3 w-3 h-3 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></div>
@@ -24,8 +24,8 @@ $cartItems => relations:
     </div>
     <div class="divide-y divide-gray-100 dark:divide-gray-700">
 
-        @if(!is_null($cartItems))
-            @foreach($cartItems->CartItemsWithProduct as $cartItemWithProduct)
+        @if(!is_null($cart))
+            @foreach($cart->CartItemsWithProduct as $cartItemWithProduct)
                 <a href="{{ route('products.product:slug', $cartItemWithProduct->product->productFlat->slug) }}" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <div class="flex-shrink-0">
                         @if(!is_null($cartItemWithProduct->product->productFlat->getMedia('thumbnail')->first()))
