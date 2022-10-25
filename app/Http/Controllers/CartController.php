@@ -9,12 +9,15 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\ProductFlat;
+use App\Traits\UserHelperTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\False_;
 
 class CartController extends Controller
 {
+    use UserHelperTrait;
+
     protected array $response = [];
 
 
@@ -24,7 +27,14 @@ class CartController extends Controller
 
     public function index()
     {
+        $userId = $this->getUserId();
+        $cart = Cart::with('CartDistinctItemsWithProduct')
+            ->whereUserId($userId)
+            ->whereIsActive(true)
+            ->whereIsGuest(is_null($userId))
+            ->first();
 
+        return view('frontend.cart.index', compact('cart'));
     }
 
     public function create()

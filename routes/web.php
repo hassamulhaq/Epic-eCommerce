@@ -13,6 +13,7 @@ use \App\Http\Controllers\ShopController;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\WishlistController;
 use \App\Http\Controllers\CartController;
+use \App\Http\Controllers\CheckoutsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +144,7 @@ Route::prefix('customer')
             });
     });
 
-Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/checkout', [CheckoutsController::class, 'index'])->name('checkout');
 
 require __DIR__.'/auth.php';

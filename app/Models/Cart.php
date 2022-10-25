@@ -52,4 +52,11 @@ class Cart extends Model
     {
         return $this->cartItems()->with('product.productFlat');
     }
+
+    public function CartDistinctItemsWithProduct(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->cartItems()
+
+            ->with('product.productFlat');
+    }
 }
