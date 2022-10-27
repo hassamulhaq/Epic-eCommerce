@@ -3,21 +3,18 @@
 namespace App\Http\ViewComposers;
 
 use App\Models\Cart;
+use App\Traits\CartTrait;
 use Illuminate\View\View;
 use App\Traits\UserHelperTrait;
 
 class CartViewComposer
 {
-    use UserHelperTrait;
+    use UserHelperTrait, CartTrait;
 
     public function compose(View $view): void
     {
         $userId = $this->getUserId();
-        $cart = Cart::with('CartItemsWithProduct')
-            ->whereUserId($userId)
-            ->whereIsActive(true)
-            ->whereIsGuest(is_null($userId))
-            ->first();
+        $cart = $this->cart($userId);
 
         $view->with('cart', $cart);
     }
