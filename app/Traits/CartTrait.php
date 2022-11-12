@@ -8,14 +8,20 @@ trait CartTrait
 {
     use UserHelperTrait;
 
-    public function cart($user_id): Cart
+    public function cart($user_id): ?Cart
     {
         if (!isset($user_id)) $user_id = $this->getUserId();
 
-        return Cart::with('CartItemsWithProduct')
+        $cart = Cart::with('CartItemsWithProduct')
             ->whereUserId($user_id)
             ->whereIsActive(true)
             ->whereIsGuest(is_null($user_id))
             ->first();
+
+        if (is_null($cart)) {
+            $cart = null;
+        }
+
+        return $cart;
     }
 }
