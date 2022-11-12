@@ -25,14 +25,14 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::with(['categories', 'productFlat'])->paginate(25);
-        return view('commerce.products.index', compact(['products']));
+        return view('ecommerce.products.index', compact(['products']));
     }
 
     public function create()
     {
         $collections = Collection::all(['id', 'title']);
         $categories = Category::all(['id', 'title']);
-        return view('commerce.products.create', compact(['collections', 'categories']));
+        return view('ecommerce.products.create', compact(['collections', 'categories']));
     }
 
     /**

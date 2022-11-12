@@ -16,7 +16,7 @@ class CollectionsController extends Controller
     public function index()
     {
         $collections = Collection::paginate(30);
-        return view('commerce.collections.index', compact(['collections']));
+        return view('ecommerce.collections.index', compact(['collections']));
     }
 
     public function create()

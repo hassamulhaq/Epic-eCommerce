@@ -13,7 +13,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::paginate(30);
-        return view('commerce.categories.index', compact(['categories']));
+        return view('ecommerce.categories.index', compact(['categories']));
     }
 
     public function store(StoreCategoryRequest $request)

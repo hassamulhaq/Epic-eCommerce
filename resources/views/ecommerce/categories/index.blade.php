@@ -1,6 +1,5 @@
-{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.dev --}}
+{{-- https://github.com/hassamulhaq/Epic-eCommerce @devhassam https://hassam.me --}}
 @extends('layouts.dashboard')
-
 @section('content')
     <div class="mb-6">
         <!-- Title -->
@@ -8,7 +7,7 @@
 
             <!-- Left: Title -->
             <div class="ri _y">
-                <h3 class="gu text-slate-800 font-bold">Collections</h3>
+                <h3 class="gu text-slate-800 font-bold">Categories</h3>
             </div>
 
             <!-- Right: Actions -->
@@ -16,7 +15,7 @@
                 <!-- Search form -->
                 <form method="get" action="" class="relative">
                     <label for="action-search" class="d">Search</label>
-                    <input id="action-search" name="query" class="w-full rounded shadow-sm border border-gray-200 py-1.5 pl-10 pr-2.5 text-base text-slate-500 placeholder:text-slate-500" type="search" placeholder="Search by collections">
+                    <input id="action-search" name="query" class="w-full rounded shadow-sm border border-gray-200 py-1.5 pl-10 pr-2.5 text-base text-slate-500 placeholder:text-slate-500" type="search" placeholder="Search by category">
                     <button class="w-10 absolute right-0 left-0 top-0 bottom-0 float-left" type="submit" aria-label="Search">
                         <svg class="w-4 h-4 fill-gray-400  ml-3 mr-2" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z"></path>
@@ -25,8 +24,9 @@
                     </button>
                 </form>
 
-                <!-- Create collection modal button -->
-                @include('commerce.collections._particles.create_modal')
+                <!-- Create category modal button -->
+                @include('ecommerce.categories._particles.create_modal')
+
             </div>
 
         </div>
@@ -57,7 +57,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($collections as $collection)
+                @foreach($categories as $category)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="pl-4 pr-1 py-1 w-4">
                             <div class="flex items-center">
@@ -66,22 +66,22 @@
                             </div>
                         </td>
                         <th scope="row" class="pl-4 pr-1 py-1 text-xs font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $collection->title }}
+                            {{ $category->title }}
                         </th>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            {{ $collection->slug ?? 'N/A' }}
+                            {{ $category->slug ?? 'N/A' }}
                         </td>
                         <td class="pl-4 pr-1 py-1 text-xs">
-                            {{ $collection->description ?? 'N/A' }}
+                            {{ $category->description ?? 'N/A' }}
                         </td>
                         <td class="pl-4 pr-1 py-1">
                             <div class="flex">
                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                <form action="{{ route('admin.collections.delete', $collection->id) }}" method="post">
+                                <form action="{{ route('admin.categories.delete', $category->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
 
-                                    <input type="hidden" name="id" value="{{ $collection->id }}">
+                                    <input type="hidden" name="id" value="{{ $category->id }}">
                                     <input type="submit" value="Delete" class="ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">
                                     {{--<a href="{{ route('admin.categories.delete', $category->id) }}" class="ml-2 font-medium text-red-600 dark:text-blue-500 hover:underline">Delete</a>--}}
                                 </form>
@@ -95,16 +95,16 @@
 
             <nav class="flex justify-between items-center pt-4 px-4" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $collections->count() }}</span>
-                    Total <span class="font-semibold text-gray-900 dark:text-white">{{ $collections->total() }}</span>
+                    Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $categories->count() }}</span>
+                    Total <span class="font-semibold text-gray-900 dark:text-white">{{ $categories->total() }}</span>
                 </span>
-                {!! $collections->links() !!}
+                {!! $categories->links() !!}
             </nav>
         </div>
     </div>
 
 
-    {{--@include('commerce.categories._particles.create_modal')--}}
+    {{--@include('ecommerce.categories._particles.create_modal')--}}
 @endsection
 
 
