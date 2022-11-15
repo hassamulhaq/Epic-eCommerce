@@ -16,6 +16,7 @@
         "cviebrock/eloquent-sluggable": "^9.0.0",
         "giggsey/libphonenumber-for-php": "^8.13.0",
         "guzzlehttp/guzzle": "^7.5.0",
+        "hashids/hashids": "^4.1",
         "laravel/cashier": "^v14.3.0",
         "laravel/framework": "^v9.39.0",
         "laravel/sanctum": "^v3.0.1",
