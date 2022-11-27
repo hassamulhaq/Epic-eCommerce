@@ -48,6 +48,7 @@ $cartItems => relations:
                     <div class="flex-shrink-0">
                         <form action="{{ route('customer.cart.remove-to-cart') }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            @method('DELETE')
 
                             <input type="hidden" name="cart_product_id" value="{{ $cartItemWithProduct->product_id }}">
                             <button type="submit" class="cursor-default p-1 text-red-700 hover:bg-red-300 rounded-full">X</button>

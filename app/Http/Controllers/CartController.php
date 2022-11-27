@@ -69,4 +69,9 @@ class CartController extends Controller
         $response = $this->cartService->store($request->validated());
         return \response()->json($response);
     }
+
+    public function removeToCart(Request $request)
+    {
+        dd($request->toArray());
+    }
 }
