@@ -164,7 +164,8 @@ class CartService implements CartServiceInterface
             'weight' => (float) $productFlat->weight,
             'total_weight' => (float) $productFlat->weight * $request['quantity'],
             'item_count' => (int) 1, // on create item_count is 1, on update value may be different
-            'price' => (float) $this->calcAddVatToAmount($productFlat->price, VAT_Helper::VAT_PERCENTAGE),
+            //'price' => (float) $this->calcAddVatToAmount($productFlat->price, VAT_Helper::VAT_PERCENTAGE),
+            'price' => (float) $productFlat->price,
             'base_price' => (float) $productFlat->price,
             'total' => (float) $this->calcAddVatToAmount($productFlat->price * $request['quantity'], VAT_Helper::VAT_PERCENTAGE),
             'base_total' => (float) $productFlat->price * $request['quantity'],
