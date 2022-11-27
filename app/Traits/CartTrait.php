@@ -8,7 +8,7 @@ trait CartTrait
 {
     use UserHelperTrait;
 
-    public function cart($user_id): ?Cart
+    public function cart($user_id):  Cart|null
     {
         if (!isset($user_id)) $user_id = $this->getUserId();
 
