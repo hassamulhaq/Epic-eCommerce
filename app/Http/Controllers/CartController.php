@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\UserHelper;
 use App\Http\Requests\AddToCartRequest;
+use App\Http\Resources\CartCollection;
 use App\Http\Services\CartService;
 use App\Models\Cart;
 use App\Models\CartItem;
@@ -28,33 +29,16 @@ class CartController extends Controller
 
     public function index()
     {
+        $cartObject = [];
+
         $userId = $this->getUserId();
-//        $cart = Cart::with('CartDistinctItemsWithProduct')
-//            ->whereUserId($userId)
-//            ->whereIsActive(true)
-//            ->whereIsGuest(is_null($userId))
-//            ->first();
+        $cart = Cart::whereUserId($userId)
+            ->whereIsActive(true)
+            ->whereIsGuest(is_null($userId))
+            ->first();
 
-//        $cart = DB::table('cart_items')
-//            ->selectRaw('
-//                product_id,
-//                SUM(quantity) AS item_quantity,
-//                SUM(total_weight) AS item_total_weight,
-//                COUNT(item_count) AS item_count,
-//                SUM(price) AS item_price,
-//                SUM(base_price) AS item_base_price,
-//                SUM(total) AS item_total,
-//                SUM(base_total) AS item_base_total,
-//                SUM(tax_percent) AS item_tax_percent,
-//                SUM(tax_amount) AS item_tax_amount,
-//                SUM(discount_percent) AS item_discount_percent,
-//                SUM(discount_amount) AS item_discount_amount
-//                ')
-//            ->groupBy('product_id')
-//            ->get();
-
-        $cart = DB::table('cart')
-            ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id', 'inner')
+        if (! is_null($cart)) {
+            $cartItems = DB::table('cart')
                 ->selectRaw('cart_items.product_id,
                     SUM(cart_items.quantity) AS item_quantity,
                     SUM(cart_items.total_weight) AS item_total_weight,
@@ -66,14 +50,27 @@ class CartController extends Controller
                     SUM(cart_items.tax_percent) AS item_tax_percent,
                     SUM(cart_items.tax_amount) AS item_tax_amount,
                     SUM(cart_items.discount_percent) AS item_discount_percent,
-                    SUM(cart_items.discount_amount) AS item_discount_amount')
+                    SUM(cart_items.discount_amount) AS item_discount_amount,
+                    product_flat.uuid as product_uuid,
+                    product_flat.title as product_title,
+                    product_flat.slug as product_slug,
+                    product_flat.sku as product_sku')
+                ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id', 'inner')
+                ->join('products', 'products.id', '=', 'cart_items.product_id', 'inner')
+                ->join('product_flat', 'product_flat.product_id', '=', 'cart_items.product_id', 'inner')
+                ->where('cart.user_id', '=', $userId)
+                ->where('cart.is_active', '=', true)
+                ->where('cart.is_guest', '=', is_null($userId))
                 ->groupBy('cart_items.product_id')
-            ->where('cart.user_id', '=', $userId)
-            ->where('cart.is_active', '=', true)
-            ->where('cart.is_guest', '=', is_null($userId))
-            ->get();
+                ->get();
 
-        return view('frontend.cart.index', compact('cart'));
+            $cartObject['cartItems'] = $cartItems;
+        }
+
+        $cartObject['cart'] = $cart;
+
+
+        return view('frontend.cart.index', compact('cartObject'));
     }
 
     public function create()
@@ -112,5 +109,27 @@ class CartController extends Controller
     public function removeToCart(Request $request)
     {
         dd($request->toArray());
+    }
+
+
+    public function getCartItemsGroupBy()
+    {
+        /*$cart = DB::table('cart_items')
+            ->selectRaw('
+                product_id,
+                SUM(quantity) AS item_quantity,
+                SUM(total_weight) AS item_total_weight,
+                COUNT(item_count) AS item_count,
+                SUM(price) AS item_price,
+                SUM(base_price) AS item_base_price,
+                SUM(total) AS item_total,
+                SUM(base_total) AS item_base_total,
+                SUM(tax_percent) AS item_tax_percent,
+                SUM(tax_amount) AS item_tax_amount,
+                SUM(discount_percent) AS item_discount_percent,
+                SUM(discount_amount) AS item_discount_amount
+                ')
+            ->groupBy('product_id')
+            ->get();*/
     }
 }
