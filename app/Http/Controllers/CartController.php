@@ -7,14 +7,9 @@ use App\Http\Requests\AddToCartRequest;
 use App\Http\Resources\CartCollection;
 use App\Http\Services\CartService;
 use App\Models\Cart;
-use App\Models\CartItem;
-use App\Models\Product;
-use App\Models\ProductFlat;
 use App\Traits\UserHelperTrait;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\False_;
 
 class CartController extends Controller
 {
@@ -77,8 +72,14 @@ class CartController extends Controller
     {
     }
 
-    public function store(Request $request)
+
+    /**
+     * @throws \Throwable
+     */
+    public function store(AddToCartRequest $request)
     {
+        $response = $this->cartService->store($request->validated());
+        return \response()->json($response);
     }
 
     public function show(Cart $cart)
@@ -95,15 +96,6 @@ class CartController extends Controller
 
     public function destroy(Cart $cart)
     {
-    }
-
-
-    /**
-     * @throws \Throwable
-     */
-    public function addToCart(AddToCartRequest $request) {
-        $response = $this->cartService->store($request->validated());
-        return \response()->json($response);
     }
 
     public function removeToCart(Request $request)

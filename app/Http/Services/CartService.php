@@ -2,18 +2,22 @@
 
 namespace App\Http\Services;
 
+use App\Events\CartCreatedEvent;
 use App\Helpers\CartHelper;
 use App\Helpers\VAT_Helper;
 use App\Interfaces\CartServiceInterface;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\ProductFlat;
+use App\Traits\CartTrait;
 use App\Traits\VAT_Trait;
 use App\Traits\UserHelperTrait;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class CartService implements CartServiceInterface
 {
-    use VAT_Trait, UserHelperTrait;
+    use VAT_Trait, UserHelperTrait, CartTrait;
 
     protected array $response = [];
 
@@ -44,9 +48,16 @@ class CartService implements CartServiceInterface
     {
         $productFlat = $this->findProductByUuid($request['product_uuid']);
 
+        $this->makeFreshCartSession();
+        $cartHash = $this->getCartMetaData()['cart_hash'];
+
         \DB::beginTransaction();
         try {
-            $cartObj = Cart::where(['user_id' => $this->getUserId(), 'is_guest' => is_null($this->getUserId()), 'is_active' => true])->first();
+            $cartObj = Cart::whereUserId($this->getUserId())
+                ->whereIsGuest(is_null($this->getUserId()))
+                ->whereIsActive(true)
+                ->whereCartHash($cartHash)
+                ->first();
 
             // new cart
             if( ! is_object($cartObj )) $res = $this->newCart($productFlat, $request);
@@ -83,9 +94,13 @@ class CartService implements CartServiceInterface
             'is_guest' => is_null($this->getUserId()), // guest=null
             'is_active' => true,
             'cart_currency_code' => CartHelper::DEFAULT_CART_CURRENCY_CODE,
-            'conversion_time' => now()
+            'conversion_time' => now(),
+            'cart_hash' => md5(uniqid())
         ]);
         if (! is_object($cart) ) return ['success' => false, 'message' => 'Error! Cart not created', 'data' => ['function newCart()']];
+
+        // create session
+        \Session::put('cart.cart_hash', $cart->cart_hash);
 
         // entry in cart_items
         $newCartItem = $this->createCartItem($cart, $productFlat, $request);
@@ -93,6 +108,10 @@ class CartService implements CartServiceInterface
         // update cart after entry in cart_items
         $is_updated = $this->updateCartAfterInsertingCartItems($cart, $newCartItem);
         if (! $is_updated ) return ['success' => false, 'message' => 'Error! Cart not updated after adding cart item', 'data' => ['function newCart()']];
+
+
+        // create cart_hash
+        \Event::dispatch(new CartCreatedEvent(cart: $cart));
 
         return $this->response = [
             'success' => true,

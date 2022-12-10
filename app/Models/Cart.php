@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Helpers\UserHelper;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,7 +26,8 @@ class Cart extends Model
         'base_tax_total',
         'discount_amount',
         'base_discount_amount',
-        'conversion_time'
+        'conversion_time',
+        'cart_hash'
     ];
 
     protected $casts = [

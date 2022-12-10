@@ -66,7 +66,7 @@
                             @endif
                         </div>
                         <div class="flex items-center mt-6 mb-4">
-                            <form id="wishlist-{{ $product->uuid }}" action="{{ route('customer.cart.add-to-cart') }}" method="post" enctype="multipart/form-data" class="ajax_form">
+                            <form id="wishlist-{{ $product->uuid }}" action="{{ route('customer.cart.store') }}" method="post" enctype="multipart/form-data" class="ajax_form">
                                 @csrf
 
                                 <input type="hidden" name="product_uuid" value="{{ $product->uuid }}">
