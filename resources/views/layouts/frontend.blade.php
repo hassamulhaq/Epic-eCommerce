@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
 
     @stack('css_after')
     @stack('before_body')
@@ -31,7 +30,6 @@
     </main>
 
 
-@livewireScripts
 @stack('js_after')
 </body>
 </html>

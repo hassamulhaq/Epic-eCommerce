@@ -11,7 +11,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link href="{{ asset('/css/ui/style.css') }}" rel="stylesheet">
-    @livewireStyles
 
     @stack('css_after')
     @stack('before_body')
@@ -129,7 +128,6 @@
 
 
 <script type="module" src="{{ asset('js/main.js') }}"></script>
-@livewireScripts
 
 @stack('js_after')
 </body>
