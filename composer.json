@@ -35,7 +35,6 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^v3.7.0",
-        "barryvdh/laravel-ide-helper": "^2.12.3",
         "fakerphp/faker": "^1.20.0",
         "laravel/breeze": "^v1.14.3",
         "laravel/pint": "^1.2.0",
