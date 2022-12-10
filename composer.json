@@ -23,8 +23,6 @@
         "laravel/sanctum": "^v3.0.1",
         "laravel/tinker": "^v2.7.2",
         "laraveldaily/laravel-permissions-ui": "^0.1.4",
-        "livewire/livewire": "^v2.10.7",
-        "opcodesio/log-viewer": "^v1.6.5",
         "pragmarx/countries": "^v0.8.2",
         "propaganistas/laravel-phone": "^4.4",
         "ramsey/uuid": "^4.6.0",
