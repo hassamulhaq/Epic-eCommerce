@@ -198,7 +198,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\SidebarMenuServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\FlashServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\CartServiceProvider::class,
