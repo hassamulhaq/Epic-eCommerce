@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\UserHelper;
 use App\Http\Requests\AddToCartRequest;
-use App\Http\Resources\CartCollection;
 use App\Http\Services\CartService;
 use App\Models\Cart;
 use App\Traits\UserHelperTrait;

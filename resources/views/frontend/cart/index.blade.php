@@ -16,35 +16,36 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(!is_null($cart))
-                        @foreach($cart->CartItemsWithProduct as $cartItemWithProduct)
+
+                    @if(! empty($cartObject))
+                        @foreach($cartObject['cartItems'] as $cartItem)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <th scope="row" class="py-2 px-2 font-medium text-gray-900 dark:text-white">
                                     <div class="flex flex-1 items-center gap-2 w-60">
-                                        @if(!is_null($cartItemWithProduct->product->productFlat->getMedia('thumbnail')->first()))
-                                            <img class="w-11 h-11 rounded-full"
-                                                 src="{{ $cartItemWithProduct->product->productFlat->getMedia('thumbnail')->first()->getUrl() }}"
-                                                 alt="">
-                                        @else
-                                            <img class="w-11 h-11 rounded-full"
-                                                 src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}"
-                                                 alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">
-                                        @endif
+{{--                                        @if(!is_null($cartItemWithProduct->product->productFlat->getMedia('thumbnail')->first()))--}}
+{{--                                            <img class="w-11 h-11 rounded-full"--}}
+{{--                                                 src="{{ $cartItemWithProduct->product->productFlat->getMedia('thumbnail')->first()->getUrl() }}"--}}
+{{--                                                 alt="">--}}
+{{--                                        @else--}}
+{{--                                            <img class="w-11 h-11 rounded-full"--}}
+{{--                                                 src="{{ asset(\App\Helpers\Constant::PLACEHOLDER_IMAGE['path']) }}"--}}
+{{--                                                 alt="{{ \App\Helpers\Constant::PLACEHOLDER_IMAGE['alt'] }}">--}}
+{{--                                        @endif--}}
 
-                                        <a href="{{ route('products.product:slug', $cartItemWithProduct->product->productFlat->slug) }}"
+                                        <a href="{{ route('products.product:slug', $cartItem->product_slug) }}"
                                            class="">
-                                            {{ $cartItemWithProduct->product->productFlat->title }}
+                                            {{ $cartItem->product_title }}
                                         </a>
                                     </div>
                                 </th>
                                 <td class="py-2 px-2">
-                                    {{ $cartItemWithProduct->product->productFlat->price }}
+                                    {{ $cartItem->item_price }}
                                 </td>
                                 <td class="py-2 px-2">
-                                    {{ $cartItemWithProduct->quantity }}
+                                    {{ $cartItem->item_quantity }}
                                 </td>
                                 <td class="py-2 px-2">
-                                    {{ $cartItemWithProduct->base_total }}
+                                    {{ $cartItem->item_base_total }}
                                 </td>
                                 <td class="py-2 px-2">
                                     {{ __('-') }}
@@ -55,7 +56,7 @@
                                         @csrf
 
                                         <input type="hidden" name="cart_product_id"
-                                               value="{{ $cartItemWithProduct->product_id }}">
+                                               value="{{ $cartItem->product_id }}">
                                         <button type="submit"
                                                 class="w-10 h-10 cursor-pointer p-1 text-red-700 hover:bg-red-300 rounded-full">
                                             X
@@ -136,7 +137,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-0 dark:hover:bg-gray-600">
                         <td class="px-2 py-2">Total (Grand Total)</td>
                         <td id="td_base_grand_total" class="px-2 py-2"
-                            align="right">{{ $cart->base_grand_total ?? 0 }}</td>
+                            align="right">{{ $cartObject['cart']->base_grand_total }}</td>
                     </tr>
                     </tbody>
                     <tfoot>
