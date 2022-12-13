@@ -6,6 +6,9 @@ use App\Http\Requests\AddToCartRequest;
 use App\Http\Services\CartService;
 use App\Models\Cart;
 use App\Traits\UserHelperTrait;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,38 +33,34 @@ class CartController extends Controller
             ->whereIsGuest(is_null($userId))
             ->first();
 
-        if (! is_null($cart)) {
-            $cartItems = DB::table('cart')
-                ->selectRaw('cart_items.product_id,
-                    SUM(cart_items.quantity) AS item_quantity,
-                    SUM(cart_items.total_weight) AS item_total_weight,
-                    COUNT(cart_items.item_count) AS item_count,
-                    SUM(cart_items.price) AS item_price,
-                    SUM(cart_items.base_price) AS item_base_price,
-                    SUM(cart_items.total) AS item_total,
-                    SUM(cart_items.base_total) AS item_base_total,
-                    SUM(cart_items.tax_percent) AS item_tax_percent,
-                    SUM(cart_items.tax_amount) AS item_tax_amount,
-                    SUM(cart_items.discount_percent) AS item_discount_percent,
-                    SUM(cart_items.discount_amount) AS item_discount_amount,
-                    product_flat.uuid as product_uuid,
-                    product_flat.title as product_title,
-                    product_flat.slug as product_slug,
-                    product_flat.sku as product_sku')
-                ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id', 'inner')
-                ->join('products', 'products.id', '=', 'cart_items.product_id', 'inner')
-                ->join('product_flat', 'product_flat.product_id', '=', 'cart_items.product_id', 'inner')
-                ->where('cart.user_id', '=', $userId)
-                ->where('cart.is_active', '=', true)
-                ->where('cart.is_guest', '=', is_null($userId))
-                ->groupBy('cart_items.product_id')
-                ->get();
-
-            $cartObject['cartItems'] = $cartItems;
-        }
+        $cartItems = DB::table('cart')
+            ->selectRaw('cart_items.product_id,
+                SUM(cart_items.quantity) AS item_quantity,
+                SUM(cart_items.total_weight) AS item_total_weight,
+                COUNT(cart_items.item_count) AS item_count,
+                SUM(cart_items.price) AS item_price,
+                SUM(cart_items.base_price) AS item_base_price,
+                SUM(cart_items.total) AS item_total,
+                SUM(cart_items.base_total) AS item_base_total,
+                SUM(cart_items.tax_percent) AS item_tax_percent,
+                SUM(cart_items.tax_amount) AS item_tax_amount,
+                SUM(cart_items.discount_percent) AS item_discount_percent,
+                SUM(cart_items.discount_amount) AS item_discount_amount,
+                product_flat.uuid as product_uuid,
+                product_flat.title as product_title,
+                product_flat.slug as product_slug,
+                product_flat.sku as product_sku')
+            ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id', 'inner')
+            ->join('products', 'products.id', '=', 'cart_items.product_id', 'inner')
+            ->join('product_flat', 'product_flat.product_id', '=', 'cart_items.product_id', 'inner')
+            ->where('cart.user_id', '=', $userId)
+            ->where('cart.is_active', '=', true)
+            ->where('cart.is_guest', '=', is_null($userId))
+            ->groupBy('cart_items.product_id')
+            ->get();
 
         $cartObject['cart'] = $cart;
-
+        $cartObject['cartItems'] = $cartItems;
 
         return view('frontend.cart.index', compact('cartObject'));
     }

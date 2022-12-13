@@ -158,7 +158,7 @@ class CartService implements CartServiceInterface
 
     public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool
     {
-        $cartItem = $this->findCartItemByCardId($cart->id);
+        //$cartItem = $this->findCartItemByCardId($cart->id);
 
         return $cart->update([
             'items_count' => $cartItem->count(),

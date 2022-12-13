@@ -10,13 +10,12 @@
                         <th scope="col" class="p-4">Product</th>
                         <th scope="col" class="p-4">Price</th>
                         <th scope="col" class="p-4">Quantity</th>
-                        <th scope="col" class="p-4">Base Total</th>
-                        <th scope="col" class="p-4">Total</th>
+                        <th scope="col" class="p-4">Base Total (Excl. VAT)</th>
+                        <th scope="col" class="p-4">Total (Incl. VAT)</th>
                         <th scope="col" class="p-4">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-
                     @if(! empty($cartObject))
                         @foreach($cartObject['cartItems'] as $cartItem)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -48,7 +47,7 @@
                                     {{ $cartItem->item_base_total }}
                                 </td>
                                 <td class="py-2 px-2">
-                                    {{ __('-') }}
+                                    {{ $cartItem->item_total }}
                                 </td>
                                 <td class="py-2 px-2">
                                     <form action="{{ route('customer.cart.remove-to-cart') }}" method="post"
@@ -67,6 +66,14 @@
                         @endforeach
                     @endif
                     </tbody>
+                    <tfoot>
+                    <th scope="col" class="p-4">-</th>
+                    <th scope="col" class="p-4">-</th>
+                    <th scope="col" class="p-4">{{ $cartObject['cart']->items_count ?? 0 }}</th>
+                    <th scope="col" class="p-4">{{ $cartObject['cart']->base_sub_total ?? 0 }}</th>
+                    <th scope="col" class="p-4">{{ $cartObject['cart']->sub_total ?? 0 }}</th>
+                    <th scope="col" class="p-4">-</th>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -80,7 +87,8 @@
                             Subtotal
                         </th>
                         <td class="py-2 px-2" align="right">
-                            {{ \App\Helpers\CartHelper::DEFAULT_CART_CURRENCY_CODE }} 10,000
+                            {{ $cartObject['cart']->cart_currency_code ?? \App\Helpers\CartHelper::DEFAULT_CART_CURRENCY_CODE }}
+                            {{ $cartObject['cart']->sub_total ?? 0 }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-0 dark:hover:bg-gray-600">
@@ -136,8 +144,9 @@
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-0 dark:hover:bg-gray-600">
                         <td class="px-2 py-2">Total (Grand Total)</td>
-                        <td id="td_base_grand_total" class="px-2 py-2"
-                            align="right">{{ $cartObject['cart']->base_grand_total }}</td>
+                        <td id="td_base_grand_total" class="px-2 py-2" align="right">
+                            {{ $cartObject['cart']->grand_total ?? 0 }}
+                        </td>
                     </tr>
                     </tbody>
                     <tfoot>
