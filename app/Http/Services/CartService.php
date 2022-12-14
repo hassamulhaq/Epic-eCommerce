@@ -12,8 +12,7 @@ use App\Models\ProductFlat;
 use App\Traits\CartTrait;
 use App\Traits\VAT_Trait;
 use App\Traits\UserHelperTrait;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Illuminate\Support\Facades\DB;
 
 class CartService implements CartServiceInterface
 {
@@ -47,23 +46,21 @@ class CartService implements CartServiceInterface
     public function store($request): array
     {
         $productFlat = $this->findProductByUuid($request['product_uuid']);
-
         $this->makeFreshCartSession();
-        $cartHash = $this->getCartMetaData()['cart_hash'];
 
         \DB::beginTransaction();
         try {
-            $cartObj = Cart::whereUserId($this->getUserId())
-                ->whereIsGuest(is_null($this->getUserId()))
-                ->whereIsActive(true)
-                ->whereCartHash($cartHash)
-                ->first();
+            $cartObj = $this->getActiveCart();
 
             // new cart
-            if( ! is_object($cartObj )) $res = $this->newCart($productFlat, $request);
+            if( ! is_object($cartObj )) {
+                $res = $this->newCart($productFlat, $request);
+            }
 
             // update existing cart
-            if ( is_object($cartObj) ) $res = $this->updateCart($cartObj, $productFlat, $request);
+            if ( is_object($cartObj) ) {
+                $res = $this->updateCart($cartObj, $productFlat, $request);
+            }
 
             \DB::commit();
 
@@ -73,6 +70,7 @@ class CartService implements CartServiceInterface
 
         } catch (\Exception $e) {
             \DB::rollback();
+
             $this->response = [
                 'success' => false,
                 'status_code' => $e->getCode(),
@@ -97,7 +95,8 @@ class CartService implements CartServiceInterface
             'conversion_time' => now(),
             'cart_hash' => md5(uniqid())
         ]);
-        if (! is_object($cart) ) return ['success' => false, 'message' => 'Error! Cart not created', 'data' => ['function newCart()']];
+        if (! is_object($cart) )
+            return ['success' => false, 'message' => 'Error! Cart not created', 'data' => ['function newCart()']];
 
         // create session
         \Session::put('cart.cart_hash', $cart->cart_hash);
@@ -158,16 +157,14 @@ class CartService implements CartServiceInterface
 
     public function updateCartAfterInsertingCartItems(Cart $cart, CartItem $cartItem): bool
     {
-        //$cartItem = $this->findCartItemByCardId($cart->id);
-
         return $cart->update([
-            'items_count' => $cartItem->count(),
-            'grand_total' => $cartItem->sum('total') - $cartItem->discount_amount,
-            'base_grand_total' => $cartItem->sum('base_total'),
-            'sub_total' => $cartItem->sum('total'),
-            'base_sub_total' => $cartItem->sum('base_total'),
-            'tax_total' => $cartItem->sum('tax_amount') - $cartItem->discount_amount,
-            'base_tax_total' => $cartItem->sum('tax_amount'),
+            'items_count' => $cartItem->whereCartId($cart->id)->count(),
+            'grand_total' => $cartItem->whereCartId($cart->id)->sum('total') - $cartItem->discount_amount,
+            'base_grand_total' => $cartItem->whereCartId($cart->id)->sum('base_total'),
+            'sub_total' => $cartItem->whereCartId($cart->id)->sum('total'),
+            'base_sub_total' => $cartItem->whereCartId($cart->id)->sum('base_total'),
+            'tax_total' => $cartItem->whereCartId($cart->id)->sum('tax_amount') - $cartItem->discount_amount,
+            'base_tax_total' => $cartItem->whereCartId($cart->id)->sum('tax_amount'),
             'discount_amount' => 0,
             'base_discount_amount' => 0,
             'conversion_time' => now()
@@ -213,6 +210,15 @@ class CartService implements CartServiceInterface
 //            'discount_amount' => 0
 //        ]);
 //    }
+
+    public function getCart(): array
+    {
+        $cartObject = [];
+        $cartObject['cart'] = $this->getActiveCart();
+        $cartObject['cartItems'] = $this->getActiveCartItems();
+
+        return $cartObject;
+    }
 
 
 }

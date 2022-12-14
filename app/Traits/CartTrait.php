@@ -3,26 +3,68 @@
 namespace App\Traits;
 
 use App\Models\Cart;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 trait CartTrait
 {
     use UserHelperTrait;
 
-    public function cart($user_id):  Cart|null
+    /**
+     * @return Cart|null
+     */
+    protected function getActiveCart(): Cart|null
     {
-        if (!isset($user_id)) $user_id = $this->getUserId();
+        $cartHash = $this->getCartMetaData()['cart_hash'];
 
-        $cart = Cart::with('CartItemsWithProduct')
-            ->whereUserId($user_id)
+        return Cart::whereUserId($this->getUserId())
+            ->whereIsGuest(is_null($this->getUserId()))
             ->whereIsActive(true)
-            ->whereIsGuest(is_null($user_id))
+            ->whereCartHash($cartHash)
+            ->whereNull('deleted_at')
             ->first();
+    }
 
-        if (is_null($cart)) {
-            $cart = null;
-        }
+    /**
+     * getActiveCart() and getActiveCartItems() both
+     * return same cart. only difference is when we require cart object
+     * we call getActiveCart() and if we require cart with cart_items then we
+     * call getActiveCartItems() function.
+     *
+     * @return Collection
+     */
+    protected function getActiveCartItems(): \Illuminate\Support\Collection
+    {
+        $userId = $this->getUserId();
+        $cartHash = $this->getCartMetaData()['cart_hash'];
 
-        return $cart;
+        return DB::table('cart')
+            ->selectRaw('cart_items.product_id,
+                SUM(cart_items.quantity) AS item_quantity,
+                SUM(cart_items.total_weight) AS item_total_weight,
+                COUNT(cart_items.item_count) AS item_count,
+                SUM(cart_items.price) AS item_price,
+                SUM(cart_items.base_price) AS item_base_price,
+                SUM(cart_items.total) AS item_total,
+                SUM(cart_items.base_total) AS item_base_total,
+                SUM(cart_items.tax_percent) AS item_tax_percent,
+                SUM(cart_items.tax_amount) AS item_tax_amount,
+                SUM(cart_items.discount_percent) AS item_discount_percent,
+                SUM(cart_items.discount_amount) AS item_discount_amount,
+                product_flat.uuid as product_uuid,
+                product_flat.title as product_title,
+                product_flat.slug as product_slug,
+                product_flat.sku as product_sku')
+            ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id', 'inner')
+            ->join('products', 'products.id', '=', 'cart_items.product_id', 'inner')
+            ->join('product_flat', 'product_flat.product_id', '=', 'cart_items.product_id', 'inner')
+            ->where('cart.user_id', '=', $userId)
+            ->where('cart.is_active', '=', true)
+            ->where('cart.is_guest', '=', is_null($userId))
+            ->where('deleted_at', '=', null)
+            ->where('cart_hash', '=', $cartHash)
+            ->groupBy('cart_items.product_id')
+            ->get();
     }
 
 
