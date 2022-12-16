@@ -54,11 +54,13 @@ class CartController extends Controller
 
     public function destroy(Cart $cart)
     {
-    }
+        $cart->delete();
 
-    public function removeToCart(Request $request)
-    {
-        dd($request->toArray());
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart deleted',
+            'data' => []
+        ]);
     }
 
 

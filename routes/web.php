@@ -140,7 +140,7 @@ Route::prefix('customer')
             ->group( function () {
                 //Route::get('/', [CartController::class, 'cart'])->name('index');
                 Route::post('/', [CartController::class, 'store'])->name('store');
-                Route::delete('/remove-to-cart', [CartController::class, 'removeToCart'])->name('remove-to-cart');
+                Route::delete('/remove-to-cart', [CartController::class, 'destroy'])->name('remove-to-cart');
             });
     });
 
