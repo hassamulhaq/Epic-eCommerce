@@ -13,8 +13,11 @@ class CheckoutsController extends Controller
 
     public function index()
     {
-        $cart = $this->cart($this->getUserId());
-        return view('frontend.checkout.index', compact('cart'));
+        $cartObject = [];
+        $cartObject['cart'] = $this->getActiveCart();
+        $cartObject['cartItems'] = $this->getActiveCartItems();
+
+        return view('frontend.checkout.index', compact('cartObject'));
     }
 
     public function create()

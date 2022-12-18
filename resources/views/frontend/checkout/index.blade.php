@@ -220,7 +220,7 @@
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-0 dark:hover:bg-gray-600">
                         <td class="px-2 py-2">Total (Grand Total)</td>
-                        <td id="td_base_grand_total" class="px-2 py-2" align="right">{{ $cart->base_grand_total ?? 0 }}</td>
+                        <td id="td_base_grand_total" class="px-2 py-2" align="right">{{ $cartObject['cart']->base_grand_total ?? 0 }}</td>
                     </tr>
                     </tbody>
                     <tfoot>
