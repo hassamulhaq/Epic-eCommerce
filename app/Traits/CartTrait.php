@@ -62,7 +62,7 @@ trait CartTrait
             ->where('cart.is_active', '=', true)
             ->where('cart.is_guest', '=', is_null($userId))
             ->whereNull('cart.deleted_at', '=', null)
-            ->where('cart_hash', '=', $cartHash)
+            ->where('cart.cart_hash', '=', $cartHash)
             ->groupBy('cart_items.product_id')
             ->get();
     }
